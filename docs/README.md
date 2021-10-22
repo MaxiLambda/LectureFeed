@@ -78,7 +78,7 @@ Implementing a System to vote questions can help the presenter to prioritize the
 
 ### 2.2 Use Case Diagram
 
-![UseCaseDiagram](https://raw.githubusercontent.com/MaximilianLincks/LectureFeed/316e2f4623c013739229f3383ca650153c367f58/docs/image/UML.svg)
+![UseCaseDiagram](https://raw.githubusercontent.com/MaximilianLincks/LectureFeed/99f5cebdf8e380cc90e3bbc0372f4d7a44581d19/docs/image/UML.svg)
 
 ### 2.3 Technology Stack
 The technology we use is:
