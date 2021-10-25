@@ -1,6 +1,6 @@
 
 
-# Common Playground - Software Requirements Specification 
+# LectureFeed - Software Requirements Specification 
 
 ## Table of contents
 - [Table of contents](#table-of-contents)
@@ -62,8 +62,8 @@ A session consists of two views. A viewer GUI, where the viewers can ask questio
 
 | Title                                                              | Date       | Publishing organization   |
 | -------------------------------------------------------------------|:----------:| ------------------------- |
-| [LectureFeed Blog](http://lecturefeed.wordpress.com)    | 21.10.2021 | Common Playground Team    |
-| [GitHub](https://github.com/MaximilianLincks/LectureFeed)              | 21.10.2021 | LectureFeed Team    |
+| [LectureFeed Blog](http://lecturefeed.wordpress.com)    	     | 21.10.2021 | LectureFeed Team    |
+| [GitHub](https://github.com/MaximilianLincks/LectureFeed)          | 21.10.2021 | LectureFeed Team    |
 
 
 ### 1.5 Overview
@@ -209,7 +209,7 @@ The logo is licensed to the LectureFeed Team and is only allowed to use for the 
 tbd
 
 ## 4. Supporting Information
-For any further information you can contact the Common Playground Team or check our [LectureFeed Blog](http://lecturefeed.wordpress.com). 
+For any further information you can contact the LectureFeed Team or check our [LectureFeed Blog](http://lecturefeed.wordpress.com). 
 The Team Members are:
 - Lukas Hörnle
 - Stefanie Neuman
