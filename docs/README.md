@@ -49,14 +49,14 @@ A session consists of two views. A viewer GUI, where the viewers can ask questio
 ### 1.3 Definitions, Acronyms and Abbreviations
 | Abbrevation | Explanation                            |
 | ----------- | -------------------------------------- |
-| SRS         | Software Requirements Specification    |
-| UC          | Use Case                               |
-| n/a         | not applicable                         |
-| tbd         | to be determined                       |
-| UCD         | overall Use Case Diagram               |
-| FAQ         | Frequently asked Questions             |
-| GUI         | Graphical User Interface               |
-| UI          | User Interface                         |
+| [SRS]         | Software Requirements Specification    |
+| [UC]          | Use Case                               |
+| [n/a]         | not applicable                         |
+| [tbd]         | to be determined                       |
+| [UCD]         | overall Use Case Diagram               |
+| [FAQ]         | Frequently asked Questions             |
+| [GUI]         | Graphical User Interface               |
+| [UI]          | User Interface                         |
 
 ### 1.4 References
 
