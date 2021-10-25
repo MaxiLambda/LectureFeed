@@ -48,7 +48,7 @@ A session consists of two views. A viewer GUI, where the viewers can ask questio
 
 ### 1.3 Definitions, Acronyms and Abbreviations
 | Abbrevation | Explanation                            |
-| ----------- | -------------------------------------- |
+| ----------- | :--------------------------------------: |
 | SRS         | Software Requirements Specification    |
 | UC          | Use Case                               |
 | n/a         | not applicable                         |
