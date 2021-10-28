@@ -121,16 +121,16 @@ This section will explain the different use cases, you could see in the Use Case
 #### [3.1.1 Creating a session](./use-cases/create-a-session.md)
 For each presentation the presenter should create a new session so he later can get distiguishable feedback. This helps to analyse and overview the last presentations.
 
-#### 3.1.2 Moderating a session
+#### [3.1.2 Moderating a session](./use-cases/moderate-a-session.md)
 Using state of the art technologies the presenter can get realtime feedback from the audience and is shown the most upvoted questions. Questions can be marked as answerd or closed. This helps to interact with the audience, to enhance the experience and improve the understanding of the viewers.
 
-#### 3.1.3 Analyse previous sessions
+#### [3.1.3 Analyse previous sessions](./use-cases/analyse-previous-session.md)
 With the gathered information the presenter can analyse the learning curve of the audience in one session and his own learning curve across all presentations. This helps to continiously improve the presentation skills.
 
-#### 3.1.4 Join a session
+#### [3.1.4 Join a session](./use-cases/join-a-session.md)
 Viewers have to join the session to participate using a nick name.
 
-#### 3.1.5 Participate in a session
+#### [3.1.5 Participate in a session](./use-cases/participate-in-session.md)
 This essentail feature enables the viewers to interact with the presenter through the application. They can ask questions using a nickname or anonymous and give realtime feedback of their mood. This way the presenter can change his style to adapt to communication problems or increase the presenting speed. 
 
 ### 3.2 Usability
