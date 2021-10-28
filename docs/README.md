@@ -118,7 +118,7 @@ This section will explain the different use cases, you could see in the Use Case
 - 3.1.4 Join a session
 - 3.1.5 Participate in a session
 
-#### [3.1.1 Creating a session](.\use-cases\create-a-session.md)
+#### [3.1.1 Creating a session](./use-cases/create-a-session.md)
 For each presentation the presenter should create a new session so he later can get distiguishable feedback. This helps to analyse and overview the last presentations.
 
 #### 3.1.2 Moderating a session
