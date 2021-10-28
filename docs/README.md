@@ -114,7 +114,6 @@ Testing:
 This section will explain the different use cases, you could see in the Use Case Diagram, and their functionality.  
 - 3.1.1 Creating a session
 - 3.1.2 Moderating a session
-- 3.1.2 Analyse previous sessions
 - 3.1.3 Join a session
 - 3.1.4 Participate in a session
 
