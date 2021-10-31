@@ -15,7 +15,9 @@ The Moderator can moderate and monitor the questions and the mood-Feedback from 
 ![Organization Application Activity Diagram](./activity_diagrams/moderate_a_session.svg)
 
 ### 2.1.2 Mock-up
-![Create Operation Form Wireframe](../Pictures/Wireframes/CreateOperation.png)
+The Mock-up for moderating a session is simlar to the Mock-up for participating in a session (the picutres below).
+![Participate in a Session Mockup](../image/mockup/SessionScreenViewer.svg)
+![Participate in a Session Mockup](../image/mockup/SessionScreenViewerV2.svg)
 
 ### 2.1.3 Narrative
 
