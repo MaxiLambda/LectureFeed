@@ -17,7 +17,7 @@ The Moderator has to create a session to use the LectureFeed Application to inte
 ![Organization Application Activity Diagram](./activity_diagrams/create_a_session.svg)
 
 ### 2.1.2 Mock-up
-![Create Operation Form Wireframe](../Pictures/Wireframes/CreateOperation.png)
+![Create a Session Mockup](../image/mockup/LoginScreenWithCreateButton.svg)
 
 ### 2.1.3 Narrative
 
