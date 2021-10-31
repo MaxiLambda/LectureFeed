@@ -15,7 +15,7 @@ Every Viewer should be able to join an existing session by clicking on an invite
 ![Organization Application Activity Diagram](./activity_diagrams/join_session.svg)
 
 ### 2.1.2 Mock-up
-![Create Operation Form Wireframe](../Pictures/Wireframes/CreateOperation.png)
+![Join a Session Mockup](../image/mockup/LoginScreen.svg)
 
 ### 2.1.3 Narrative
 
