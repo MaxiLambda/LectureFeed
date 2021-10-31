@@ -16,6 +16,7 @@ The Viewer can interact with the moderator and the questions from other viewers 
 
 ### 2.1.2 Mock-up
 ![Participate in a Session Mockup](../image/mockup/SessionScreenViewer.svg)
+![Participate in a Session Mockup](../image/mockup/SessionScreenViewerV2.svg)
 
 ### 2.1.3 Narrative
 
