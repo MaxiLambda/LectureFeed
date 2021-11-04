@@ -20,18 +20,7 @@ The Moderator has to create a session to use the LectureFeed Application to inte
 ![Create a Session Mockup](../image/mockup/LoginScreenWithCreateButton.svg)
 
 ### 2.1.3 Narrative
-
-```gherkin
-Feature: create session
-
-  Scenario: create a session 
-    Given I started the LectureFeed application
-    And I opened a browser on a different device 
-    When I open the moderator-page
-    And I enter a valid Admin-token
-    And I press the “create session” button    
-    Then create a new session invite-link, session-code, QR-Code
-```
+![Create a Session Feature](./cucumber/create-a-session.feature)
 
 ## 2.2 Alternative Flows
 If a bad admin-token is provided an error message is shown
