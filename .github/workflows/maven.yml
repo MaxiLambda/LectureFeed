@@ -42,7 +42,7 @@ jobs:
       run: cd "src/main/resources/LectureFeed-Web" && npm run build
       
     - name: Delete Subproject
-      run: rm -rfv "src/main/resources/LectureFeed-Web"
+      run: rm -rf "src/main/resources/LectureFeed-Web"
     
     
     #- uses: actions/checkout@v2
