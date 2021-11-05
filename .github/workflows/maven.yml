@@ -21,23 +21,26 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+        
+    - name: Test
+      run: ls && cd ~ && pwd && ls
 
     - name: Install
-      run: npm install
+      run: cd ~/src/main/resources/LectureFeed-Web && npm install
                 
     - name: Run tests
-      run: npm run test-server
+      run: pwd && npm run test-server
                 
     - name: Build
       run: npm run build
+      
+    - name: Delete Subproject
+      run: rm -rfv ~/src/main/resources/LectureFeed-Web/LectureFeed-Web
     
     
     #- uses: actions/checkout@v2
