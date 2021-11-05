@@ -31,7 +31,7 @@ jobs:
       run: pwd && ls -la
         
     - name: Test2
-      run: cd src/main/resources/ && pwd && ls -la
+      run: cd "src/main/resources/LectureFeed-Web" && pwd && ls -la
 
     - name: Install
       run: npm install
