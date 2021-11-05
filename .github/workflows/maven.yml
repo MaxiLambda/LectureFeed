@@ -32,18 +32,19 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Install
-      run: cd "src/main/resources/LectureFeed-Web" && npm install
+    #- name: Install
+    #  run: cd "src/main/resources/LectureFeed-Web" && npm install
                 
-    - name: Run tests
-      run: cd "src/main/resources/LectureFeed-Web" && npm run test-server
+    #- name: Run tests
+    #  run: cd "src/main/resources/LectureFeed-Web" && npm run test-server
                 
-    - name: Build
-      run: cd "src/main/resources/LectureFeed-Web" && npm run build
+    #- name: Build
+    #  run: cd "src/main/resources/LectureFeed-Web" && npm run build
       
     - name: Delete Subproject
-      run: rm -rf "src/main/resources/LectureFeed-Web"
-    
+      uses: JesseTG/rm@v1.0.2
+      with:
+        path: src/main/resources/LectureFeed-Web    
     
     #- uses: actions/checkout@v2
     - name: Set up JDK 17
