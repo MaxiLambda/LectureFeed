@@ -32,14 +32,14 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    #- name: Install
-    #  run: cd "src/main/resources/LectureFeed-Web" && npm install
+    - name: Install
+      run: cd "src/main/resources/LectureFeed-Web" && npm install
                 
-    #- name: Run tests
-    #  run: cd "src/main/resources/LectureFeed-Web" && npm run test-server
+    - name: Run tests
+      run: cd "src/main/resources/LectureFeed-Web" && npm run test-server
                 
-    #- name: Build
-    #  run: cd "src/main/resources/LectureFeed-Web" && npm run build
+    - name: Build
+      run: cd "src/main/resources/LectureFeed-Web" && npm run build
       
     - name: Delete Subproject
       run: sudo chown -R $USER:$USER "src/main/resources/LectureFeed-Web" && rm -rf "src/main/resources/LectureFeed-Web"
