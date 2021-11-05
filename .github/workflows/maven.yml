@@ -27,7 +27,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         
-    - name: Install
+    - name: Test1
+      run: pwd && ls -la
+        
+    - name: Test2
       run: cd src/main/resources/LectureFeed-Web && pwd && ls -la
 
     - name: Install
