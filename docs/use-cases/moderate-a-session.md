@@ -15,13 +15,13 @@ The Moderator can moderate and monitor the questions and the mood-Feedback from 
 ![Organization Application Activity Diagram](./activity_diagrams/moderate_a_session.svg)
 
 ### 2.1.2 Mock-up
-The Mock-up for moderating a session is simlar to the Mock-up for participating in a session (the picutres below).
-![Moderate a Session Mockup](../image/mockup/SessionScreenViewer.svg)
-![Moderate in a Session Mockup](../image/mockup/SessionScreenViewerV2.svg)
+![Create Operation Form Wireframe](../Pictures/Wireframes/CreateOperation.png)
 
 ### 2.1.3 Narrative
 
-![Moderate a session](./cucumber/moderate-a-session.feature)
+```gherkin
+Feature: 
+```
 
 ## 2.2 Alternative Flows
 (n/a)
