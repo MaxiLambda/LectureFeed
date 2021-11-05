@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LectureFeed.iml" filepath="$PROJECT_DIR$/LectureFeed.iml" />
-      <module fileurl="file://$PROJECT_DIR$/LectureFeedLight.iml" filepath="$PROJECT_DIR$/LectureFeedLight.iml" />
     </modules>
   </component>
 </project>
