@@ -26,12 +26,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-        
-    - name: Test
-      run: ls && cd ~ && pwd && ls
 
     - name: Install
-      run: cd ~/src/main/resources/LectureFeed-Web && npm install
+      run: cd src/main/resources/LectureFeed-Web && npm install
                 
     - name: Run tests
       run: pwd && npm run test-server
@@ -40,7 +37,10 @@ jobs:
       run: npm run build
       
     - name: Delete Subproject
-      run: rm -rfv ~/src/main/resources/LectureFeed-Web/LectureFeed-Web
+      run: cd .. && rm -rfv LectureFeed-Web
+      
+    - name: Go Back
+      run: cd ../../../ && pwd
     
     
     #- uses: actions/checkout@v2
