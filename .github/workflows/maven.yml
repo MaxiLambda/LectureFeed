@@ -14,9 +14,37 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [14.x]
 
     steps:
     - uses: actions/checkout@v2
+    
+    - name: Checkout repository
+      uses: actions/checkout@master
+    - name: Checkout submodules
+      uses: textbook/git-checkout-submodule-action@master
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install
+      run: cd "src/main/resources/LectureFeed-Web" && npm install
+                
+    - name: Run tests
+      run: cd "src/main/resources/LectureFeed-Web" && npm run test-server
+                
+    - name: Build
+      run: cd "src/main/resources/LectureFeed-Web" && npm run build
+      
+    - name: Delete Subproject
+      run: sudo chown -R $USER:$USER "src/main/resources/LectureFeed-Web" && rm -rf "src/main/resources/LectureFeed-Web"
+    
+    #- uses: actions/checkout@v2
     - name: Set up JDK 17
       uses: actions/setup-java@v2
       with:
