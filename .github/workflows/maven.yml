@@ -42,9 +42,7 @@ jobs:
     #  run: cd "src/main/resources/LectureFeed-Web" && npm run build
       
     - name: Delete Subproject
-      uses: JesseTG/rm@v1.0.2
-      with:
-        path: src/main/resources/LectureFeed-Web    
+      run: sudo chown -R $USER:$USER "src/main/resources/LectureFeed-Web" && rm -rf "src/main/resources/LectureFeed-Web"
     
     #- uses: actions/checkout@v2
     - name: Set up JDK 17
