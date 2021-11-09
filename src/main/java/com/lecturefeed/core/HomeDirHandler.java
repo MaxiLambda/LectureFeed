@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class HomeDirHandler {
+public abstract class HomeDirHandler {
 
     private final static String HOME_FOLDER = ".lectureFeed";
 
