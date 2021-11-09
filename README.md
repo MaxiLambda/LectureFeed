@@ -4,5 +4,3 @@ It is really cool and developed using Angular and Java.
 
 ## Build-Status
 [![Build LectureFeed](https://github.com/MaximilianLincks/LectureFeed/actions/workflows/maven.yml/badge.svg)](https://github.com/MaximilianLincks/LectureFeed/actions/workflows/maven.yml)
-
-Moin
