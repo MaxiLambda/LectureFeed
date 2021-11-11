@@ -9,4 +9,5 @@ public class TokenModel {
     @Getter
     @Setter
     private String token;
+
 }
