@@ -24,7 +24,6 @@ public class AuthenticationController {
         //TODO: validate session code for given session
         //TODO: get right sessionId from Session-controller
         Integer userId = 1;
-
         return createToken(userId,username, UserRole.ADMINISTRATOR, sessionId);
     }
 
