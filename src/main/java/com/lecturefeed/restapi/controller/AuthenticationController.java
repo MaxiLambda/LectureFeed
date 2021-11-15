@@ -13,13 +13,14 @@ import java.util.Map;
 
 @AllArgsConstructor
 @RestController
+@RequestMapping("/auth")
 public class AuthenticationController {
 
     @Getter
     private final CustomAuthenticationService customAuthenticationService;
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/auth/admin")
+    @GetMapping("/admin")
     public TokenModel adminAuth(@RequestParam String sessionCode, @RequestParam Integer sessionId, @RequestParam String username) {
         //TODO: validate session code for given session
         //TODO: get right sessionId from Session-controller
@@ -28,7 +29,7 @@ public class AuthenticationController {
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/auth/participant")
+    @GetMapping("/participant")
     public TokenModel participantAuth(@RequestParam String sessionCode, @RequestParam Integer sessionId, @RequestParam String username) {
         //TODO: validate session code for given session
         //TODO: get right sessionId from Session-controller
