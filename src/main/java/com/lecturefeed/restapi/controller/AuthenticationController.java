@@ -5,10 +5,8 @@ import com.lecturefeed.model.TokenModel;
 import com.lecturefeed.model.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.apache.el.parser.Token;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,4 +36,12 @@ public class AuthenticationController {
         return createToken(userId,username, UserRole.PARTICIPANT, sessionId);
     }
 
+    private TokenModel createToken(Integer id, String username, UserRole role, Integer sessionId){
+        Map<String, Object> payloadClaims = new HashMap<>();
+        payloadClaims.put("id",id);
+        payloadClaims.put("username", username);
+        payloadClaims.put("role", role.getRole());
+        payloadClaims.put("sessionId", sessionId);
+        return new TokenModel(customAuthenticationService.generateToken(payloadClaims));
+    }
 }
