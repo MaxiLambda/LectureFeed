@@ -13,5 +13,12 @@ public enum UserRole {
         this.role = role;
     }
 
-
+    public static UserRole fromString(String role) {
+        for (UserRole userRole : UserRole.values()) {
+            if (userRole.role.equalsIgnoreCase(role)) {
+                return userRole;
+            }
+        }
+        return null;
+    }
 }
