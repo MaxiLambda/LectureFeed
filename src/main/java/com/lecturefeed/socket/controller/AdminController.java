@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 
 @AllArgsConstructor
 @Controller
+@Deprecated
 public class AdminController {
 
     @Getter

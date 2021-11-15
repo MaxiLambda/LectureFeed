@@ -8,6 +8,6 @@ import lombok.Setter;
 @Data
 @AllArgsConstructor
 public class TokenModel {
-    private String token;
-
+    private final String token;
+    private final int userId;
 }

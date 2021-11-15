@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-
+@Deprecated
 @Data
 @Service
 public class AdminService {
