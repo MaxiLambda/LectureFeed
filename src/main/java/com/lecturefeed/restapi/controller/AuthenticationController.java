@@ -25,7 +25,7 @@ public class AuthenticationController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/admin")
-    public Object adminAuth() {
+    public TokenModel adminAuth() {
         //create and return token
         return TokenUtils.createAdminToken(customAuthenticationService);
 
