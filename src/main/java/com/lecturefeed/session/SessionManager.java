@@ -24,11 +24,15 @@ public class SessionManager {
     //todo remove Constructor
     public SessionManager(SessionDataService sessionDataService){
         this.sessionDataService = sessionDataService;
-        sessions.put(10, new Session(sessionDataService,10));
+        int newSessionId = createSession();
+        System.out.printf("Session with Id %d created!%n", newSessionId);
     }
 
-    public Session createSession(){
-        return new Session(sessionDataService, sessions.size());
+    public Integer createSession(){
+        int sessionId = sessions.size();
+        Session session = new Session(sessionDataService, sessionId);
+        sessions.put(sessionId,session);
+        return sessionId;
     }
 
     public boolean isCorrectSessionCode(Integer sessionId, String sessionCode){
