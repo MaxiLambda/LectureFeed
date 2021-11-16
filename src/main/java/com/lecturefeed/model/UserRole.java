@@ -7,11 +7,9 @@ public enum UserRole {
     ADMINISTRATOR("ADMIN");
 
     @Getter
-    String role;
+    final String role;
 
     UserRole(String role){
         this.role = role;
     }
-
-
 }

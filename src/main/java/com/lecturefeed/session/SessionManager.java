@@ -14,15 +14,21 @@ import java.util.Map;
 import java.util.Optional;
 
 @Component
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class SessionManager {
     private final HashMap<Integer,Session> sessions = new HashMap<>();
     @Autowired
     @Getter
     private final SessionDataService sessionDataService;
 
+    //todo remove Constructor
+    public SessionManager(SessionDataService sessionDataService){
+        this.sessionDataService = sessionDataService;
+        sessions.put(10, new Session(sessionDataService,10));
+    }
+
     public Session createSession(){
-        return new Session(this, sessions.size());
+        return new Session(sessionDataService, sessions.size());
     }
 
     public boolean isCorrectSessionCode(Integer sessionId, String sessionCode){
