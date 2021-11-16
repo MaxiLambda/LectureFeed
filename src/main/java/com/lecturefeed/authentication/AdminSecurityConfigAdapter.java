@@ -12,8 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class AdminSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-            .cors().and()
+        http.cors().and()
+            .csrf().disable()
             .authorizeRequests()
             .antMatchers("/auth/admin")
             .access("hasIpAddress(\"127.0.0.1\") or hasIpAddress(\"::1\")");

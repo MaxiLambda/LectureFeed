@@ -17,7 +17,7 @@ import java.util.Optional;
 //@RequiredArgsConstructor
 public class SessionManager {
     private final HashMap<Integer,Session> sessions = new HashMap<>();
-    @Autowired
+
     @Getter
     private final SessionDataService sessionDataService;
 
@@ -29,7 +29,7 @@ public class SessionManager {
     }
 
     public Integer createSession(){
-        int sessionId = sessions.size();
+        int sessionId = sessions.size()+1;
         Session session = new Session(sessionDataService, sessionId);
         sessions.put(sessionId,session);
         return sessionId;
@@ -47,15 +47,5 @@ public class SessionManager {
         return Optional.ofNullable(sessions.get(id));
     }
 
-    public TokenModel createToken(CustomAuthenticationService customAuthenticationService, String nickname, UserRole role, Integer sessionId){
-        Map<String, Object> payloadClaims = new HashMap<>();
-        int id = getSession(sessionId).
-                map(Session::getNextUserId).
-                orElseThrow();
-        payloadClaims.put("id",id);
-        payloadClaims.put("username", nickname);
-        payloadClaims.put("role", role.getRole());
-        payloadClaims.put("sessionId", sessionId);
-        return new TokenModel(customAuthenticationService.generateToken(payloadClaims),id);
-    }
+
 }
