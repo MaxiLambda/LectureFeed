@@ -1,42 +1,46 @@
 package com.lecturefeed.restapi.controller;
 
 import com.lecturefeed.authentication.jwt.CustomAuthenticationService;
+import com.lecturefeed.model.ParticipantAuthRequestModel;
 import com.lecturefeed.model.TokenModel;
+import com.lecturefeed.model.UserRole;
+import com.lecturefeed.session.Participant;
+import com.lecturefeed.session.SessionManager;
+import com.lecturefeed.utils.TokenUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import static com.lecturefeed.utils.TokenUtils.getTokenValue;
 
 @AllArgsConstructor
 @RestController
+@RequestMapping("/auth")
 public class AuthenticationController {
+
+    @Getter
+    private final SessionManager sessionManager;
 
     @Getter
     private final CustomAuthenticationService customAuthenticationService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @RequestMapping(method = RequestMethod.GET, path = "/auth/admin")
+    @GetMapping("/admin")
     public TokenModel adminAuth() {
-        Map<String, Object> payloadClaims = new HashMap<>();
-        payloadClaims.put("id", 1);
-        payloadClaims.put("username", "Administrator");
-        payloadClaims.put("role", "ADMIN");
-        return new TokenModel(customAuthenticationService.generateToken(payloadClaims));
+        //create and return token
+        return TokenUtils.createAdminToken(customAuthenticationService);
+
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @RequestMapping(method = RequestMethod.GET, path = "/auth/participant")
-    public TokenModel participantAuth() {
-        Map<String, Object> payloadClaims = new HashMap<>();
-        payloadClaims.put("id", 99);
-        payloadClaims.put("username", "Participant0815");
-        payloadClaims.put("role", "PARTICIPANT");
-        return new TokenModel(customAuthenticationService.generateToken(payloadClaims));
-    }
+    @PostMapping("/participant")
+    public Object participantAuth(@RequestBody ParticipantAuthRequestModel authRequestModel) {
+        if(!sessionManager.isCorrectSessionCode(authRequestModel.getSessionId(),authRequestModel.getSessionCode())) return null;
 
+        //create token
+        TokenModel tokenModel = TokenUtils.createParticipantToken(customAuthenticationService,sessionManager,authRequestModel.getNickname(), UserRole.PARTICIPANT, authRequestModel.getSessionId());
+        int userId = Integer.parseInt(TokenUtils.getTokenValue(customAuthenticationService,"id",tokenModel));
+        //Add new Participant to session
+        sessionManager.getSession(authRequestModel.getSessionId()).
+                ifPresent(s->s.addParticipant(new Participant(userId, authRequestModel.getNickname())));
+        return tokenModel;
+    }
 }

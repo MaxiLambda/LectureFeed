@@ -1,5 +1,6 @@
 package com.lecturefeed.authentication;
 
+import com.lecturefeed.model.UserRole;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.messaging.MessageSecurityMetadataSourceRegistry;
 import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer;
@@ -8,8 +9,8 @@ import org.springframework.security.config.annotation.web.socket.AbstractSecurit
 public class WebSocketAuthorizationSecurityConfig extends AbstractSecurityWebSocketMessageBrokerConfigurer {
     @Override
     protected void configureInbound(final MessageSecurityMetadataSourceRegistry messages) {
-        messages.simpDestMatchers("/admin/**").hasRole("ADMIN");
-        messages.simpDestMatchers("/participant/**").hasRole("PARTICIPANT");
+        messages.simpDestMatchers("/admin/**").hasRole(UserRole.ADMINISTRATOR.getRole());
+        messages.simpDestMatchers("/participant/**").hasRole(UserRole.PARTICIPANT.getRole());
     }
 
     @Override
