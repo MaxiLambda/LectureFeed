@@ -7,10 +7,7 @@ import com.lecturefeed.utils.TokenUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,8 +20,8 @@ public class SessionController {
     private final CustomAuthenticationService customAuthenticationService;
     private final SessionManager sessionManager;
 
-    @GetMapping("/session/create")
-    public Map<String,Object> createNewSession(@RequestParam TokenModel token) {
+    @PostMapping("/session/create")
+    public Map<String,Object> createNewSession(@RequestBody TokenModel token) {
 
         if (UserRole.ADMINISTRATOR.getRole().equals(TokenUtils.getTokenValue(customAuthenticationService,"role",token))) {
            Session session = sessionManager.createSession();
