@@ -23,7 +23,6 @@ public class AuthenticationController {
     @Getter
     private final CustomAuthenticationService customAuthenticationService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/admin")
     public TokenModel adminAuth() {
         //create and return token
@@ -31,7 +30,6 @@ public class AuthenticationController {
 
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/participant")
     public Object participantAuth(@RequestBody ParticipantAuthRequestModel authRequestModel) {
         if(!sessionManager.isCorrectSessionCode(authRequestModel.getSessionId(),authRequestModel.getSessionCode())) return null;
@@ -44,6 +42,4 @@ public class AuthenticationController {
                 ifPresent(s->s.addParticipant(new Participant(tokenModel.getUserId(), authRequestModel.getNickname())));
         return tokenModel;
     }
-
-
 }
