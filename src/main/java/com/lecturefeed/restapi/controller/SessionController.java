@@ -3,6 +3,8 @@ package com.lecturefeed.restapi.controller;
 import com.lecturefeed.model.*;
 import com.lecturefeed.utils.TokenUtils;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,6 +16,8 @@ public class SessionController {
 
     private SessionManager sessionManager = new SessionManager();
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/session/create")
     public Map<Integer,String> createNewSession(@RequestParam TokenModel token) throws SessionAlreadyExistsException {
         if (UserRole.ADMINISTRATOR.equals(TokenUtils.getUserRole(token))) {
 
