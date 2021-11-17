@@ -14,7 +14,7 @@ public class AdminSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors()
                 .and().authorizeRequests()
-                .antMatchers("/auth/admin")
+                .antMatchers("/auth/admin or /session/create")
                 .access("hasIpAddress(\"127.0.0.1\") or hasIpAddress(\"::1\")")
                 .anyRequest().permitAll()
                 .and().csrf().disable();

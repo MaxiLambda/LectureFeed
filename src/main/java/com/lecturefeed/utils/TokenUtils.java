@@ -7,16 +7,8 @@ import com.lecturefeed.model.TokenModel;
 import com.lecturefeed.model.UserRole;
 import com.lecturefeed.session.Session;
 import com.lecturefeed.session.SessionManager;
-import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.stereotype.Service;
-
 import java.util.HashMap;
-import lombok.Getter;
-import org.springframework.security.authentication.BadCredentialsException;
-
 import java.util.Map;
 
 public class TokenUtils {
@@ -33,32 +25,21 @@ public class TokenUtils {
         return new TokenModel(customAuthenticationService.generateToken(payloadClaims));
     }
 
-    public static TokenModel createAdminToken(CustomAuthenticationService customAuthenticationService){
+    public static TokenModel createAdminToken(CustomAuthenticationService customAuthenticationService) {
         Map<String, Object> payloadClaims = new HashMap<>();
 
         payloadClaims.put("role", UserRole.ADMINISTRATOR.getRole());
         return new TokenModel(customAuthenticationService.generateToken(payloadClaims));
+    }
 
-    public static UserRole getUserRole(CustomAuthenticationService customAuthenticationService,TokenModel token){
+    public static String getTokenValue(CustomAuthenticationService customAuthenticationService, String valueName, TokenModel token){
         try {
             DecodedJWT jwt = customAuthenticationService.verifyToken(token.getToken());
             Map<String, Claim> claims = jwt.getClaims();
-            String roleAsString = claims.get("role").asString();
-            UserRole role = UserRole.fromString(roleAsString);
-            return role;
+            return claims.get(valueName).asString();
         }catch (Exception e){
             throw new BadCredentialsException(String.format("token are invalid %s", token));
         }
     }
 
-    public static int getSessionId(CustomAuthenticationService customAuthenticationService, TokenModel token){
-        try {
-            DecodedJWT jwt = customAuthenticationService.verifyToken(token.getToken());
-            Map<String, Claim> claims = jwt.getClaims();
-            int sessionId = claims.get("sessionId").asInt();
-            return sessionId;
-        }catch (Exception e){
-            throw new BadCredentialsException(String.format("token are invalid %s", token));
-        }
-    }
 }

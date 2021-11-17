@@ -9,8 +9,9 @@ import com.lecturefeed.session.SessionManager;
 import com.lecturefeed.utils.TokenUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import static com.lecturefeed.utils.TokenUtils.getTokenValue;
 
 @AllArgsConstructor
 @RestController
@@ -36,10 +37,10 @@ public class AuthenticationController {
 
         //create token
         TokenModel tokenModel = TokenUtils.createParticipantToken(customAuthenticationService,sessionManager,authRequestModel.getNickname(), UserRole.PARTICIPANT, authRequestModel.getSessionId());
-
+        int userId = Integer.parseInt(TokenUtils.getTokenValue(customAuthenticationService,"id",tokenModel));
         //Add new Participant to session
         sessionManager.getSession(authRequestModel.getSessionId()).
-                ifPresent(s->s.addParticipant(new Participant(tokenModel.getUserId(), authRequestModel.getNickname())));
+                ifPresent(s->s.addParticipant(new Participant(userId, authRequestModel.getNickname())));
         return tokenModel;
     }
 }
