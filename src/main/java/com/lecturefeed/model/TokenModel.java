@@ -9,5 +9,4 @@ import lombok.Setter;
 @AllArgsConstructor
 public class TokenModel {
     private final String token;
-    private final int userId;
 }
