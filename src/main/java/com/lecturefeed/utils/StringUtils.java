@@ -9,7 +9,8 @@ public class StringUtils {
     private static final SecureRandom rnd = new SecureRandom();
 
     public static String randomString(int len){
-        return rnd.ints(0,CHARS.length()).
+        return len < 1 ?
+                "" : rnd.ints(0,CHARS.length()).
                 limit(len).
                 mapToObj(CHARS::charAt).
                 map(Object::toString).
