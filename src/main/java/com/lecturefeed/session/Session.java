@@ -17,9 +17,9 @@ public class Session {
     private int userIdCurrentIndex = 0;
     private final int SESSION_CODE_LENGTH = 8;
 
-    public Session(SessionDataService sessionDataService, ArrayList<Question> questions, Integer id){
+    public Session(SessionDataService sessionDataService, Integer id){
         this.sessionDataService = sessionDataService;
-        this.questions = questions;
+        this.questions = new ArrayList<Question>();
         this.participants = new ArrayList<>();
         this.id = id;
         this.sessionCode = StringUtils.randomString(SESSION_CODE_LENGTH);

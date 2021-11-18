@@ -22,8 +22,8 @@ public class SessionController {
     private final CustomAuthenticationService customAuthenticationService;
     private final SessionManager sessionManager;
 
-    @PostMapping(path = "/create")
-    public Map<String,Object> createNewSession(@RequestParam TokenModel token) {
+    @PostMapping("/create")
+    public Map<String,Object> createNewSession(@RequestBody TokenModel token) {
 
         if (TokenUtils.isValidAdminToken(customAuthenticationService, token)) {
            Session session = sessionManager.createSession();
@@ -36,19 +36,17 @@ public class SessionController {
         throw new BadCredentialsException(String.format("No admin rights for token %s", token.getToken()));
     }
 
-    @PostMapping(path = "/{sessionId}/initial")
-    public Map<String,Object> getSessionData(@RequestParam TokenModel token) {
-        int sessionId = Integer.parseInt(TokenUtils.getTokenValue(customAuthenticationService,"sessionId",token));
-        Session session = sessionManager.getSession(sessionId).get();
-        if(session != null)
-        {
-            ArrayList<Participant> participants = session.getParticipants();
-            ArrayList<Question> questions = session.getQuestions();
+    @GetMapping("/{sessionId}/initial")
+    public Map<String,Object> getSessionData(@PathVariable String sessionIdString) {
+        int sessionId = Integer.parseInt(sessionIdString);
+        Session session = sessionManager.getSession(sessionId).orElseThrow(NoSessionFoundException::new);
+        ArrayList<Participant> participants = session.getParticipants();
+        ArrayList<Question> questions = session.getQuestions();
 
-            Map<String, Object> sessionData = new HashMap<>();
-            sessionData.put("questions", questions);
-            sessionData.put("participants", participants);
-        }
-        throw new BadCredentialsException(String.format("Invalid sessionId %s", sessionId));
+        Map<String, Object> sessionData = new HashMap<>();
+        sessionData.put("questions", questions);
+        sessionData.put("participants", participants);
+
+        return sessionData;
     }
 }

@@ -20,14 +20,10 @@ public class SessionManager {
     private final SessionDataService sessionDataService;
 
     public Session createSession(){
-        Random random = new Random();
-        int possibleId;
-        do{
-            possibleId = random.nextInt();
-        }while(sessions.get(possibleId) == null);
+        int sessionId = sessions.size() +1;
 
-        Session session = new Session(sessionDataService, new ArrayList<Question>(), possibleId);
-        sessions.put(possibleId,session);
+        Session session = new Session(sessionDataService, sessionId);
+        sessions.put(sessionId,session);
         return session;
     }
 
