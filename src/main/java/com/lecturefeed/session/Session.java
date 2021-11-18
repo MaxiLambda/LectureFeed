@@ -1,12 +1,11 @@
 package com.lecturefeed.session;
 
 import com.lecturefeed.socket.controller.service.SessionDataService;
-import lombok.*;
-
-import java.nio.charset.StandardCharsets;
+import com.lecturefeed.utils.StringUtils;
+import lombok.Data;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.Random;
+
 
 @Data
 public class Session {
@@ -23,8 +22,7 @@ public class Session {
         this.questions = questions;
         this.participants = new ArrayList<>();
         this.id = id;
-        //todo replace with actual generation (Random Number generator)
-        this.sessionCode = generateRandomStringCode();
+        this.sessionCode = StringUtils.randomString(SESSION_CODE_LENGTH);
     }
 
     public Integer getNextUserId(){
@@ -40,10 +38,4 @@ public class Session {
         sessionDataService.sendNewParticipantToAll(id,participant);
     }
 
-    private String generateRandomStringCode()
-    {
-        byte[] array = new byte[SESSION_CODE_LENGTH];
-        new Random().nextBytes(array);
-        return new String(array, StandardCharsets.UTF_8);
-    }
 }

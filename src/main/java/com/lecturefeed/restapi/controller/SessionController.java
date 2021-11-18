@@ -25,7 +25,7 @@ public class SessionController {
     @PostMapping(path = "/create")
     public Map<String,Object> createNewSession(@RequestParam TokenModel token) {
 
-        if (UserRole.ADMINISTRATOR.getRole().equals(TokenUtils.getTokenValue(customAuthenticationService,"role",token))) {
+        if (TokenUtils.isValidAdminToken(customAuthenticationService, token)) {
            Session session = sessionManager.createSession();
 
             Map<String,Object> sessionInformation = new HashMap<>();

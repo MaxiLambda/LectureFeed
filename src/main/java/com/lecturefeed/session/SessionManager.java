@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.Random;
 
+
 @Component
 @RequiredArgsConstructor
 public class SessionManager {
@@ -17,13 +18,6 @@ public class SessionManager {
 
     @Getter
     private final SessionDataService sessionDataService;
-
-    //todo remove Constructor
-//    public SessionManager(SessionDataService sessionDataService){
-//        this.sessionDataService = sessionDataService;
-//        int newSessionId = createSession();
-//        System.out.printf("Session with Id %d created!%n", newSessionId);
-//    }
 
     public Session createSession(){
         Random random = new Random();
