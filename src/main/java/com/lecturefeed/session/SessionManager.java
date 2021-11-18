@@ -1,18 +1,12 @@
 package com.lecturefeed.session;
 
-import com.lecturefeed.authentication.jwt.CustomAuthenticationService;
-import com.lecturefeed.model.TokenModel;
-import com.lecturefeed.model.UserRole;
 import com.lecturefeed.socket.controller.service.SessionDataService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
@@ -38,7 +32,7 @@ public class SessionManager {
             possibleId = random.nextInt();
         }while(sessions.get(possibleId) == null);
 
-        Session session = new Session(sessionDataService, possibleId);
+        Session session = new Session(sessionDataService, new ArrayList<Question>(), possibleId);
         sessions.put(possibleId,session);
         return session;
     }

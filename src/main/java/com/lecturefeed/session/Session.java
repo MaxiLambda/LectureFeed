@@ -12,13 +12,15 @@ import java.util.Random;
 public class Session {
     private final SessionDataService sessionDataService;
     private final ArrayList<Participant> participants;
+    private final ArrayList<Question> questions;
     private final int id;
     private final String sessionCode;
     private int userIdCurrentIndex = 0;
     private final int SESSION_CODE_LENGTH = 8;
 
-    public Session(SessionDataService sessionDataService, Integer id){
+    public Session(SessionDataService sessionDataService, ArrayList<Question> questions, Integer id){
         this.sessionDataService = sessionDataService;
+        this.questions = questions;
         this.participants = new ArrayList<>();
         this.id = id;
         //todo replace with actual generation (Random Number generator)
