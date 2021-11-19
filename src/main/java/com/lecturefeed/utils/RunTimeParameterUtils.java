@@ -21,7 +21,7 @@ public class RunTimeParameterUtils {
         HashMap<String, String> modifiedArgs = getDefaultRunTimeArgs();
         for (int i = 0; i < args.length-1; i++) {
             if(args[i].matches("^-.*$")){
-                modifiedArgs.put(args[i],args[i+1]);
+                modifiedArgs.put(args[i].substring(1),args[i+1]);
             }
         }
         return modifiedArgs;
