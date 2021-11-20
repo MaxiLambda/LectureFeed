@@ -5,10 +5,12 @@ import com.lecturefeed.model.*;
 import com.lecturefeed.session.*;
 import com.lecturefeed.utils.TokenUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,9 +38,14 @@ public class SessionController {
         throw new BadCredentialsException(String.format("No admin rights for token %s", token.getToken()));
     }
 
-    @GetMapping("/{sessionId}/initial")
-    public Map<String,Object> getSessionData(@PathVariable String sessionIdString) {
-        int sessionId = Integer.parseInt(sessionIdString);
+    @PostMapping("/{sessionId}/initial")
+    public Map<String,Object> getSessionData(@RequestBody TokenModel token) {
+
+    }
+
+    @PostMapping("/{sessionId}/initial")
+    public Map<String,Object> getSessionData(@PathParam("sessionId") Integer sessionId, @RequestBody TokenModel token) {
+        //if (!TokenUtils.isValidToken(customAuthenticationService, token)) throw new BadCredentialsException(String.format("No valid token %s in request body", token.getToken()));
         Session session = sessionManager.getSession(sessionId).orElseThrow(NoSessionFoundException::new);
         ArrayList<Participant> participants = session.getParticipants();
         ArrayList<Question> questions = session.getQuestions();
