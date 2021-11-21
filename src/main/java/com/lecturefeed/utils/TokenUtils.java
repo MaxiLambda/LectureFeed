@@ -8,10 +8,16 @@ import com.lecturefeed.model.UserRole;
 import com.lecturefeed.session.Session;
 import com.lecturefeed.session.SessionManager;
 import org.springframework.security.authentication.BadCredentialsException;
+
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class TokenUtils {
+
+    private final static Calendar calendar = Calendar.getInstance();
+    private final static int DAYS_TILL_EXPIRATION = 30;
 
     public static TokenModel createParticipantToken(CustomAuthenticationService customAuthenticationService, SessionManager sessionManager, String nickname, UserRole role, Integer sessionId){
         Map<String, Object> payloadClaims = new HashMap<>();
@@ -26,9 +32,13 @@ public class TokenUtils {
     }
 
     public static TokenModel createAdminToken(CustomAuthenticationService customAuthenticationService) {
+        calendar.setTime(new Date());
+        calendar.add(Calendar.DATE, DAYS_TILL_EXPIRATION);
         Map<String, Object> payloadClaims = new HashMap<>();
 
+        payloadClaims.put("expirationDate",calendar.getTimeInMillis()+"");
         payloadClaims.put("role", UserRole.ADMINISTRATOR.getRole());
+
         return new TokenModel(customAuthenticationService.generateToken(payloadClaims));
     }
 
@@ -43,7 +53,9 @@ public class TokenUtils {
     }
 
     public static boolean isValidAdminToken(CustomAuthenticationService customAuthenticationService, TokenModel token){
-        return UserRole.ADMINISTRATOR.getRole().equals(TokenUtils.getTokenValue(customAuthenticationService,"role",token));
+        boolean isAdmin = UserRole.ADMINISTRATOR.getRole().equals(TokenUtils.getTokenValue(customAuthenticationService,"role",token));
+        boolean isNotExpired = System.currentTimeMillis() < Long.parseLong(getTokenValue(customAuthenticationService,"expirationDate",token));
+        return isAdmin && isNotExpired;
     }
 
 }
