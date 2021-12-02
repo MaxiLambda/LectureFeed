@@ -53,8 +53,14 @@ public class TokenUtils {
     }
 
     public static boolean isValidAdminToken(CustomAuthenticationService customAuthenticationService, TokenModel token){
-        boolean isAdmin = UserRole.ADMINISTRATOR.getRole().equals(getTokenValue(customAuthenticationService,"role",token).asString());
-        boolean isNotExpired = System.currentTimeMillis() < getTokenValue(customAuthenticationService,"expirationDate",token).asLong();
+        boolean isAdmin = false;
+        boolean isNotExpired = false;
+        try{
+            isAdmin = UserRole.ADMINISTRATOR.getRole().equals(getTokenValue(customAuthenticationService,"role",token).asString());
+            isNotExpired = System.currentTimeMillis() < getTokenValue(customAuthenticationService,"expirationDate",token).asLong();
+        }catch (Exception ignored){
+
+        }
         return isAdmin && isNotExpired;
     }
 }
