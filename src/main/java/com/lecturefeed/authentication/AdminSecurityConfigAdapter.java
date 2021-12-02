@@ -24,13 +24,13 @@ public class AdminSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .authorizeRequests()
-            .antMatchers("/auth/admin", "/session/create")
-            .access("hasIpAddress('127.0.0.1') or hasIpAddress('::1')")
-            .anyRequest().permitAll()
-            .and().csrf().disable();
-    }
+                .authorizeRequests()
+                .antMatchers("/auth/admin", "/session/create")
+                .access("hasIpAddress('127.0.0.1') or hasIpAddress('::1')")
+                .anyRequest().permitAll()
+                .and().csrf().disable();
 
+    }
     @Bean
     public FilterRegistrationBean<CorsFilter> corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -46,4 +46,3 @@ public class AdminSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
         return bean;
     }
 }
-
