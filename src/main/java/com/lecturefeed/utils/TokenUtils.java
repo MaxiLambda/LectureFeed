@@ -45,9 +45,4 @@ public class TokenUtils {
     public static boolean isValidAdminToken(CustomAuthenticationService customAuthenticationService, TokenModel token){
         return UserRole.ADMINISTRATOR.getRole().equals(TokenUtils.getTokenValue(customAuthenticationService,"role",token));
     }
-
-    public static boolean isValidToken(CustomAuthenticationService customAuthenticationService, TokenModel token)
-    {
-        return true;
-    }
 }
