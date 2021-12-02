@@ -30,7 +30,7 @@ public class AdminSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and().csrf().disable();
 
-
+    }
     @Bean
     public FilterRegistrationBean<CorsFilter> corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
