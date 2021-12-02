@@ -6,5 +6,5 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TokenModel {
-    private String token;
+    public String token;
 }

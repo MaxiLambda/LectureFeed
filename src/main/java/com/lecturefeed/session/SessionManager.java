@@ -4,8 +4,11 @@ import com.lecturefeed.socket.controller.service.SessionDataService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.Random;
 
 
 @Component
@@ -17,7 +20,7 @@ public class SessionManager {
     private final SessionDataService sessionDataService;
 
     public Session createSession(){
-        int sessionId = sessions.size() + 1;
+        int sessionId = sessions.size() +1;
 
         Session session = new Session(sessionDataService, sessionId);
         sessions.put(sessionId,session);

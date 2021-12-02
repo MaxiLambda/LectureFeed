@@ -11,6 +11,7 @@ import java.util.Optional;
 public class Session {
     private final SessionDataService sessionDataService;
     private final ArrayList<Participant> participants;
+    private final ArrayList<Question> questions;
     private final int id;
     private final String sessionCode;
     private int userIdCurrentIndex = 0;
@@ -18,6 +19,7 @@ public class Session {
 
     public Session(SessionDataService sessionDataService, Integer id){
         this.sessionDataService = sessionDataService;
+        this.questions = new ArrayList<Question>();
         this.participants = new ArrayList<>();
         this.id = id;
         this.sessionCode = StringUtils.randomString(SESSION_CODE_LENGTH);
