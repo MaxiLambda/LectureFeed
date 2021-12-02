@@ -38,6 +38,7 @@ public class TokenUtils {
 
         payloadClaims.put("expirationDate",calendar.getTimeInMillis());
         payloadClaims.put("role", UserRole.ADMINISTRATOR.getRole());
+        payloadClaims.put("username", UserRole.ADMINISTRATOR.getRole());
 
         return new TokenModel(customAuthenticationService.generateToken(payloadClaims));
     }
