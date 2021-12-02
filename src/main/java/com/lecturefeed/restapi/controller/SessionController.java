@@ -45,7 +45,7 @@ public class SessionController {
 
     @PostMapping("/{sessionId}/initial")
     public Map<String,Object> getSessionData(@PathParam("sessionId") Integer sessionId, @RequestBody TokenModel token) {
-        //if (!TokenUtils.isValidToken(customAuthenticationService, token)) throw new BadCredentialsException(String.format("No valid token %s in request body", token.getToken()));
+        if (!TokenUtils.isValidToken(customAuthenticationService, token)) throw new BadCredentialsException(String.format("No valid token %s in request body", token.getToken()));
         Session session = sessionManager.getSession(sessionId).orElseThrow(NoSessionFoundException::new);
         ArrayList<Participant> participants = session.getParticipants();
         ArrayList<Question> questions = session.getQuestions();
