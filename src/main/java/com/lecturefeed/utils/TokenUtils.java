@@ -36,7 +36,7 @@ public class TokenUtils {
         calendar.add(Calendar.DATE, DAYS_TILL_EXPIRATION);
         Map<String, Object> payloadClaims = new HashMap<>();
 
-        payloadClaims.put("expirationDate",calendar.getTimeInMillis()+"");
+        payloadClaims.put("expirationDate",calendar.getTimeInMillis());
         payloadClaims.put("role", UserRole.ADMINISTRATOR.getRole());
 
         return new TokenModel(customAuthenticationService.generateToken(payloadClaims));
