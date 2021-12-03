@@ -1,6 +1,5 @@
 package com.lecturefeed.socket.controller.core;
 
-import com.lecturefeed.socket.controller.service.AdminService;
 import org.springframework.stereotype.Component;
 
 @Component
