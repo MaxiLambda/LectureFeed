@@ -19,7 +19,6 @@ public class SessionController {
     private final CustomAuthenticationService customAuthenticationService;
     private final SessionManager sessionManager;
 
-
     @PostMapping("/create")
     public Map<String,Object> createNewSession(@RequestBody TokenModel token) {
 
