@@ -40,7 +40,7 @@ public class SessionController {
         if (!(TokenUtils.isValidAdminToken(customAuthenticationService,token) || !sessionManager.getSession(TokenUtils.getTokenValue(customAuthenticationService, "sessionId", token).asInt()).isEmpty())) throw new BadCredentialsException(String.format("No valid token %s in request body", token.getToken()));
         Session session = sessionManager.getSession(sessionId).orElseThrow(NoSessionFoundException::new);
         ArrayList<Participant> participants = session.getParticipants();
-        ArrayList<Question> questions = session.getQuestions();
+        ArrayList<QuestionModel> questions = session.getQuestions();
 
         Map<String, Object> sessionData = new HashMap<>();
         sessionData.put("questions", questions);

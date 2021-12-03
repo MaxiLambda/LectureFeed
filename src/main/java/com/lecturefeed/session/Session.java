@@ -1,5 +1,6 @@
 package com.lecturefeed.session;
 
+import com.lecturefeed.model.QuestionModel;
 import com.lecturefeed.socket.controller.service.SessionDataService;
 import com.lecturefeed.utils.StringUtils;
 import lombok.Data;
@@ -11,7 +12,7 @@ import java.util.Optional;
 public class Session {
     private final SessionDataService sessionDataService;
     private final ArrayList<Participant> participants;
-    private final ArrayList<Question> questions;
+    private final ArrayList<QuestionModel> questions;
     private final int id;
     private final String sessionCode;
     private int userIdCurrentIndex = 0;
@@ -19,7 +20,7 @@ public class Session {
 
     public Session(SessionDataService sessionDataService, Integer id){
         this.sessionDataService = sessionDataService;
-        this.questions = new ArrayList<Question>();
+        this.questions = new ArrayList<>();
         this.participants = new ArrayList<>();
         this.id = id;
         this.sessionCode = StringUtils.randomString(SESSION_CODE_LENGTH);
@@ -38,4 +39,10 @@ public class Session {
         sessionDataService.sendNewParticipantToAll(id,participant);
     }
 
+    //returns question Id
+    public void addQuestion(QuestionModel question){
+        questions.add(question);
+        int questionId = questions.indexOf(question);
+        question.setId(questionId);
+    }
 }
