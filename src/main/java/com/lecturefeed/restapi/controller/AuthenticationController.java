@@ -9,6 +9,7 @@ import com.lecturefeed.session.SessionManager;
 import com.lecturefeed.utils.TokenUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -32,7 +33,7 @@ public class AuthenticationController {
 
     @PostMapping("/participant")
     public Object participantAuth(@RequestBody ParticipantAuthRequestModel authRequestModel) {
-        if(!sessionManager.isCorrectSessionCode(authRequestModel.getSessionId(),authRequestModel.getSessionCode())) return null;
+        if(!sessionManager.isCorrectSessionCode(authRequestModel.getSessionId(),authRequestModel.getSessionCode())) throw new BadCredentialsException(String.format("Bad session data"));
 
         //create token
         TokenModel tokenModel = TokenUtils.createParticipantToken(customAuthenticationService,sessionManager,authRequestModel.getNickname(), UserRole.PARTICIPANT, authRequestModel.getSessionId());
