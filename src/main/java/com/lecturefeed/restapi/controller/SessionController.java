@@ -37,7 +37,7 @@ public class SessionController {
 
     @PostMapping("/{sessionId}/initial")
     public Map<String,Object> getSessionData(@PathVariable("sessionId") Integer sessionId, @RequestBody TokenModel token) {
-        if (!(TokenUtils.isValidAdminToken(customAuthenticationService,token) || !sessionManager.getSession(TokenUtils.getTokenValue(customAuthenticationService, "sessionId", token).asInt()).isEmpty())) throw new BadCredentialsException(String.format("No valid token %s in request body", token.getToken()));
+        if (!(TokenUtils.isValidAdminToken(customAuthenticationService,token) || sessionManager.getSession(TokenUtils.getTokenValue(customAuthenticationService, "sessionId", token).asInt()).isPresent())) throw new BadCredentialsException(String.format("No valid token %s in request body", token.getToken()));
         Session session = sessionManager.getSession(sessionId).orElseThrow(NoSessionFoundException::new);
         ArrayList<Participant> participants = session.getParticipants();
         ArrayList<QuestionModel> questions = session.getQuestions();
