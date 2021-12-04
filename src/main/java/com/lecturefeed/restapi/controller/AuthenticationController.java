@@ -34,7 +34,7 @@ public class AuthenticationController {
     @PostMapping("/participant")
     public Object participantAuth(@RequestBody ParticipantAuthRequestModel authRequestModel) {
         if(!sessionManager.isCorrectSessionCode(authRequestModel.getSessionId(),authRequestModel.getSessionCode()))
-            throw new BadCredentialsException(String.format("Bad session data"));
+            throw new BadCredentialsException("Bad session data");
 
         //create token
         TokenModel tokenModel = TokenUtils.createParticipantToken(customAuthenticationService,sessionManager,authRequestModel.getNickname(), UserRole.PARTICIPANT, authRequestModel.getSessionId());
