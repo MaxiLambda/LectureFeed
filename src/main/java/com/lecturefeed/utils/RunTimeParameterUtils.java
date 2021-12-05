@@ -1,36 +1,32 @@
 package com.lecturefeed.utils;
 
-import com.lecturefeed.authentication.AdminSecurityConfigAdapter;
+import com.google.devtools.common.options.OptionsParser;
+import com.lecturefeed.core.ServerOptions;
+import java.util.Map;
 
-import java.util.Arrays;
-import java.util.HashMap;
 
 public class RunTimeParameterUtils {
 
-    private static final String[][] DEFAULT_ARGS = {
-            {"debug","false"}
-    };
+    private static Map<String, Object> serverOptions;
 
-    public static HashMap<String, String> getDefaultRunTimeArgs(){
-        HashMap<String, String> args = new HashMap<>();
-        Arrays.stream(DEFAULT_ARGS).parallel().forEach(value -> args.put(value[0],value[1]));
-        return args;
+    public static boolean parseArgs(String[] args){
+        OptionsParser parser = OptionsParser.newOptionsParser(ServerOptions.class);
+        parser.parseAndExitUponError(args);
+        ServerOptions options = parser.getOptions(ServerOptions.class);
+        serverOptions = options.asMap();
+
+        //if we had required options
+//        if (options.host.isEmpty()) {
+//            System.out.println("Usage: java -jar server.jar OPTIONS");
+//            System.out.println(parser.describeOptions(Collections.emptyMap(), OptionsParser.HelpVerbosity.LONG));
+//            return true;
+//        }
+
+        return false;
     }
 
-    public static HashMap<String, String> getModifiedRunTimeArgs(String[] args){
-        HashMap<String, String> modifiedArgs = getDefaultRunTimeArgs();
-        for (int i = 0; i < args.length-1; i++) {
-            if(args[i].matches("^-.*$")){
-                modifiedArgs.put(args[i].substring(1),args[i+1]);
-            }
-        }
-        return modifiedArgs;
-    }
-
-    public static void setRunTimeArgs(String[] args){
-        HashMap<String, String> runTimeArgs = getModifiedRunTimeArgs(args);
-
-        AdminSecurityConfigAdapter.setInDebugMode(Boolean.parseBoolean(runTimeArgs.get("debug")));
+    public Map<String, Object> getServerOptions(){
+        return serverOptions;
     }
 
 }
