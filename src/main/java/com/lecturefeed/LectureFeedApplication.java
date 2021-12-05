@@ -1,27 +1,23 @@
 package com.lecturefeed;
 
-import com.lecturefeed.utils.RunTimeParameterUtils;
-import org.springframework.beans.factory.annotation.Value;
+import com.lecturefeed.utils.RunTimeUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.Collections;
 
 
 @SpringBootApplication
 public class LectureFeedApplication{
 
-	@Value("${person.name}")
-	private String name;
-
-
 	public static void main(String[] args) {
-		if(RunTimeParameterUtils.parseArgs(args)){
+		if(RunTimeUtils.parseArgs(args)){
 			System.exit(1);
 		}
-		SpringApplication.run(LectureFeedApplication.class, args);
+//		RunTimeUtils.openBrowser();
+		SpringApplication app = new SpringApplication(LectureFeedApplication.class);
+		app.setDefaultProperties(Collections.singletonMap("server.port", RunTimeUtils.getServerOptions().serverPort));
+		app.run(args);
 	}
-
-
-
-
 
 }

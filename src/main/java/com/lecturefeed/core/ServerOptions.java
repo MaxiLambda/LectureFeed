@@ -14,6 +14,16 @@ public class ServerOptions extends OptionsBase {
     public boolean help;
 
     @Option(
+            name = "serverPort",
+            abbrev = 'p',
+            help = "Server port",
+            category = "startup",
+            defaultValue = "8080"
+    )
+    public int serverPort;
+
+
+    @Option(
             name = "debug",
             abbrev = 'd',
             help = "Debug mode",
