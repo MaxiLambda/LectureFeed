@@ -3,6 +3,7 @@ package com.lecturefeed.restapi.controller;
 import com.lecturefeed.authentication.jwt.CustomAuthenticationService;
 import com.lecturefeed.model.*;
 import com.lecturefeed.session.*;
+import com.lecturefeed.socket.controller.service.QuestionService;
 import com.lecturefeed.utils.TokenUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -18,6 +19,7 @@ public class SessionController {
 
     private final CustomAuthenticationService customAuthenticationService;
     private final SessionManager sessionManager;
+    private final QuestionService questionService;
 
     @GetMapping("/create")
     public Map<String,Object> createNewSession(@RequestHeader("Authorization") String stringToken) {
@@ -45,5 +47,17 @@ public class SessionController {
         sessionData.put("questions", questions);
         sessionData.put("participants", participants);
         return sessionData;
+    }
+
+    @PostMapping("/{sessionId}/question/create")
+    public QuestionModel createQuestion(@RequestBody QuestionModel questionModel, @PathVariable("sessionId") Integer sessionId){
+
+        sessionManager.getSession(sessionId).orElseThrow(NoSessionFoundException::new).addQuestion(questionModel);
+
+        //sendToAll
+        questionService.sendQuestion(questionModel,sessionId);
+
+        return questionModel;
+
     }
 }
