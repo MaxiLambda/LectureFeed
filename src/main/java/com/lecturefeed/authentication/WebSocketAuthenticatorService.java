@@ -40,7 +40,7 @@ public class WebSocketAuthenticatorService {
 
         return new UsernamePasswordAuthenticationToken(
                 username,
-                null,
+                token,
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_"+role.toUpperCase())) // MUST provide at least one role
         );
     }

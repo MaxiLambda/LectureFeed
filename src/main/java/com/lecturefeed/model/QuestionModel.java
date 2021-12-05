@@ -1,7 +1,10 @@
 package com.lecturefeed.model;
 
+import com.lecturefeed.utils.TokenUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import java.util.HashSet;
 
 @Data
 @AllArgsConstructor
@@ -15,4 +18,25 @@ public class QuestionModel {
     private final Long created;
     //null means the question was never closed
     private Long closed;
+
+    private final HashSet<Integer> voters = new HashSet<>();
+
+
+    public void ratingUp(Integer voterId){
+        if (!voters.contains(id)){
+            rating++;
+            voters.add(id);
+        }
+    }
+
+    public void ratingDown(Integer voterId){
+        if (!voters.contains(id)){
+            rating--;
+            voters.add(id);
+        }
+    }
+
+    public void closeQuestion(){
+        if(closed == null) closed = System.currentTimeMillis();
+    }
 }
