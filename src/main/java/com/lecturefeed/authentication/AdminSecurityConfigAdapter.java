@@ -29,8 +29,8 @@ public class AdminSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
                 .access("hasIpAddress('127.0.0.1') or hasIpAddress('::1')")
                 .anyRequest().permitAll()
                 .and().csrf().disable();
-
     }
+    
     @Bean
     public FilterRegistrationBean<CorsFilter> corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

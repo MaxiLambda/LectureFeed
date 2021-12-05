@@ -28,9 +28,9 @@ public class WebSocketAuthenticatorService {
         }
         String username;
         String role;
-
+        DecodedJWT jwt;
         try {
-            DecodedJWT jwt = customAuthenticationService.verifyToken(token);
+            jwt = customAuthenticationService.verifyToken(token);
             Map<String, Claim> claims = jwt.getClaims();
             username = claims.get("username").asString();
             role = claims.get("role").asString();
@@ -40,7 +40,7 @@ public class WebSocketAuthenticatorService {
 
         return new UsernamePasswordAuthenticationToken(
                 username,
-                null,
+                jwt.getClaims(),
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_"+role.toUpperCase())) // MUST provide at least one role
         );
     }
