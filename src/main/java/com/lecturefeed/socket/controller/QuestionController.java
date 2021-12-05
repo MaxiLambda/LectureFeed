@@ -37,7 +37,7 @@ public class QuestionController {
                 });
     }
 
-    @MessageMapping("/admin/session/{sessionId}/question/{questionId}/closed")
+    @MessageMapping("/admin/session/{sessionId}/question/{questionId}/close")
     public void closeQuestion(@DestinationVariable Integer sessionId, @DestinationVariable Integer questionId){
         sessionManager.
                 getSession(sessionId).
