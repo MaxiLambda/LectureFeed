@@ -5,11 +5,8 @@ import com.lecturefeed.core.ServerOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
-
 import java.awt.*;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Map;
 
 @Service
 public class RunTimeUtils {
@@ -42,7 +39,7 @@ public class RunTimeUtils {
         try {
             System.setProperty("java.awt.headless", "false");
             if (getServerOptions().openBrowser && Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-                Desktop.getDesktop().browse(new URI(String.format("http://localhost:%d", getServerOptions().serverPort)));
+                Desktop.getDesktop().browse(new URI(String.format("http://localhost:%d/#/presenter", getServerOptions().serverPort)));
             }
         }catch (Exception ignore){}
     }
