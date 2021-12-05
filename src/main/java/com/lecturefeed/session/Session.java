@@ -42,7 +42,7 @@ public class Session {
     //returns question Id
     public void addQuestion(QuestionModel question){
         questions.add(question);
-        int questionId = questions.indexOf(question);
+        int questionId = questions.indexOf(question) + 1;
         question.setId(questionId);
     }
 }
