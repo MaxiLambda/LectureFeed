@@ -21,7 +21,4 @@ public class QuestionService {
                     map(root->WS_MESSAGE_TRANSFER_DESTINATION.formatted(root,sessionId))
                     .forEach(path->simpMessagingTemplate.convertAndSend(path,question));
     }
-
-
-
 }
