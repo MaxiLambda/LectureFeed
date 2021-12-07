@@ -10,7 +10,8 @@
     - [Definitions, Acronyms and Abbreviations](#13-definitions-acronyms-and-abbreviations)
     - [References](#14-references)
     - [Overview](#15-overview)
-- [Overall Description](#2-overall-description)
+- [Overall Description](#2-overall-description)![backend_rest_controller](https://user-images.githubusercontent.com/26250042/145081187-e2906439-5a80-4e25-8407-0eec6961783b.png)
+
     - [Vision](#21-vision)
     - [Use Case Diagram](#22-use-case-diagram)
 	- [Technology Stack](#23-technology-stack)
@@ -123,6 +124,28 @@ The front end internally follows the MVVM pattern which can be depicted as follo
 This pattern separates the View components again into a funcional part (the ViewModel) and a purely representational part (View) while the model remains analogous to the back end.
 
 ![MVVM](./uml/MVVM.drawio.svg)
+
+The following diagrams display our architecture within the code structure.
+
+![BackendModel](./uml/architecture/backend_model.png)
+
+UML diagram of backend model
+
+![Backend RestController](./uml/architecture/backend_rest_controller.png)
+
+UML diagram of backend REST-Controller
+
+![Backend SocketController](./uml/architecture/backend_socket_controller.png)
+
+UML diagram of backend Socket-Controller
+
+![Frontend ModelService](./uml/architecture/frontend_model_service.png)
+
+UML diagram of frontend REST-Service and model
+
+![Frontend ModelSocket](./uml/architecture/frontend_model_socket.png)
+
+UML diagram of frontend Websocket-Service and model
 
 ## 4. Architectural Goals and Constraints
 
