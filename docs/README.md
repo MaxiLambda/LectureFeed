@@ -10,8 +10,7 @@
     - [Definitions, Acronyms and Abbreviations](#13-definitions-acronyms-and-abbreviations)
     - [References](#14-references)
     - [Overview](#15-overview)
-- [Overall Description](#2-overall-description)![backend_rest_controller](https://user-images.githubusercontent.com/26250042/145081187-e2906439-5a80-4e25-8407-0eec6961783b.png)
-
+- [Overall Description](#2-overall-description)
     - [Vision](#21-vision)
     - [Use Case Diagram](#22-use-case-diagram)
 	- [Technology Stack](#23-technology-stack)
