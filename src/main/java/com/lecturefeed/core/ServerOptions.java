@@ -37,7 +37,7 @@ public class ServerOptions extends OptionsBase {
             abbrev = 'o',
             help = "start default browser",
             category = "startup",
-            defaultValue = "true"
+            defaultValue = "false"
     )
     public boolean openBrowser;
 
