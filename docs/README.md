@@ -124,6 +124,28 @@ This pattern separates the View components again into a funcional part (the View
 
 ![MVVM](./uml/MVVM.drawio.svg)
 
+The following diagrams display our architecture within the code structure.
+
+![BackendModel](./uml/architecture/backend_model.png)
+
+UML diagram of backend model
+
+![Backend RestController](./uml/architecture/backend_rest_controller.png)
+
+UML diagram of backend REST-Controller
+
+![Backend SocketController](./uml/architecture/backend_socket_controller.png)
+
+UML diagram of backend Socket-Controller
+
+![Frontend ModelService](./uml/architecture/frontend_model_service.png)
+
+UML diagram of frontend REST-Service and model
+
+![Frontend ModelSocket](./uml/architecture/frontend_model_socket.png)
+
+UML diagram of frontend Websocket-Service and model
+
 ## 4. Architectural Goals and Constraints
 
 ### MVC
