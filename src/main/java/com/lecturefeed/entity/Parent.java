@@ -1,17 +1,25 @@
 package com.lecturefeed.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-public class Beer{
+public class Parent {
+
     private String name;
+
+    @Id
+    @GeneratedValue
     private Integer id;
 
-    public Beer(String name) {
+    @OneToMany(targetEntity=Child.class, fetch=FetchType.EAGER)
+    private List<Child> children;
+
+    public Parent(String name) {
         this.name = name;
     }
 
-    public Beer() {
+    public Parent() {
 
     }
 
@@ -23,16 +31,22 @@ public class Beer{
     }
     @Override
     public String toString() {
-        return "Beer [name=" + name + "]";
+        return "Parent [name=" + name + "]";
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
 
-    @Id
-    @GeneratedValue
     public Integer getId() {
         return id;
+    }
+
+    public List<Child> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Child> children) {
+        this.children = children;
     }
 }

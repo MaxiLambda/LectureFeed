@@ -1,4 +1,4 @@
-package com.lecturefeed.sqlite;
+package com.lecturefeed.db;
 
 import com.lecturefeed.core.HomeDirHandler;
 import com.lecturefeed.utils.ObjectUtils;
@@ -16,7 +16,7 @@ import java.nio.file.Paths;
 
 
 @Configuration
-public class SQLiteConfig {
+public class DBConfig {
 
     @Autowired
     Environment env;
@@ -32,7 +32,7 @@ public class SQLiteConfig {
     }
 
     private static String getURLFormatByPath(Path filePath){
-        return String.format("jdbc:sqlite:%s", filePath);
+        return String.format("jdbc:h2:file:%s", filePath);
     }
 
     @Bean

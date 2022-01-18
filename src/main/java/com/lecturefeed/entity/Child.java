@@ -3,16 +3,29 @@ package com.lecturefeed.entity;
 import javax.persistence.*;
 
 @Entity
-public class Beer{
+public class Child {
     private String name;
+
+    @Id
+    @GeneratedValue
     private Integer id;
 
-    public Beer(String name) {
+    public Child(String name) {
         this.name = name;
     }
 
-    public Beer() {
+    public Child() {}
 
+    @ManyToOne
+    @JoinColumn(name="parent_id", nullable=false)
+    private Parent parent;
+
+    public Parent getParent() {
+        return parent;
+    }
+
+    public void setParent(Parent parent) {
+        this.parent = parent;
     }
 
     public String getName() {
@@ -23,16 +36,17 @@ public class Beer{
     }
     @Override
     public String toString() {
-        return "Beer [name=" + name + "]";
+        return "Child [name=" + name + "]";
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
 
-    @Id
-    @GeneratedValue
+
     public Integer getId() {
         return id;
     }
+
+
 }
