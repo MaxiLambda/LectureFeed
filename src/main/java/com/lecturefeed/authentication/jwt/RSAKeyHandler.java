@@ -15,7 +15,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
 @Getter
-public class RSAKeyHandler extends HomeDirHandler {
+public class RSAKeyHandler{
 
     private static final String PRIVATE_KEY_FILENAME = "rsa.key";
     private static final String PUBLIC_KEY_FILENAME = "rsa.pub";
@@ -26,13 +26,12 @@ public class RSAKeyHandler extends HomeDirHandler {
     private static RSAPublicKey publicKey;
 
     protected static void initKeys(){
-        createHomeDir();
         initRSA();
     }
 
     private static void initRSA(){
-        Path privateKey = Paths.get(getLectureFeedPath().toString(), PRIVATE_KEY_FILENAME);
-        Path publicKey = Paths.get(getLectureFeedPath().toString(), PUBLIC_KEY_FILENAME);
+        Path privateKey = Paths.get(HomeDirHandler.getLectureFeedPath().toString(), PRIVATE_KEY_FILENAME);
+        Path publicKey = Paths.get(HomeDirHandler.getLectureFeedPath().toString(), PUBLIC_KEY_FILENAME);
         if(Files.notExists(privateKey)){
             initRSAKey(privateKey, publicKey);
         }
