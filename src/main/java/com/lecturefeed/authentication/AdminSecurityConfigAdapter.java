@@ -25,7 +25,7 @@ public class AdminSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/auth/admin", "/session/create")
+                .antMatchers("/auth/admin", "/session/presenter/**")
                 .access("hasIpAddress('127.0.0.1') or hasIpAddress('::1')")
                 .anyRequest().permitAll()
                 .and().csrf().disable();
