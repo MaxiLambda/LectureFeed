@@ -7,15 +7,20 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public abstract class HomeDirHandler {
+public class HomeDirHandler {
 
     private final static String HOME_FOLDER = ".lectureFeed";
 
-    protected static Path getLectureFeedPath(){
+    public static Path getLectureFeedPath(){
         return Paths.get(PathUtils.getUserHomePath().toString(), HOME_FOLDER);
     }
 
-    protected static void createHomeDir(){
+    public static Path getSafetyLectureFeedPath(){
+        createHomeDir();
+        return getLectureFeedPath();
+    }
+
+    public static void createHomeDir(){
         try{
             if (Files.notExists(getLectureFeedPath())) {
                 new File(getLectureFeedPath().toString()).mkdirs();

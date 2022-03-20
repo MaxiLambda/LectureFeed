@@ -22,7 +22,6 @@ public class ServerOptions extends OptionsBase {
     )
     public int serverPort;
 
-
     @Option(
             name = "debug",
             abbrev = 'd',
@@ -41,6 +40,12 @@ public class ServerOptions extends OptionsBase {
     )
     public boolean openBrowser;
 
-
+    @Option(
+            name = "Database",
+            abbrev = 'b',
+            help = "Path of database file",
+            defaultValue = ""
+    )
+    public String database;
 
 }
