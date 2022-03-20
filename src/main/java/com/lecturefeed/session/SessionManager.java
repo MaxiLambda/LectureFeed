@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -34,5 +35,9 @@ public class SessionManager {
 
     public Optional<Session> getSession(Integer id){
         return Optional.ofNullable(sessions.get(id));
+    }
+
+    public Set<Integer> getAllSessionIds(){
+        return sessions.keySet();
     }
 }
