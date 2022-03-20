@@ -14,7 +14,7 @@ import java.util.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/session")
-public class SessionController {
+public class SessionRestController {
 
     private final CustomAuthenticationService customAuthenticationService;
     private final SessionManager sessionManager;
@@ -68,6 +68,7 @@ public class SessionController {
 
     }
 
+    //TODO: LFD-79 //Aktuell Testdaten
     @GetMapping("/presenter/sessions/metadata")
     public List<SessionMetadata> getSessionsMetadata(@RequestHeader("Authorization") String stringToken) {
         TokenModel token = new TokenModel(stringToken);
