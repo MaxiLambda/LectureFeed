@@ -8,20 +8,19 @@ import com.lecturefeed.model.survey.SurveyTimer;
 import com.lecturefeed.socket.controller.service.SurveyService;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 
 @RestController
-public class SurveyController {
+public class SurveyRestController {
 
     private final SurveyService surveyService;
 
     private final HashMap<Integer, ArrayList<SurveyEntity>> sessionSurveys = new HashMap<>();
     private final HashMap<Integer, ArrayList<Integer>> publishedSessionSurveys = new HashMap<>();
 
-    public SurveyController(SurveyService surveyService){
+    public SurveyRestController(SurveyService surveyService){
         this.surveyService = surveyService;
     }
 
@@ -39,7 +38,7 @@ public class SurveyController {
                 map(answers -> answers.add(messageModel.getText()));
     }
 
-    @GetMapping("admin/session/{sessionId}/survey/{surveyId}/close")
+    @GetMapping("/admin/session/{sessionId}/survey/{surveyId}/close")
     public void close(@PathVariable int sessionId, @PathVariable int surveyId){
         //check if the survey was already published
         ArrayList<Integer> publishedSurveys = getPublishedSessionSurveys(sessionId);
