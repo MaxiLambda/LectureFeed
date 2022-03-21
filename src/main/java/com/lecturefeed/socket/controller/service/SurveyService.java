@@ -1,7 +1,7 @@
 package com.lecturefeed.socket.controller.service;
 
-import com.lecturefeed.model.survey.SurveyEntity;
-import com.lecturefeed.model.survey.SurveyCreationModel;
+import com.lecturefeed.model.survey.Survey;
+import com.lecturefeed.model.survey.SurveyTemplate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -15,10 +15,9 @@ public class SurveyService {
     private static final String WS_MESSAGE_CLOSE_TRANSFER_DESTINATION = "/session/%d/survey/%d/onclose";
     private static final String WS_MESSAGE_RESULT_TRANSFER_DESTINATION = "/%s/session/%d/survey/%d/onresult";
 
-    public void onCreate(int sessionId, SurveyCreationModel surveyCreationModel){
+    public void onCreate(int sessionId, SurveyTemplate template){
         String path = WS_MESSAGE_CREATE_TRANSFER_DESTINATION.formatted(sessionId);
-
-        simpMessagingTemplate.convertAndSend(path,surveyCreationModel);
+        simpMessagingTemplate.convertAndSend(path, template);
     }
 
     public void onClose(int sessionId, int surveyId){
@@ -27,14 +26,14 @@ public class SurveyService {
         simpMessagingTemplate.convertAndSend(path,sessionId);
     }
 
-    public void onResult(int sessionId, SurveyEntity surveyEntity){
-        String adminPath = WS_MESSAGE_RESULT_TRANSFER_DESTINATION.formatted("admin",sessionId,surveyEntity.getId());
+    public void onResult(int sessionId, Survey survey){
+        String adminPath = WS_MESSAGE_RESULT_TRANSFER_DESTINATION.formatted("admin",sessionId, survey.getId());
 
-        simpMessagingTemplate.convertAndSend(adminPath,surveyEntity);
-        if(surveyEntity.isPublishResults()){
-            String participantPath = WS_MESSAGE_RESULT_TRANSFER_DESTINATION.formatted("participant",sessionId,surveyEntity.getId());
+        simpMessagingTemplate.convertAndSend(adminPath, survey);
+        if(survey.getTemplate().isPublishResults()){
+            String participantPath = WS_MESSAGE_RESULT_TRANSFER_DESTINATION.formatted("participant",sessionId, survey.getId());
 
-            simpMessagingTemplate.convertAndSend(participantPath,surveyEntity);
+            simpMessagingTemplate.convertAndSend(participantPath, survey);
         }
     }
 }

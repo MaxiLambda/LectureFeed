@@ -8,8 +8,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SurveyTemplateEntity {
-    private SurveyType surveyType;
+public class SurveyTemplate {
+    private int id;
+    private String name;
+    private SurveyType type;
     private String question;
     //always >0
     private long duration;
