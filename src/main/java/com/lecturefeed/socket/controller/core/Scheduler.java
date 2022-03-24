@@ -17,7 +17,7 @@ public class Scheduler {
     @Scheduled(fixedRate = 10000)
     public void schedulingTask() {
         for (Integer id: sessionManager.getAllSessionIds()) {
-            sessionDataService.sendMood(id, IntegerUtils.getRandomIntegerByRange(-5, 5));
+            //sessionDataService.sendMood(id, IntegerUtils.getRandomIntegerByRange(-5, 5));
         }
     }
 }

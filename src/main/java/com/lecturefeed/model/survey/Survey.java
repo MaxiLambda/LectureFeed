@@ -26,4 +26,8 @@ public class Survey {
     public Survey(int id, SurveyTemplate template) {
         this.id = id;
     }
+
+    public void addAnswer(String answer){
+        answers.add(answer);
+    }
 }

@@ -41,6 +41,7 @@ public class AdminSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
         config.addAllowedOriginPattern("*");
         source.registerCorsConfiguration("/auth/**", config);
         source.registerCorsConfiguration("/session/**", config);
+        source.registerCorsConfiguration("/participant/**", config);
         source.registerCorsConfiguration("/admin/**", config);
         FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
         bean.setOrder(0);

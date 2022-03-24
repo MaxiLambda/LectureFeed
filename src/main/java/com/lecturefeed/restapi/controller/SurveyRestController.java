@@ -18,7 +18,7 @@ public class SurveyRestController {
     private final SurveyService surveyService;
 
     private final HashMap<Integer, SurveyTemplate> templates = new HashMap<>();
-    private final HashMap<Integer, ArrayList<Survey>> sessionSurveys = new HashMap<>();
+    private final HashMap<Integer, HashMap<Integer, Survey>> sessionSurveys = new HashMap<>();
     private final HashMap<Integer, ArrayList<Integer>> publishedSessionSurveys = new HashMap<>();
 
     public SurveyRestController(SurveyService surveyService){
@@ -28,15 +28,28 @@ public class SurveyRestController {
         template.setId(1);
         template.setName("TestTemplate");
         template.setQuestion("Question?");
-        template.setDuration(5);
-        template.setType(SurveyType.OpenAnswer);
+        template.setDuration(10);
+        template.setType(SurveyType.YesNo);
         template.setPublishResults(true);
         templates.put(1, template);
         List<String> answers = new ArrayList<>();
-        answers.add("answer1");
-        answers.add("answer2");
+//        answers.add("-3");
+//        answers.add("-3");
+//        answers.add("5");
+//        answers.add("3");
+//        answers.add("2");
+//        answers.add("2");
+//        answers.add("2");
+        answers.add("-1");
+        answers.add("-1");
+        answers.add("-1");
+        answers.add("-1");
+        answers.add("-1");
+        answers.add("-1");
+        answers.add("1");
+        answers.add("1");
         Survey survey = new Survey(1, template, answers, new Date().getTime());
-        getSessionSurveyList(1).add(survey);
+        getSessionSurveyList(1).put(1, survey);
     }
 
 
@@ -47,13 +60,13 @@ public class SurveyRestController {
     }
 
     @GetMapping("/admin/session/{sessionId}/surveys")
-    public ArrayList<Survey> getSessionSurveys(@PathVariable int sessionId){
+    public Collection<Survey> getSessionSurveys(@PathVariable int sessionId){
         //todo Abfrage sessionId exists
-        List<Survey> surveys = getSessionSurveyList(sessionId);
+        Collection<Survey> surveys = getSessionSurveyList(sessionId).values();
         if(surveys == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Surveys not exists", surveys));
         }
-        return getSessionSurveyList(sessionId);
+        return getSessionSurveyList(sessionId).values();
     }
 
     @GetMapping("/admin/session/{sessionId}/survey/create/{templateId}")
@@ -62,7 +75,6 @@ public class SurveyRestController {
         SurveyTemplate template = getTemplateById(templateId);
         if(template != null){
             createSurveyInSession(sessionId, template);
-            surveyService.onCreate(sessionId, template);
         }else{
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("SurveyTemplate-ID %d not exists", templateId));
         }
@@ -70,16 +82,19 @@ public class SurveyRestController {
 
     @PostMapping("/admin/session/{sessionId}/survey/create")
     public void create(@PathVariable int sessionId, @RequestBody SurveyTemplate template){
+        template.setId(templates.size()+1);
+        templates.put(templates.size(), template);
         createSurveyInSession(sessionId, template);
-        surveyService.onCreate(sessionId, template);
     }
 
     //TODO PROBLEM: users (also random people) can use the api to submit multiple responses
     @PostMapping("/participant/session/{sessionId}/survey/{surveyId}/answer")
     public void setAnswer(@PathVariable int sessionId, @PathVariable int surveyId, @RequestBody MessageModel messageModel){
-        Optional.ofNullable(getSessionSurveyList(sessionId).get(surveyId)).
-                map(Survey::getAnswers).
-                map(answers -> answers.add(messageModel.getText()));
+        Survey survey = getSessionSurveyList(sessionId).get(surveyId);
+        if(survey != null){
+            survey.addAnswer(messageModel.getText());
+            surveyService.onUpdate(sessionId, survey);
+        }
     }
 
     @GetMapping("/admin/session/{sessionId}/survey/{surveyId}/close")
@@ -102,8 +117,14 @@ public class SurveyRestController {
     }
 
     //removes the need to check if sessionSurveys returns null for a given key
-    private ArrayList<Survey> getSessionSurveyList(int sessionId){
-        return sessionSurveys.computeIfAbsent(sessionId, k -> new ArrayList<>());
+    private HashMap<Integer, Survey> getSessionSurveyList(int sessionId){
+        if(!sessionSurveys.containsKey(sessionId)) sessionSurveys.put(sessionId, new HashMap<>());
+        return sessionSurveys.get(sessionId);
+    }
+
+    private void addSurveyToSession(int sessionId, Survey survey){
+        if(!sessionSurveys.containsKey(sessionId)) sessionSurveys.put(sessionId, new HashMap<>());
+        sessionSurveys.get(sessionId).put(sessionId, survey);
     }
 
     //removes the need to check if publishedSessionSurveys returns null for a given key
@@ -112,15 +133,14 @@ public class SurveyRestController {
     }
 
     private SurveyTemplate createSurveyInSession(int sessionId, SurveyTemplate template){
-        //create the new SurveyCreationModel
-        template.setId(templates.size()+1);
-        templates.put(templates.size(), template);
-
-        ArrayList<Survey> sessionSurveys = getSessionSurveyList(sessionId);
         //create the new SurveyEntity
-        Survey survey = new Survey(sessionSurveys.size()+1, template, new ArrayList<>(),System.currentTimeMillis());
+        Survey survey = new Survey(getSessionSurveyList(sessionId).size()+1, template, new ArrayList<>(),System.currentTimeMillis());
         //add it to the surveys in the Session with id sessionId
-        sessionSurveys.add(sessionId, survey);
+        addSurveyToSession(sessionId, survey);
+
+        surveyService.onCreateByAdmin(sessionId, survey);
+        surveyService.onCreateByParticipant(sessionId, survey.getId(), template);
+
         //start Thread to publish survey after a given amount of time
         new SurveyTimer(survey,sessionId,getPublishedSessionSurveys(sessionId),surveyService).start();
 
