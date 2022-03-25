@@ -24,32 +24,32 @@ public class SurveyRestController {
     public SurveyRestController(SurveyService surveyService){
         this.surveyService = surveyService;
         //test
-        SurveyTemplate template = new SurveyTemplate();
-        template.setId(1);
-        template.setName("TestTemplate");
-        template.setQuestion("Question?");
-        template.setDuration(10);
-        template.setType(SurveyType.YesNo);
-        template.setPublishResults(true);
-        templates.put(1, template);
-        List<String> answers = new ArrayList<>();
-//        answers.add("-3");
-//        answers.add("-3");
-//        answers.add("5");
-//        answers.add("3");
-//        answers.add("2");
-//        answers.add("2");
-//        answers.add("2");
-        answers.add("-1");
-        answers.add("-1");
-        answers.add("-1");
-        answers.add("-1");
-        answers.add("-1");
-        answers.add("-1");
-        answers.add("1");
-        answers.add("1");
-        Survey survey = new Survey(1, template, answers, new Date().getTime());
-        getSessionSurveyList(1).put(1, survey);
+//        SurveyTemplate template = new SurveyTemplate();
+//        template.setId(1);
+//        template.setName("TestTemplate");
+//        template.setQuestion("Question?");
+//        template.setDuration(10);
+//        template.setType(SurveyType.YesNo);
+//        template.setPublishResults(true);
+//        templates.put(1, template);
+//        List<String> answers = new ArrayList<>();
+////        answers.add("-3");
+////        answers.add("-3");
+////        answers.add("5");
+////        answers.add("3");
+////        answers.add("2");
+////        answers.add("2");
+////        answers.add("2");
+//        answers.add("-1");
+//        answers.add("-1");
+//        answers.add("-1");
+//        answers.add("-1");
+//        answers.add("-1");
+//        answers.add("-1");
+//        answers.add("1");
+//        answers.add("1");
+//        Survey survey = new Survey(1, template, answers, new Date().getTime());
+//        getSessionSurveyList(1).put(1, survey);
     }
 
 
@@ -75,16 +75,16 @@ public class SurveyRestController {
         SurveyTemplate template = getTemplateById(templateId);
         if(template != null){
             createSurveyInSession(sessionId, template);
-        }else{
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("SurveyTemplate-ID %d not exists", templateId));
         }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("SurveyTemplate-ID %d not exists", templateId));
     }
 
     @PostMapping("/admin/session/{sessionId}/survey/create")
-    public void create(@PathVariable int sessionId, @RequestBody SurveyTemplate template){
+    public SurveyTemplate create(@PathVariable int sessionId, @RequestBody SurveyTemplate template){
         template.setId(templates.size()+1);
-        templates.put(templates.size(), template);
+        templates.put(template.getId(), template);
         createSurveyInSession(sessionId, template);
+        return template;
     }
 
     //TODO PROBLEM: users (also random people) can use the api to submit multiple responses
@@ -124,7 +124,7 @@ public class SurveyRestController {
 
     private void addSurveyToSession(int sessionId, Survey survey){
         if(!sessionSurveys.containsKey(sessionId)) sessionSurveys.put(sessionId, new HashMap<>());
-        sessionSurveys.get(sessionId).put(sessionId, survey);
+        sessionSurveys.get(sessionId).put(survey.getId(), survey);
     }
 
     //removes the need to check if publishedSessionSurveys returns null for a given key
