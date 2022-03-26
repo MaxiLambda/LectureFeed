@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -46,7 +45,6 @@ public class SurveyService {
         simpMessagingTemplate.convertAndSend(adminPath, survey);
         if(survey.getTemplate().isPublishResults()){
             String participantPath = WS_MESSAGE_RESULT_TRANSFER_DESTINATION.formatted("participant",sessionId, survey.getId());
-
             simpMessagingTemplate.convertAndSend(participantPath, survey);
         }
     }
