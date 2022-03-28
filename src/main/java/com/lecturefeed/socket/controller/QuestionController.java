@@ -23,7 +23,7 @@ public class QuestionController {
         int userId = PrincipalUtils.getClaim("id",principal).asInt();
 
         sessionManager.
-                getSession(sessionId).
+                getSessionById(sessionId).
                 map(Session::getQuestions).
                 //questionId -1 because the questionId is the position
                 // of the question in the questions ArrayList
@@ -40,7 +40,7 @@ public class QuestionController {
     @MessageMapping("/admin/session/{sessionId}/question/{questionId}/close")
     public void closeQuestion(@DestinationVariable Integer sessionId, @DestinationVariable Integer questionId){
         sessionManager.
-                getSession(sessionId).
+                getSessionById(sessionId).
                 map(Session::getQuestions).
                 //questionId -1 because the questionId is the position
                 // of the question in the questions ArrayList

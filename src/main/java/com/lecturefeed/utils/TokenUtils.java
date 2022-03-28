@@ -21,7 +21,7 @@ public class TokenUtils {
 
     public static TokenModel createParticipantToken(CustomAuthenticationService customAuthenticationService, SessionManager sessionManager, String nickname, UserRole role, Integer sessionId){
         Map<String, Object> payloadClaims = new HashMap<>();
-        int id = sessionManager.getSession(sessionId).
+        int id = sessionManager.getSessionById(sessionId).
                 map(Session::getNextUserId).
                 orElseThrow();
         payloadClaims.put("id",id);

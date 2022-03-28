@@ -27,13 +27,13 @@ public class SessionManager {
 
     public boolean isCorrectSessionCode(Integer sessionId, String sessionCode){
 
-        return getSession(sessionId).
+        return getSessionById(sessionId).
                 map(Session::getSessionCode).
                 map(sessionCode::equals).
                 orElse(false);
     }
 
-    public Optional<Session> getSession(Integer id){
+    public Optional<Session> getSessionById(Integer id) {
         return Optional.ofNullable(sessions.get(id));
     }
 
