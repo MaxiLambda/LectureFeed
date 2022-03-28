@@ -4,6 +4,7 @@ import com.lecturefeed.authentication.jwt.CustomAuthenticationService;
 import com.lecturefeed.model.*;
 import com.lecturefeed.session.*;
 import com.lecturefeed.socket.controller.service.QuestionService;
+import com.lecturefeed.socket.controller.service.SessionDataService;
 import com.lecturefeed.utils.TokenUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -19,6 +20,7 @@ public class SessionRestController {
     private final CustomAuthenticationService customAuthenticationService;
     private final SessionManager sessionManager;
     private final QuestionService questionService;
+    private final SessionDataService sessionDataService;
 
     @PostMapping("/presenter/create")
     public Map<String,Object> createNewSession(@RequestHeader("Authorization") String stringToken, @RequestBody CreateSessionModel createSessionModel) {
@@ -34,11 +36,26 @@ public class SessionRestController {
         throw new BadCredentialsException(String.format("No admin rights for token %s", token.getToken()));
     }
 
+    @GetMapping("/presenter/{sessionId}/close")
+    public void closeSession(@RequestHeader("Authorization") String stringToken, @PathVariable("sessionId") Integer sessionId) {
+        TokenModel token = new TokenModel(stringToken);
+        if (TokenUtils.isValidAdminToken(customAuthenticationService, token)) {
+            Optional<Session> session = sessionManager.getSessionById(sessionId);
+            if(session.isPresent()){
+                session.get().setClosed(new Date().getTime());
+                sessionDataService.sendClose(sessionId);
+            }else
+                throw new BadCredentialsException(String.format("No Session with id %d are found", sessionId));
+        }else
+            throw new BadCredentialsException(String.format("No admin rights for token %s", token.getToken()));
+
+    }
+
     @GetMapping("/presenter/{sessionId}/initial")
     public Map<String,Object> getSessionData(@PathVariable("sessionId") Integer sessionId, @RequestHeader("Authorization") String stringToken) {
         TokenModel token = new TokenModel(stringToken);
-        if (!(TokenUtils.isValidAdminToken(customAuthenticationService,token) || sessionManager.getSession(TokenUtils.getTokenValue(customAuthenticationService, "sessionId", token).asInt()).isPresent())) throw new BadCredentialsException(String.format("No valid token %s in request body", token.getToken()));
-        Session session = sessionManager.getSession(sessionId).orElseThrow(NoSessionFoundException::new);
+        if (!(TokenUtils.isValidAdminToken(customAuthenticationService,token) || sessionManager.getSessionById(TokenUtils.getTokenValue(customAuthenticationService, "sessionId", token).asInt()).isPresent())) throw new BadCredentialsException(String.format("No valid token %s in request body", token.getToken()));
+        Session session = sessionManager.getSessionById(sessionId).orElseThrow(NoSessionFoundException::new);
         ArrayList<Participant> participants = session.getParticipants();
         ArrayList<QuestionModel> questions = session.getQuestions();
 
@@ -51,7 +68,7 @@ public class SessionRestController {
     @DeleteMapping("/presenter/{sessionId}")
     public void deleteSession(@PathVariable("sessionId") Integer sessionId, @RequestHeader("Authorization") String stringToken) {
         TokenModel token = new TokenModel(stringToken);
-        if (!(TokenUtils.isValidAdminToken(customAuthenticationService,token) || sessionManager.getSession(TokenUtils.getTokenValue(customAuthenticationService, "sessionId", token).asInt()).isPresent())) throw new BadCredentialsException(String.format("No valid token %s in request body", token.getToken()));
+        if (!(TokenUtils.isValidAdminToken(customAuthenticationService,token) || sessionManager.getSessionById(TokenUtils.getTokenValue(customAuthenticationService, "sessionId", token).asInt()).isPresent())) throw new BadCredentialsException(String.format("No valid token %s in request body", token.getToken()));
         //Session session = sessionManager.getSession(sessionId).orElseThrow(NoSessionFoundException::new);
 
     }
@@ -59,7 +76,7 @@ public class SessionRestController {
     @PostMapping("/{sessionId}/question/create")
     public QuestionModel createQuestion(@RequestBody QuestionModel questionModel, @PathVariable("sessionId") Integer sessionId){
 
-        sessionManager.getSession(sessionId).orElseThrow(NoSessionFoundException::new).addQuestion(questionModel);
+        sessionManager.getSessionById(sessionId).orElseThrow(NoSessionFoundException::new).addQuestion(questionModel);
 
         //sendToAll
         questionService.sendQuestion(questionModel,sessionId);
@@ -72,7 +89,7 @@ public class SessionRestController {
     @GetMapping("/presenter/sessions/metadata")
     public List<SessionMetadata> getSessionsMetadata(@RequestHeader("Authorization") String stringToken) {
         TokenModel token = new TokenModel(stringToken);
-        if (!(TokenUtils.isValidAdminToken(customAuthenticationService,token) || sessionManager.getSession(TokenUtils.getTokenValue(customAuthenticationService, "sessionId", token).asInt()).isPresent())) throw new BadCredentialsException(String.format("No valid token %s in request body", token.getToken()));
+        if (!(TokenUtils.isValidAdminToken(customAuthenticationService,token) || sessionManager.getSessionById(TokenUtils.getTokenValue(customAuthenticationService, "sessionId", token).asInt()).isPresent())) throw new BadCredentialsException(String.format("No valid token %s in request body", token.getToken()));
 
         List<SessionMetadata> dummyValues = new ArrayList<>();
         SessionMetadata dummyValue1 = new SessionMetadata();

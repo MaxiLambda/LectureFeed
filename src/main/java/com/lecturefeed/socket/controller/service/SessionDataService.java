@@ -34,6 +34,20 @@ enum SessionDataServiceParticipantPath {
     }
 }
 
+enum SessionDataServiceSharedPath {
+    sendClosedToAll("/session/%d/onclose");
+
+    private final String path;
+    SessionDataServiceSharedPath(String path) {
+        this.path = path;
+    }
+
+    @Override
+    public String toString() {
+        return path;
+    }
+}
+
 @Service
 public class SessionDataService {
     private final SimpMessagingTemplate simpMessagingTemplate;
@@ -56,6 +70,11 @@ public class SessionDataService {
 
         simpMessagingTemplate.convertAndSend(adminPath, value);
         simpMessagingTemplate.convertAndSend(participantPath, value);
+    }
+
+    public void sendClose(int sessionId){
+        String path = String.format(SessionDataServiceSharedPath.sendClosedToAll.toString(),sessionId);
+        simpMessagingTemplate.convertAndSend(path, "");
     }
 
 
