@@ -5,11 +5,13 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.lecturefeed.model.token.TokenClaim;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class CustomAuthenticationService extends RSAKeyHandler {
@@ -25,10 +27,12 @@ public class CustomAuthenticationService extends RSAKeyHandler {
         return generateToken(new HashMap<>());
     }
 
-    public String generateToken(Map<String, Object> payloadClaims) {
+    public String generateToken(Map<TokenClaim, Object> payloadClaims) {
         try {
             return JWT.create()
-                    .withPayload(payloadClaims)
+                    .withPayload(payloadClaims.entrySet().
+                            stream().
+                            collect(Collectors.toMap(e -> e.getKey().getValue(), Map.Entry::getValue)))
                     .withIssuer("auth0")
                     .sign(algorithmRS);
         } catch (JWTCreationException exception){

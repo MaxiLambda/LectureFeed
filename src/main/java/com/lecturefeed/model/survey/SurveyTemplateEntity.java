@@ -14,4 +14,5 @@ public class SurveyTemplateEntity {
     //always >0
     private long duration;
     private boolean publishResults;
+    private int id;
 }

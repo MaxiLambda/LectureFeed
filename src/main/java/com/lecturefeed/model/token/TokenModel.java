@@ -1,4 +1,4 @@
-package com.lecturefeed.model;
+package com.lecturefeed.model.token;
 
 import lombok.*;
 

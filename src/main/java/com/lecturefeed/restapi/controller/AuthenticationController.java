@@ -2,7 +2,7 @@ package com.lecturefeed.restapi.controller;
 
 import com.lecturefeed.authentication.jwt.CustomAuthenticationService;
 import com.lecturefeed.model.ParticipantAuthRequestModel;
-import com.lecturefeed.model.TokenModel;
+import com.lecturefeed.model.token.TokenModel;
 import com.lecturefeed.model.UserRole;
 import com.lecturefeed.session.Participant;
 import com.lecturefeed.session.SessionManager;
