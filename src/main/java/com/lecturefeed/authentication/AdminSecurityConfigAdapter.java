@@ -25,7 +25,7 @@ public class AdminSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/auth/admin", "/session/create")
+                .antMatchers("/auth/admin", "/session/presenter/**", "/admin/**")
                 .access("hasIpAddress('127.0.0.1') or hasIpAddress('::1')")
                 .anyRequest().permitAll()
                 .and().csrf().disable();
@@ -41,6 +41,8 @@ public class AdminSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
         config.addAllowedOriginPattern("*");
         source.registerCorsConfiguration("/auth/**", config);
         source.registerCorsConfiguration("/session/**", config);
+        source.registerCorsConfiguration("/participant/**", config);
+        source.registerCorsConfiguration("/admin/**", config);
         FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
         bean.setOrder(0);
         return bean;

@@ -4,6 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-public class MessageModel {
-    private String text;
+public class CreateSessionModel {
+    private String name;
 }
