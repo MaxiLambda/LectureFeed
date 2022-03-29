@@ -1,51 +1,59 @@
 package com.lecturefeed.restapi.controller;
 
 import com.lecturefeed.model.MessageModel;
+import com.lecturefeed.model.TokenModel;
 import com.lecturefeed.model.survey.Survey;
+import com.lecturefeed.model.survey.SurveyManager;
 import com.lecturefeed.model.survey.SurveyTemplate;
 import com.lecturefeed.model.survey.SurveyTimer;
 import com.lecturefeed.model.survey.SurveyType;
 import com.lecturefeed.socket.controller.service.SurveyService;
+import com.lecturefeed.utils.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AuthorizationServiceException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.MethodNotAllowedException;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 
 @RequiredArgsConstructor
 @RestController
 public class SurveyRestController {
 
     private final SurveyService surveyService;
-    private final HashMap<Integer, SurveyTemplate> templates = new HashMap<>();
-    private final HashMap<Integer, HashMap<Integer, Survey>> sessionSurveys = new HashMap<>();
+    private final SurveyManager surveyManager;
+    private final SessionManager sessionManager;
+    private final TokenService tokenService;
 
     @GetMapping("/admin/session/{sessionId}/survey/templates")
-    public Collection<SurveyTemplate> getSessionTemplates(@PathVariable int sessionId){
-        //todo
-        // -Abfrage sessionId exists und alle templates zur sessionId
-        // -Prüfen on der token auch ein admin ist
-        return templates.values();
+    public Collection<SurveyTemplate> getSessionTemplates(@PathVariable int sessionId,@RequestHeader("Authorization") String stringToken){
+        if(!sessionManager.exitsSession(sessionId)) throw new NoSessionFoundException(sessionId);
+        if(!tokenService.isValidAdminToken(new TokenModel(stringToken))) throw new AuthorizationServiceException("Only Admins can request SurveyTemplates");
+
+        return surveyManager.getTemplates().values();
     }
 
     @GetMapping("/admin/session/{sessionId}/surveys")
-    public Collection<Survey> getSessionSurveys(@PathVariable int sessionId){
-        //todo
-        // - Abfrage sessionId exists
-        // - Prüfen on der token auch ein admin ist
-        Collection<Survey> surveys = getSessionSurveyList(sessionId).values();
-        if(surveys == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Surveys not exists", surveys));
+    public Collection<Survey> getSessionSurveys(@PathVariable int sessionId,@RequestHeader("Authorization") String stringToken){
+        if(!sessionManager.exitsSession(sessionId)) throw new NoSessionFoundException(sessionId);
+        if(!tokenService.isValidAdminToken(new TokenModel(stringToken))) throw new AuthorizationServiceException("Only Admins can request SurveyTemplates");
+
+        if(getSessionSurveyList(sessionId).values().isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No surveys exist");
         }
         return getSessionSurveyList(sessionId).values();
     }
 
     @GetMapping("/admin/session/{sessionId}/survey/create/{templateId}")
-    public void create(@PathVariable int sessionId, @PathVariable int templateId){
-        //todo
-        // - Abfrage sessionId exists
-        // - Prüfen on der token auch ein admin ist
+    public void create(@PathVariable int sessionId, @PathVariable int templateId,@RequestHeader("Authorization") String stringToken){
+        if(!sessionManager.exitsSession(sessionId)) throw new NoSessionFoundException(sessionId);
+        if(!tokenService.isValidAdminToken(new TokenModel(stringToken))) throw new AuthorizationServiceException("Only Admins can request SurveyTemplates");
+
         SurveyTemplate template = getTemplateById(templateId);
         if(template != null){
             createSurveyInSession(sessionId, template);
@@ -55,47 +63,59 @@ public class SurveyRestController {
     }
 
     @PostMapping("/admin/session/{sessionId}/survey/create")
-    public SurveyTemplate create(@PathVariable int sessionId, @RequestBody SurveyTemplate template){
-        //todo
-        // - Abfrage sessionId exists
-        // - Prüfen on der token auch ein admin ist
-        template.setId(templates.size()+1);
-        templates.put(template.getId(), template);
+    public SurveyTemplate create(@PathVariable int sessionId, @RequestBody SurveyTemplate template,@RequestHeader("Authorization") String stringToken){
+        if(!sessionManager.exitsSession(sessionId)) throw new NoSessionFoundException(sessionId);
+        if(!tokenService.isValidAdminToken(new TokenModel(stringToken))) throw new AuthorizationServiceException("Only Admins can request SurveyTemplates");
+
+        template.setId(surveyManager.getTemplates().size()+1);
+        surveyManager.getTemplates().put(template.getId(), template);
         createSurveyInSession(sessionId, template);
         return template;
     }
 
-    //TODO PROBLEM: users (also random people) can use the api to submit multiple responses
     @PostMapping("/participant/session/{sessionId}/survey/{surveyId}/answer")
-    public void setAnswer(@PathVariable int sessionId, @PathVariable int surveyId, @RequestBody MessageModel messageModel){
-        //todo
-        // - Abfrage sessionId exists
-        // - Prüfen ob ein gültiger token existiert
-        // - prüfen ob der token für die Session zugelassen ist
+    public void setAnswer(@PathVariable int sessionId, @PathVariable int surveyId, @RequestBody MessageModel messageModel,@RequestHeader("Authorization") String stringToken){
+
+        if(!sessionManager.exitsSession(sessionId)) throw new NoSessionFoundException(sessionId);
+        TokenModel tokenModel = new TokenModel(stringToken);
+        int participantId;
+        int participantSessionId;
+        try{
+            participantId = tokenService.getTokenValue("id",tokenModel).asInt();
+            participantSessionId = tokenService.getTokenValue("sessionId",tokenModel).asInt();
+        }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"The token from the Authentication Header was bad");
+        }
+
+        if(sessionId != participantSessionId) throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"The Token was created for another session");
+
+
         Survey survey = getSessionSurveyList(sessionId).get(surveyId);
         if(survey != null){
-            survey.addAnswer(messageModel.getText());
+            survey.addAnswer(messageModel.getText(),participantId);
             surveyService.onUpdate(sessionId, survey);
         }
     }
 
     private SurveyTemplate getTemplateById(int templateId){
-        return templates.get(templateId);
+        return surveyManager.getTemplates().get(templateId);
     }
 
     //removes the need to check if sessionSurveys returns null for a given key
     private HashMap<Integer, Survey> getSessionSurveyList(int sessionId){
+        HashMap<Integer,HashMap<Integer,Survey>> sessionSurveys = surveyManager.getSessionSurveys();
         if(!sessionSurveys.containsKey(sessionId)) sessionSurveys.put(sessionId, new HashMap<>());
         return sessionSurveys.get(sessionId);
     }
 
     private void addSurveyToSession(int sessionId, Survey survey){
+        HashMap<Integer,HashMap<Integer,Survey>> sessionSurveys = surveyManager.getSessionSurveys();
         if(!sessionSurveys.containsKey(sessionId)) sessionSurveys.put(sessionId, new HashMap<>());
         sessionSurveys.get(sessionId).put(survey.getId(), survey);
     }
 
     public void updateSurvey(int sessionId, Survey survey){
-        sessionSurveys.get(sessionId).put(survey.getId(), survey);
+        surveyManager.getSessionSurveys().get(sessionId).put(survey.getId(), survey);
     }
 
     private SurveyTemplate createSurveyInSession(int sessionId, SurveyTemplate template){
