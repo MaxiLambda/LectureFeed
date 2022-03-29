@@ -8,15 +8,18 @@ import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.messaging.support.MessageHeaderAccessor;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
+
+import java.security.Principal;
 
 @AllArgsConstructor
 @Component
 public class AuthChannelInterceptorAdapter implements ChannelInterceptor {
     private static final String TOKEN_HEADER = "token";
     @Getter
-    private final WebSocketAuthenticatorService webSocketAuthenticatorService;
+    private final AuthenticatorService authenticatorService;
 
     @Override
     public Message<?> preSend(final Message<?> message, final MessageChannel channel) throws AuthenticationException {
@@ -24,7 +27,11 @@ public class AuthChannelInterceptorAdapter implements ChannelInterceptor {
 
         if (accessor != null && StompCommand.CONNECT == accessor.getCommand()) {
             final String token = accessor.getFirstNativeHeader(TOKEN_HEADER);
-            accessor.setUser(webSocketAuthenticatorService.getAuthenticatedOrFail(token));
+            Principal principal = authenticatorService.getAuthenticated(token);
+            if(principal == null){
+                throw new AuthenticationCredentialsNotFoundException("token was null or empty.");
+            }
+            accessor.setUser(principal);
         }
         return message;
     }

@@ -1,9 +1,13 @@
 package com.lecturefeed.session;
 
+import com.lecturefeed.authentication.AuthenticatorService;
 import com.lecturefeed.socket.controller.service.SessionDataService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.Optional;
@@ -40,4 +44,12 @@ public class SessionManager {
     public Set<Integer> getAllSessionIds(){
         return sessions.keySet();
     }
+
+    public void checkSessionId(int sessionId){
+        if (getSessionById(sessionId).isEmpty())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("SessionId %d are not exists", sessionId));
+    }
+
+
+
 }

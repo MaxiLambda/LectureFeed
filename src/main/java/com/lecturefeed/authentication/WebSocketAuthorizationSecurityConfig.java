@@ -11,7 +11,7 @@ public class WebSocketAuthorizationSecurityConfig extends AbstractSecurityWebSoc
     protected void configureInbound(final MessageSecurityMetadataSourceRegistry messages) {
         messages.simpDestMatchers("/admin/**").hasRole(UserRole.ADMINISTRATOR.getRole());
         messages.simpDestMatchers("/participant/**").hasRole(UserRole.PARTICIPANT.getRole());
-        messages.simpDestMatchers("/socket/**").hasAnyRole();
+        messages.simpDestMatchers("/socket/**").hasAnyRole(UserRole.ADMINISTRATOR.getRole(), UserRole.PARTICIPANT.getRole());
     }
 
     @Override

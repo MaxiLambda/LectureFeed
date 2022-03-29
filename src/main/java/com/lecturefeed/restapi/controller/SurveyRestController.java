@@ -1,10 +1,11 @@
 package com.lecturefeed.restapi.controller;
 
+import com.lecturefeed.authentication.jwt.TokenService;
 import com.lecturefeed.model.MessageModel;
 import com.lecturefeed.model.survey.Survey;
 import com.lecturefeed.model.survey.SurveyTemplate;
 import com.lecturefeed.model.survey.SurveyTimer;
-import com.lecturefeed.model.survey.SurveyType;
+import com.lecturefeed.session.SessionManager;
 import com.lecturefeed.socket.controller.service.SurveyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,26 +15,27 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.*;
 
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class SurveyRestController {
 
     private final SurveyService surveyService;
+    private final SessionManager sessionManager;
+    private final TokenService tokenService;
+
     private final HashMap<Integer, SurveyTemplate> templates = new HashMap<>();
     private final HashMap<Integer, HashMap<Integer, Survey>> sessionSurveys = new HashMap<>();
 
+
     @GetMapping("/admin/session/{sessionId}/survey/templates")
     public Collection<SurveyTemplate> getSessionTemplates(@PathVariable int sessionId){
-        //todo
-        // -Abfrage sessionId exists und alle templates zur sessionId
-        // -Prüfen on der token auch ein admin ist
+        sessionManager.checkSessionId(sessionId);
         return templates.values();
     }
 
     @GetMapping("/admin/session/{sessionId}/surveys")
     public Collection<Survey> getSessionSurveys(@PathVariable int sessionId){
-        //todo
-        // - Abfrage sessionId exists
-        // - Prüfen on der token auch ein admin ist
+        sessionManager.checkSessionId(sessionId);
         Collection<Survey> surveys = getSessionSurveyList(sessionId).values();
         if(surveys == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Surveys not exists", surveys));
@@ -43,9 +45,7 @@ public class SurveyRestController {
 
     @GetMapping("/admin/session/{sessionId}/survey/create/{templateId}")
     public void create(@PathVariable int sessionId, @PathVariable int templateId){
-        //todo
-        // - Abfrage sessionId exists
-        // - Prüfen on der token auch ein admin ist
+        sessionManager.checkSessionId(sessionId);
         SurveyTemplate template = getTemplateById(templateId);
         if(template != null){
             createSurveyInSession(sessionId, template);
@@ -56,22 +56,18 @@ public class SurveyRestController {
 
     @PostMapping("/admin/session/{sessionId}/survey/create")
     public SurveyTemplate create(@PathVariable int sessionId, @RequestBody SurveyTemplate template){
-        //todo
-        // - Abfrage sessionId exists
-        // - Prüfen on der token auch ein admin ist
+        sessionManager.checkSessionId(sessionId);
         template.setId(templates.size()+1);
         templates.put(template.getId(), template);
         createSurveyInSession(sessionId, template);
         return template;
     }
 
-    //TODO PROBLEM: users (also random people) can use the api to submit multiple responses
     @PostMapping("/participant/session/{sessionId}/survey/{surveyId}/answer")
-    public void setAnswer(@PathVariable int sessionId, @PathVariable int surveyId, @RequestBody MessageModel messageModel){
-        //todo
-        // - Abfrage sessionId exists
-        // - Prüfen ob ein gültiger token existiert
-        // - prüfen ob der token für die Session zugelassen ist
+    public void setAnswer(@PathVariable int sessionId, @PathVariable int surveyId, @RequestBody MessageModel messageModel, @RequestHeader("Authorization") String token){
+        tokenService.checkSessionIdByToken(token, sessionId);
+        sessionManager.checkSessionId(sessionId);
+
         Survey survey = getSessionSurveyList(sessionId).get(surveyId);
         if(survey != null){
             survey.addAnswer(messageModel.getText());

@@ -1,50 +1,48 @@
 package com.lecturefeed.authentication;
 
-import lombok.Setter;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
+import com.lecturefeed.model.UserRole;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 
+@AllArgsConstructor
 @EnableWebSecurity
 @Configuration
-@Order(1)
 public class AdminSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
 
-    @Setter
-    private static boolean isInDebugMode = false;
+    private final AuthenticatorService authenticatorService;
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        PreAuthTokenHeaderFilter preAuthTokenHeaderFilter = new PreAuthTokenHeaderFilter(authenticatorService);
+        preAuthTokenHeaderFilter.setAuthenticationManager(authentication -> {
+            if(authentication.getPrincipal() == null){
+                authentication.setAuthenticated(authentication.getPrincipal() != null);
+                return authentication;
+            }
+            return (Authentication) authentication.getPrincipal();
+        });
+
         http
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/auth/admin", "/session/presenter/**", "/admin/**")
+                .antMatchers("/auth/admin")
                 .access("hasIpAddress('127.0.0.1') or hasIpAddress('::1')")
-                .anyRequest().permitAll()
-                .and().csrf().disable();
+                .antMatchers("/auth/participant").permitAll()
+                .antMatchers("/admin/**", "/presenter/**", "/session/presenter/**").hasRole(UserRole.ADMINISTRATOR.getRole())
+                .antMatchers("/session/**").hasAnyRole(UserRole.ADMINISTRATOR.getRole(), UserRole.PARTICIPANT.getRole())
+                .antMatchers("/ws/**").permitAll()
+                .anyRequest().authenticated()
+                .and().addFilter(preAuthTokenHeaderFilter)
+        ;
+
     }
-    
-    @Bean
-    public FilterRegistrationBean<CorsFilter> corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        config.addAllowedOriginPattern("*");
-        source.registerCorsConfiguration("/auth/**", config);
-        source.registerCorsConfiguration("/session/**", config);
-        source.registerCorsConfiguration("/participant/**", config);
-        source.registerCorsConfiguration("/admin/**", config);
-        FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
-        bean.setOrder(0);
-        return bean;
-    }
+
 }
