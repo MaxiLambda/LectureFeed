@@ -1,22 +1,39 @@
-package com.lecturefeed.utils;
+package com.lecturefeed.authentication.jwt;
 
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.lecturefeed.authentication.jwt.CustomAuthenticationService;
 import com.lecturefeed.model.TokenModel;
 import com.lecturefeed.model.UserRole;
 import com.lecturefeed.session.Session;
 import com.lecturefeed.session.SessionManager;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
-public class TokenUtils {
+@AllArgsConstructor
+@Component
+public class TokenService {
+
+    private final CustomAuthenticationService customAuthenticationService;
+    private final SessionManager sessionManager;
 
     private final static Calendar calendar = Calendar.getInstance();
     private final static int DAYS_TILL_EXPIRATION = 30;
 
-    public static TokenModel createParticipantToken(CustomAuthenticationService customAuthenticationService, SessionManager sessionManager, String nickname, UserRole role, Integer sessionId){
+    public void checkSessionIdByToken(String token, int sessionId){
+        if(getTokenValue("sessionId", token).asInt() != sessionId){
+            throw new BadCredentialsException(String.format("Permission denied"));
+        }
+    }
+
+    public TokenModel createParticipantToken(String nickname, UserRole role, Integer sessionId){
         Map<String, Object> payloadClaims = new HashMap<>();
         int id = sessionManager.getSessionById(sessionId).
                 map(Session::getNextUserId).
@@ -28,7 +45,7 @@ public class TokenUtils {
         return new TokenModel(customAuthenticationService.generateToken(payloadClaims));
     }
 
-    public static TokenModel createAdminToken(CustomAuthenticationService customAuthenticationService) {
+    public TokenModel createAdminToken() {
         calendar.setTime(new Date());
         calendar.add(Calendar.DATE, DAYS_TILL_EXPIRATION);
         Map<String, Object> payloadClaims = new HashMap<>();
@@ -40,39 +57,39 @@ public class TokenUtils {
         return new TokenModel(customAuthenticationService.generateToken(payloadClaims));
     }
 
-    public static Claim getTokenValue(CustomAuthenticationService customAuthenticationService, String valueName, TokenModel token){
-        return getTokenValue(customAuthenticationService, valueName, token.getToken());
+    public Claim getTokenValue(String valueName, TokenModel token){
+        return getTokenValue(valueName, token.getToken());
     }
 
-    public static Claim getTokenValue(CustomAuthenticationService customAuthenticationService, String valueName, String token){
-        Map<String, Claim> claims = getTokenClaims(customAuthenticationService, token);
+    public Claim getTokenValue(String valueName, String token){
+        Map<String, Claim> claims = getTokenClaims(token);
         return claims.get(valueName);
     }
 
-    public static Map<String, Claim> getTokenClaims(CustomAuthenticationService customAuthenticationService, String token){
+    public Map<String, Claim> getTokenClaims(String token){
         try {
             DecodedJWT jwt = customAuthenticationService.verifyToken(token);
             return jwt.getClaims();
         }catch (Exception e){
-            throw new BadCredentialsException(String.format("token are invalid %s", token));
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, String.format("token are invalid %s", token));
         }
     }
 
-    public static boolean isValidAdminToken(CustomAuthenticationService customAuthenticationService, TokenModel token){
+    public boolean isValidAdminToken(String token){
         boolean isAdmin = false;
         boolean isNotExpired = false;
         try{
-            isAdmin = UserRole.ADMINISTRATOR.getRole().equals(getTokenValue(customAuthenticationService,"role",token).asString());
-            isNotExpired = System.currentTimeMillis() < getTokenValue(customAuthenticationService,"expirationDate",token).asLong();
+            isAdmin = UserRole.ADMINISTRATOR.getRole().equals(getTokenValue("role", token).asString());
+            isNotExpired = System.currentTimeMillis() < getTokenValue("expirationDate", token).asLong();
         }catch (Exception ignored){
 
         }
         return isAdmin && isNotExpired;
     }
 
-    public static Map<String, Claim> getClaimsByValidToken(CustomAuthenticationService customAuthenticationService, String token){
+    public Map<String, Claim> getClaimsByValidToken(String token){
         try{
-            Map<String, Claim> claims = getTokenClaims(customAuthenticationService, token);
+            Map<String, Claim> claims = getTokenClaims(token);
             if(claims.containsKey("expirationDate") && System.currentTimeMillis() < claims.get("expirationDate").asLong()){
                 return claims;
             }
@@ -81,4 +98,5 @@ public class TokenUtils {
         }
         return null;
     }
+
 }

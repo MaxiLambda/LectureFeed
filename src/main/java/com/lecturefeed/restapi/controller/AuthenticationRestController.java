@@ -1,12 +1,11 @@
 package com.lecturefeed.restapi.controller;
 
-import com.lecturefeed.authentication.jwt.CustomAuthenticationService;
+import com.lecturefeed.authentication.jwt.TokenService;
 import com.lecturefeed.model.ParticipantAuthRequestModel;
 import com.lecturefeed.model.TokenModel;
 import com.lecturefeed.model.UserRole;
 import com.lecturefeed.session.Participant;
 import com.lecturefeed.session.SessionManager;
-import com.lecturefeed.utils.TokenUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -21,14 +20,12 @@ public class AuthenticationRestController {
 
     @Getter
     private final SessionManager sessionManager;
-
-    @Getter
-    private final CustomAuthenticationService customAuthenticationService;
+    private final TokenService tokenService;
 
     @GetMapping("/admin")
     public TokenModel adminAuth() {
         //create and return token
-        return TokenUtils.createAdminToken(customAuthenticationService);
+        return tokenService.createAdminToken();
 
     }
 
@@ -38,8 +35,8 @@ public class AuthenticationRestController {
             throw new BadCredentialsException("Bad session data");
 
         //create token
-        TokenModel tokenModel = TokenUtils.createParticipantToken(customAuthenticationService,sessionManager,authRequestModel.getNickname(), UserRole.PARTICIPANT, authRequestModel.getSessionId());
-        int userId = TokenUtils.getTokenValue(customAuthenticationService,"id",tokenModel).asInt();
+        TokenModel tokenModel = tokenService.createParticipantToken(authRequestModel.getNickname(), UserRole.PARTICIPANT, authRequestModel.getSessionId());
+        int userId = tokenService.getTokenValue("id", tokenModel).asInt();
         //Add new Participant to session
         sessionManager.getSessionById(authRequestModel.getSessionId()).
                 ifPresent(s->s.addParticipant(new Participant(userId, authRequestModel.getNickname())));
