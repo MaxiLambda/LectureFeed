@@ -14,6 +14,7 @@ import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/session")
 public class SessionRestController {
 
@@ -51,7 +52,7 @@ public class SessionRestController {
 
     }
 
-    @GetMapping("/presenter/{sessionId}/initial")
+    @GetMapping("/{sessionId}/initial")
     public Map<String,Object> getSessionData(@PathVariable("sessionId") Integer sessionId, @RequestHeader("Authorization") String stringToken) {
         TokenModel token = new TokenModel(stringToken);
         if (!(TokenUtils.isValidAdminToken(customAuthenticationService,token) || sessionManager.getSessionById(TokenUtils.getTokenValue(customAuthenticationService, "sessionId", token).asInt()).isPresent())) throw new BadCredentialsException(String.format("No valid token %s in request body", token.getToken()));

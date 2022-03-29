@@ -9,10 +9,7 @@ import com.lecturefeed.session.Session;
 import com.lecturefeed.session.SessionManager;
 import org.springframework.security.authentication.BadCredentialsException;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class TokenUtils {
 
@@ -44,10 +41,18 @@ public class TokenUtils {
     }
 
     public static Claim getTokenValue(CustomAuthenticationService customAuthenticationService, String valueName, TokenModel token){
+        return getTokenValue(customAuthenticationService, valueName, token.getToken());
+    }
+
+    public static Claim getTokenValue(CustomAuthenticationService customAuthenticationService, String valueName, String token){
+        Map<String, Claim> claims = getTokenClaims(customAuthenticationService, token);
+        return claims.get(valueName);
+    }
+
+    public static Map<String, Claim> getTokenClaims(CustomAuthenticationService customAuthenticationService, String token){
         try {
-            DecodedJWT jwt = customAuthenticationService.verifyToken(token.getToken());
-            Map<String, Claim> claims = jwt.getClaims();
-            return claims.get(valueName);
+            DecodedJWT jwt = customAuthenticationService.verifyToken(token);
+            return jwt.getClaims();
         }catch (Exception e){
             throw new BadCredentialsException(String.format("token are invalid %s", token));
         }
@@ -63,5 +68,17 @@ public class TokenUtils {
 
         }
         return isAdmin && isNotExpired;
+    }
+
+    public static Map<String, Claim> getClaimsByValidToken(CustomAuthenticationService customAuthenticationService, String token){
+        try{
+            Map<String, Claim> claims = getTokenClaims(customAuthenticationService, token);
+            if(claims.containsKey("expirationDate") && System.currentTimeMillis() < claims.get("expirationDate").asLong()){
+                return claims;
+            }
+        }catch (Exception ignored){
+            return null;
+        }
+        return null;
     }
 }

@@ -17,14 +17,14 @@ import java.util.Map;
 
 @AllArgsConstructor
 @Component
-public class WebSocketAuthenticatorService {
+public class AuthenticatorService {
 
     @Getter
     private final CustomAuthenticationService customAuthenticationService;
 
-    public UsernamePasswordAuthenticationToken getAuthenticatedOrFail(final String  token) throws AuthenticationException {
+    public UsernamePasswordAuthenticationToken getAuthenticated(final String  token) throws AuthenticationException {
         if (token == null || token.trim().isEmpty()) {
-            throw new AuthenticationCredentialsNotFoundException("token was null or empty.");
+            return null;
         }
         String username;
         String role;
