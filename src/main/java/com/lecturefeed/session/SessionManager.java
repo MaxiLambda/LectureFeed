@@ -40,4 +40,8 @@ public class SessionManager {
     public Set<Integer> getAllSessionIds(){
         return sessions.keySet();
     }
+
+    public boolean exitsSession(int sessionId){
+        return sessions.containsKey(sessionId);
+    }
 }
