@@ -14,6 +14,7 @@ public class Session {
     private final ArrayList<Participant> participants;
     private final ArrayList<QuestionModel> questions;
     private final int id;
+    private long closed = 0;
     private final String sessionCode;
     private int userIdCurrentIndex = 0;
     private final int SESSION_CODE_LENGTH = 8;

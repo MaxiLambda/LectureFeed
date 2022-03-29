@@ -19,8 +19,6 @@ public class SessionController {
     @MessageMapping("/participant/session/{sessionId}/mood/{participantId}/{rating}")
     public void ratingChange(@DestinationVariable Integer sessionId, @DestinationVariable Integer participantId, @DestinationVariable Integer rating, Principal principal){
         int userId = PrincipalUtils.getClaim("id",principal).asInt();
-
-
     }
 
 }
