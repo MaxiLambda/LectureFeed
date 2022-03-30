@@ -25,7 +25,7 @@ public class SessionRestController {
 
     @PostMapping("/presenter/create")
     public Map<String,Object> createNewSession(@RequestBody CreateSessionModel createSessionModel) {
-        Session session = sessionManager.createSession();
+        Session session = sessionManager.createSession(createSessionModel.getName());
         Map<String,Object> sessionInformation = new HashMap<>();
         sessionInformation.put("id",session.getId());
         sessionInformation.put("sessionCode",session.getSessionCode());
@@ -110,7 +110,7 @@ public class SessionRestController {
         questions.put(1, new QuestionModel(1, 1, "Question1?", -5, new Date().getTime(), new Date().getTime(), voters));
         questions.put(2, new QuestionModel(2, 2, "Question2?", 3, new Date().getTime(), new Date().getTime(), voters));
 
-        return new Session(1, "CODE", participants, questions, surveys);
+        return new Session(1, "DummyName1", "CODE", participants, questions, surveys);
     }
 
 }

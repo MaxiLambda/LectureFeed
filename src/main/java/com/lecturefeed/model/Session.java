@@ -12,6 +12,7 @@ import java.util.List;
 
 @Data
 public class Session {
+    private final String name;
     private final List<Participant> participants;
     @Getter
     private final HashMap<Integer, QuestionModel> questions;
@@ -22,16 +23,18 @@ public class Session {
     private final String sessionCode;
     private final int SESSION_CODE_LENGTH = 8;
 
-    public Session(Integer id){
+    public Session(Integer id, String name){
         this.id = id;
+        this.name = name;
         this.sessionCode = StringUtils.randomString(SESSION_CODE_LENGTH);
         this.participants = new ArrayList<>();
         this.questions = new HashMap<>();
         this.surveys = new HashMap<>();
     }
 
-    public Session(Integer id, String sessionCode, List<Participant> participants, HashMap<Integer, QuestionModel> questions, HashMap<Integer, Survey> surveys){
+    public Session(Integer id, String name, String sessionCode, List<Participant> participants, HashMap<Integer, QuestionModel> questions, HashMap<Integer, Survey> surveys){
         this.id = id;
+        this.name = name;
         this.sessionCode = sessionCode;
         this.participants = participants;
         this.questions = questions;

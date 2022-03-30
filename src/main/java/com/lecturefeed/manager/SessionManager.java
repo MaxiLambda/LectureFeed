@@ -19,9 +19,9 @@ public class SessionManager {
 
     private final HashMap<Integer, Session> sessions = new HashMap<>();
 
-    public Session createSession(){
+    public Session createSession(String name){
         int sessionId = sessions.size() + 1;
-        Session session = new Session(sessionId);
+        Session session = new Session(sessionId, name);
         sessions.put(sessionId,session);
         return session;
     }
