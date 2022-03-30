@@ -20,24 +20,6 @@ public class QuestionModel {
     //null means the question was never closed
     private Long closed;
 
-    private final HashSet<Integer> voters = new HashSet<>();
+    private HashSet<Integer> voters = new HashSet<>();
 
-
-    public void ratingUp(Integer voterId){
-        if (!voters.contains(id)){
-            rating++;
-            voters.add(id);
-        }
-    }
-
-    public void ratingDown(Integer voterId){
-        if (!voters.contains(id)){
-            rating--;
-            voters.add(id);
-        }
-    }
-
-    public void closeQuestion(){
-        if(closed == null) closed = System.currentTimeMillis();
-    }
 }

@@ -4,14 +4,9 @@ import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.lecturefeed.model.TokenModel;
 import com.lecturefeed.model.UserRole;
-import com.lecturefeed.session.Session;
-import com.lecturefeed.session.SessionManager;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -22,23 +17,19 @@ import java.util.*;
 public class TokenService {
 
     private final CustomAuthenticationService customAuthenticationService;
-    private final SessionManager sessionManager;
 
     private final static Calendar calendar = Calendar.getInstance();
     private final static int DAYS_TILL_EXPIRATION = 30;
 
     public void checkSessionIdByToken(String token, int sessionId){
         if(getTokenValue("sessionId", token).asInt() != sessionId){
-            throw new BadCredentialsException(String.format("Permission denied"));
+            throw new BadCredentialsException("Permission denied");
         }
     }
 
-    public TokenModel createParticipantToken(String nickname, UserRole role, Integer sessionId){
+    public TokenModel createParticipantToken(String nickname, UserRole role, Integer sessionId, Integer participantId){
         Map<String, Object> payloadClaims = new HashMap<>();
-        int id = sessionManager.getSessionById(sessionId).
-                map(Session::getNextUserId).
-                orElseThrow();
-        payloadClaims.put("id",id);
+        payloadClaims.put("id", participantId);
         payloadClaims.put("username", nickname);
         payloadClaims.put("role", role.getRole());
         payloadClaims.put("sessionId", sessionId);
