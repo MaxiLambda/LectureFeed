@@ -7,6 +7,8 @@ import com.lecturefeed.model.survey.SurveyManager;
 import com.lecturefeed.model.survey.SurveyTemplate;
 import com.lecturefeed.model.survey.SurveyTimer;
 import com.lecturefeed.model.survey.SurveyType;
+import com.lecturefeed.session.NoSessionFoundException;
+import com.lecturefeed.session.SessionManager;
 import com.lecturefeed.socket.controller.service.SurveyService;
 import com.lecturefeed.utils.TokenService;
 import lombok.RequiredArgsConstructor;
