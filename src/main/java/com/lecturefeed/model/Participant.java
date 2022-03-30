@@ -1,4 +1,4 @@
-package com.lecturefeed.session;
+package com.lecturefeed.model;
 
 import lombok.Data;
 

@@ -1,6 +1,6 @@
 package com.lecturefeed.socket.controller.core;
 
-import com.lecturefeed.session.SessionManager;
+import com.lecturefeed.manager.SessionManager;
 import com.lecturefeed.socket.controller.service.SessionDataService;
 import com.lecturefeed.utils.IntegerUtils;
 import lombok.RequiredArgsConstructor;
