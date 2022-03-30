@@ -4,9 +4,10 @@ import com.lecturefeed.authentication.jwt.TokenService;
 import com.lecturefeed.manager.SurveyManager;
 import com.lecturefeed.manager.SurveyTemplateManager;
 import com.lecturefeed.model.MessageModel;
-import com.lecturefeed.model.survey.Survey;
-import com.lecturefeed.model.survey.SurveyTemplate;
+import com.lecturefeed.entity.model.survey.Survey;
+import com.lecturefeed.entity.model.survey.SurveyTemplate;
 import com.lecturefeed.manager.SessionManager;
+import com.lecturefeed.utils.SecurityContextHolderUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,7 +54,10 @@ public class SurveyRestController {
     public void setAnswer(@PathVariable int sessionId, @PathVariable int surveyId, @RequestBody MessageModel messageModel, @RequestHeader("Authorization") String token){
         tokenService.checkSessionIdByToken(token, sessionId);
         sessionManager.checkSessionId(sessionId);
-        surveyManager.addAnswerToSurvey(sessionId, surveyId, messageModel.getText());
+        SecurityContextHolderUtils.getCurrentAuthenticationId().ifPresent(id ->
+                surveyManager.addAnswerToSurvey(sessionId, surveyId,id, messageModel.getText())
+        );
+
     }
 
 }

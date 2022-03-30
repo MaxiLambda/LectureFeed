@@ -5,7 +5,7 @@ import com.lecturefeed.manager.ParticipantManager;
 import com.lecturefeed.model.ParticipantAuthRequestModel;
 import com.lecturefeed.model.TokenModel;
 import com.lecturefeed.model.UserRole;
-import com.lecturefeed.model.Participant;
+import com.lecturefeed.entity.model.Participant;
 import com.lecturefeed.manager.SessionManager;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;

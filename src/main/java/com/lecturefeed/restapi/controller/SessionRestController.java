@@ -1,17 +1,19 @@
 package com.lecturefeed.restapi.controller;
 
 import com.lecturefeed.authentication.jwt.TokenService;
+import com.lecturefeed.entity.model.Participant;
+import com.lecturefeed.entity.model.QuestionModel;
+import com.lecturefeed.entity.model.Session;
+import com.lecturefeed.entity.model.SessionMetadata;
 import com.lecturefeed.manager.QuestionManager;
 import com.lecturefeed.manager.SessionManager;
 import com.lecturefeed.model.*;
-import com.lecturefeed.model.survey.Survey;
-import com.lecturefeed.model.survey.SurveyTemplate;
-import com.lecturefeed.model.survey.SurveyType;
 import com.lecturefeed.utils.SecurityContextHolderUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,8 +37,8 @@ public class SessionRestController {
     @GetMapping("/presenter/{sessionId}/close")
     public void closeSession(@PathVariable("sessionId") Integer sessionId) {
         sessionManager.checkSessionId(sessionId);
-        //todo: check session active
-        sessionManager.closeSession(sessionId);
+        if(!sessionManager.isSessionClosed(sessionId))
+            sessionManager.closeSession(sessionId);
     }
 
     @GetMapping("/{sessionId}/initial")
@@ -45,20 +47,19 @@ public class SessionRestController {
         sessionManager.checkSessionId(sessionId);
 
         Session session = sessionManager.getSessionById(sessionId);
-        List<Participant> participants = session.getParticipants();
-        Map<Integer, QuestionModel> questions = session.getQuestions();
+        Set<Participant> participants = session.getParticipants();
+        Set<QuestionModel> questions = session.getQuestions();
 
         Map<String, Object> sessionData = new HashMap<>();
-        sessionData.put("questions", questions.values());
+        sessionData.put("questions", questions);
         sessionData.put("participants", participants);
         return sessionData;
     }
 
     @DeleteMapping("/presenter/{sessionId}")
     public void deleteSession(@PathVariable("sessionId") Integer sessionId) {
-        //todo: check session active and delete session
         sessionManager.checkSessionId(sessionId);
-        //Session session = sessionManager.getSession(sessionId).orElseThrow(NoSessionFoundException::new);
+        if(sessionManager.isSessionClosed(sessionId)) sessionManager.deleteSession(sessionId);
     }
 
     @PostMapping("/{sessionId}/question/create")
@@ -70,47 +71,17 @@ public class SessionRestController {
     //TODO: LFD-79 //Aktuell Testdaten
     @GetMapping("/presenter/sessions/metadata")
     public List<SessionMetadata> getSessionsMetadata() {
-
-        List<SessionMetadata> dummyValues = new ArrayList<>();
-        SessionMetadata dummyValue1 = new SessionMetadata();
-        dummyValue1.setSessionId(99);
-        dummyValue1.setName("DummyName1");
-        dummyValue1.setClosed(new Date().getTime());
-        dummyValues.add(dummyValue1);
-        SessionMetadata dummyValue2 = new SessionMetadata();
-        dummyValue2.setSessionId(98);
-        dummyValue2.setName("DummyName2");
-        dummyValue2.setClosed(new Date().getTime());
-        dummyValues.add(dummyValue2);
-        return dummyValues;
+        return sessionManager.getAllClosedSessions()
+                .stream()
+                .map(sessionManager::toMetadata)
+                .collect(Collectors.toList());
     }
 
     //TODO: LFD-79 //Aktuell Testdaten
     @GetMapping("/presenter/{sessionId}/data")
     public Session getSessionData(@PathVariable("sessionId") Integer sessionId) {
-        //sessionManager.checkSessionId(sessionId);
-
-
-        SurveyTemplate template = new SurveyTemplate(1, "templateName", SurveyType.YesNo, "question?", 5, true);
-        List<String> answers = new ArrayList<>();
-        answers.add("-1");
-        answers.add("1");
-        answers.add("1");
-        HashMap<Integer, Survey> surveys = new HashMap<>();
-        surveys.put(1, new Survey(1, template, answers, new Date().getTime()));
-
-
-        List<Participant> participants = new ArrayList<>();
-        participants.add(new Participant(1, "Participant1"));
-        participants.add(new Participant(2, "Participant2"));
-        HashMap<Integer, QuestionModel> questions = new HashMap<>();
-
-        HashSet<Integer> voters = new HashSet<>();
-        voters.add(1); voters.add(2);
-        questions.put(1, new QuestionModel(1, 1, "Question1?", -5, new Date().getTime(), new Date().getTime(), voters));
-        questions.put(2, new QuestionModel(2, 2, "Question2?", 3, new Date().getTime(), new Date().getTime(), voters));
-
-        return new Session(99, "DummyName1", "CODE", participants, questions, surveys);
+        sessionManager.checkSessionId(sessionId);
+        return sessionManager.getSessionById(sessionId);
     }
 
 }

@@ -1,6 +1,6 @@
 package com.lecturefeed.socket.controller.service;
 
-import com.lecturefeed.model.QuestionModel;
+import com.lecturefeed.entity.model.QuestionModel;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
