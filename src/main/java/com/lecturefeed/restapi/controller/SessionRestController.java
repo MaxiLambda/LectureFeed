@@ -9,8 +9,15 @@ import com.lecturefeed.model.survey.SurveyTemplate;
 import com.lecturefeed.model.survey.SurveyType;
 import com.lecturefeed.utils.SecurityContextHolderUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 @RestController
@@ -111,6 +118,23 @@ public class SessionRestController {
         questions.put(2, new QuestionModel(2, 2, "Question2?", 3, new Date().getTime(), new Date().getTime(), voters));
 
         return new Session(99, "DummyName1", "CODE", participants, questions, surveys);
+    }
+
+    //TODO: LFD-92 //Aktuell Testdaten
+    @GetMapping("/presenter/{sessionId}/data/download")
+    public FileSystemResource downloadSessionData(@PathVariable("sessionId") Integer sessionId) {
+        //sessionManager.checkSessionId(sessionId);
+        try {
+            File tempFile = File.createTempFile("prefix-", "-suffix");
+            String s = System.lineSeparator() + "New Line!";
+            BufferedOutputStream out = new BufferedOutputStream(Files.newOutputStream(Paths.get(tempFile.getPath()), StandardOpenOption.APPEND));
+            out.write(s.getBytes());
+            out.close();
+
+            return new FileSystemResource(tempFile);
+        } catch (IOException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, String.format("Failed to create data by session id %d", sessionId));
+        }
     }
 
 }
