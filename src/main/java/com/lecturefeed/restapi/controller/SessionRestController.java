@@ -110,7 +110,7 @@ public class SessionRestController {
         questions.put(1, new QuestionModel(1, 1, "Question1?", -5, new Date().getTime(), new Date().getTime(), voters));
         questions.put(2, new QuestionModel(2, 2, "Question2?", 3, new Date().getTime(), new Date().getTime(), voters));
 
-        return new Session(1, "DummyName1", "CODE", participants, questions, surveys);
+        return new Session(99, "DummyName1", "CODE", participants, questions, surveys);
     }
 
 }
