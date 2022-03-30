@@ -16,7 +16,7 @@ public class QuestionService {
         this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
-    public void sendQuestion(QuestionModel question, int sessionId){
+    public void sendQuestion(int sessionId, QuestionModel question){
                     Arrays.stream(roots).
                     map(root->WS_MESSAGE_TRANSFER_DESTINATION.formatted(root,sessionId))
                     .forEach(path->simpMessagingTemplate.convertAndSend(path,question));

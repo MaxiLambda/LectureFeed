@@ -4,27 +4,23 @@ import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.lecturefeed.authentication.jwt.CustomAuthenticationService;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.Map;
+import java.util.*;
 
 @AllArgsConstructor
 @Component
-public class WebSocketAuthenticatorService {
+public class AuthenticatorService {
 
-    @Getter
     private final CustomAuthenticationService customAuthenticationService;
 
-    public UsernamePasswordAuthenticationToken getAuthenticatedOrFail(final String  token) throws AuthenticationException {
+    public UsernamePasswordAuthenticationToken getAuthenticated(final String  token) throws AuthenticationException {
         if (token == null || token.trim().isEmpty()) {
-            throw new AuthenticationCredentialsNotFoundException("token was null or empty.");
+            return null;
         }
         String username;
         String role;
@@ -44,4 +40,6 @@ public class WebSocketAuthenticatorService {
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_"+role.toUpperCase())) // MUST provide at least one role
         );
     }
+
+
 }

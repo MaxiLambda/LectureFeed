@@ -1,5 +1,6 @@
 package com.lecturefeed.model.survey;
 
+import com.lecturefeed.manager.SurveyManager;
 import com.lecturefeed.restapi.controller.SurveyRestController;
 import com.lecturefeed.socket.controller.service.SurveyService;
 import lombok.RequiredArgsConstructor;
@@ -12,14 +13,14 @@ public class SurveyTimer extends Thread{
     private final int sessionId;
     private final Survey survey;
     private final SurveyService surveyService;
-    private final SurveyRestController controller;
+    private final SurveyManager surveyManager;
 
     @Override
     public void run() {
         try {
             sleep(survey.getTemplate().getDuration() * 1000L);
             survey.setTimestamp(new Date().getTime());
-            controller.updateSurvey(sessionId, survey);
+            surveyManager.updateSurvey(sessionId, survey);
             surveyService.onClose(sessionId, survey.getId());
             surveyService.onResult(sessionId, survey);
         } catch (InterruptedException e) {
