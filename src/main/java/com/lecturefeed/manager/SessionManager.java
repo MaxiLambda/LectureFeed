@@ -83,6 +83,10 @@ public class SessionManager {
         return sessionDBService.findAll();
     }
 
+    public List<Session> getAllOpenSessions(){
+        return sessionDBService.findAllOpen();
+    }
+
     public List<Session> getAllClosedSessions(){
         return sessionDBService.findAllClosed();
     }
