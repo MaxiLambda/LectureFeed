@@ -28,8 +28,7 @@ public class SessionManager {
     }
 
     private Session createSessionEntity(String name){
-        //return Session.builder().name(name).sessionCode(StringUtils.randomString(SESSION_CODE_LENGTH)).build();
-        return Session.builder().name(name).sessionCode("TEST").build();
+        return Session.builder().name(name).sessionCode(StringUtils.randomString(SESSION_CODE_LENGTH)).build();
     }
 
     public Session createSession(String name){
