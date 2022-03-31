@@ -1,11 +1,10 @@
 package com.lecturefeed.model.survey;
 
+import com.lecturefeed.entity.model.survey.Survey;
 import com.lecturefeed.manager.SurveyManager;
-import com.lecturefeed.restapi.controller.SurveyRestController;
 import com.lecturefeed.socket.controller.service.SurveyService;
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 @RequiredArgsConstructor

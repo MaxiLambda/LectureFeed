@@ -1,8 +1,8 @@
 package com.lecturefeed.socket.controller.service;
 
-import com.lecturefeed.model.survey.Survey;
+import com.lecturefeed.entity.model.survey.Survey;
 import com.lecturefeed.model.survey.SurveyParticipantData;
-import com.lecturefeed.model.survey.SurveyTemplate;
+import com.lecturefeed.entity.model.survey.SurveyTemplate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;

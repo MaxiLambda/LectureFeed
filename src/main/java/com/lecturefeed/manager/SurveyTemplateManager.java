@@ -1,6 +1,7 @@
 package com.lecturefeed.manager;
 
-import com.lecturefeed.model.survey.SurveyTemplate;
+import com.lecturefeed.entity.model.survey.SurveyTemplate;
+import com.lecturefeed.repository.service.SurveyTemplateDBService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -13,25 +14,23 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 public class SurveyTemplateManager {
 
-    private final HashMap<Integer, SurveyTemplate> templates = new HashMap<>();
+    private final SurveyTemplateDBService surveyTemplateDBService;
 
     public SurveyTemplate createTemplate(SurveyTemplate template){
-        template.setId(templates.size()+1);
-        templates.put(template.getId(), template);
-        return template;
+        return surveyTemplateDBService.save(template);
     }
 
     public void checkTemplateId(int templateId){
-        if (!templates.containsKey(templateId))
+        if (surveyTemplateDBService.findById(templateId)==null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Template-Id %d are not exists", templateId));
     }
 
     public Collection<SurveyTemplate> getAllTemplates(){
-        return templates.values();
+        return surveyTemplateDBService.findAll();
     }
 
     public SurveyTemplate getTemplateById(int templateId){
-        return templates.get(templateId);
+        return surveyTemplateDBService.findById(templateId);
     }
 
 }
