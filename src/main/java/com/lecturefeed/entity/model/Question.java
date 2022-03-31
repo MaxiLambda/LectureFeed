@@ -11,7 +11,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Builder
-public class QuestionModel {
+public class Question {
 
     //null means the question is not yet handled by the server
     @Id
@@ -31,7 +31,7 @@ public class QuestionModel {
 
     //TODO implement possibility to map voters to ids
     @Builder.Default
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             joinColumns = @JoinColumn(name = "question_id"),
             inverseJoinColumns = @JoinColumn(name = "participant_id")

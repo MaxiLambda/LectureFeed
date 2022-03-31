@@ -4,6 +4,7 @@ import com.lecturefeed.entity.model.Session;
 import com.lecturefeed.entity.model.SessionMetadata;
 import com.lecturefeed.repository.service.SessionDBService;
 import com.lecturefeed.socket.controller.service.SessionDataService;
+import com.lecturefeed.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -20,14 +21,19 @@ public class SessionManager {
 
     private final SessionDataService sessionDataService;
     private final SessionDBService sessionDBService;
+    private static final int SESSION_CODE_LENGTH = 8;
 
     public boolean isSessionClosed(int sessionId){
         return getSessionById(sessionId).getClosed() != 0L;
     }
 
-    public Session createSession(String name){
+    private Session createSessionEntity(String name){
+        //return Session.builder().name(name).sessionCode(StringUtils.randomString(SESSION_CODE_LENGTH)).build();
+        return Session.builder().name(name).sessionCode("TEST").build();
+    }
 
-        Session session = Session.builder().name(name).build();
+    public Session createSession(String name){
+        Session session = createSessionEntity(name);
         sessionDBService.save(session);
         return session;
     }
@@ -67,7 +73,7 @@ public class SessionManager {
     }
 
     public boolean existsSessionId(int sessionId){
-        return getSessionById(sessionId) == null;
+        return getSessionById(sessionId) != null;
     }
 
     public void deleteSession(int sessionId){

@@ -1,6 +1,6 @@
 package com.lecturefeed.socket.controller.service;
 
-import com.lecturefeed.entity.model.QuestionModel;
+import com.lecturefeed.entity.model.Question;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ public class QuestionService {
         this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
-    public void sendQuestion(int sessionId, QuestionModel question){
+    public void sendQuestion(int sessionId, Question question){
                     Arrays.stream(roots).
                     map(root->WS_MESSAGE_TRANSFER_DESTINATION.formatted(root,sessionId))
                     .forEach(path->simpMessagingTemplate.convertAndSend(path,question));

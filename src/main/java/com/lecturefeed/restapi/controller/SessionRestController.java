@@ -2,9 +2,10 @@ package com.lecturefeed.restapi.controller;
 
 import com.lecturefeed.authentication.jwt.TokenService;
 import com.lecturefeed.entity.model.Participant;
-import com.lecturefeed.entity.model.QuestionModel;
+import com.lecturefeed.entity.model.Question;
 import com.lecturefeed.entity.model.Session;
 import com.lecturefeed.entity.model.SessionMetadata;
+import com.lecturefeed.manager.ParticipantManager;
 import com.lecturefeed.manager.QuestionManager;
 import com.lecturefeed.manager.SessionManager;
 import com.lecturefeed.model.*;
@@ -23,6 +24,7 @@ public class SessionRestController {
 
     private final SessionManager sessionManager;
     private final QuestionManager questionManager;
+    private final ParticipantManager participantManager;
     private final TokenService tokenService;
 
     @PostMapping("/presenter/create")
@@ -48,7 +50,7 @@ public class SessionRestController {
 
         Session session = sessionManager.getSessionById(sessionId);
         Set<Participant> participants = session.getParticipants();
-        Set<QuestionModel> questions = session.getQuestions();
+        Set<Question> questions = session.getQuestions();
 
         Map<String, Object> sessionData = new HashMap<>();
         sessionData.put("questions", questions);
@@ -63,9 +65,10 @@ public class SessionRestController {
     }
 
     @PostMapping("/{sessionId}/question/create")
-    public QuestionModel createQuestion(@RequestBody QuestionModel questionModel, @PathVariable("sessionId") Integer sessionId){
+    public Question createQuestion(@RequestBody QuestionModel questionModel, @PathVariable("sessionId") Integer sessionId){
         sessionManager.checkSessionId(sessionId);
-        return questionManager.createQuestion(sessionId, questionModel);
+        participantManager.checkParticipantId(questionModel.getParticipantId());
+        return questionManager.createQuestionByModel(sessionId, questionModel);
     }
 
     //TODO: LFD-79 //Aktuell Testdaten
