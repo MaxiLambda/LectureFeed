@@ -90,4 +90,9 @@ public class SessionManager {
     public Session saveSession(Session session){
         return sessionDBService.save(session);
     }
+
+    public void closeAllOpenSessions(){
+        sessionDBService.findAllOpen().stream().forEach(session ->  closeSession(session.getId()));
+    }
+
 }

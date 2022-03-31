@@ -48,6 +48,10 @@ public class SessionRestController {
         if(!SecurityContextHolderUtils.isCurrentUserAdmin()) tokenService.checkSessionIdByToken(token, sessionId);
         sessionManager.checkSessionId(sessionId);
 
+        if(sessionManager.isSessionClosed(sessionId)){
+            return null;
+        }
+
         Session session = sessionManager.getSessionById(sessionId);
         Set<Participant> participants = session.getParticipants();
         Set<Question> questions = session.getQuestions();
