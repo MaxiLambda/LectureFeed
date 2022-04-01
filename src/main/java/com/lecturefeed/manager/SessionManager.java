@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -98,5 +99,7 @@ public class SessionManager {
     public void closeAllOpenSessions(){
         sessionDBService.findAllOpen().stream().forEach(session ->  closeSession(session.getId()));
     }
+
+
 
 }

@@ -20,8 +20,7 @@ public class Session {
     private int id;
 
     @Builder.Default
-    @OneToMany
-    @JoinColumn(name = "session_id")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "session")
     private Set<Participant> participants = Set.of();
 
     @Builder.Default
