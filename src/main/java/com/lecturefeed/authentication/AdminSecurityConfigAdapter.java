@@ -22,13 +22,6 @@ public class AdminSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
     private final HttpServletRequest request;
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //auth.authenticationProvider(ipAuthenticationProvider);
-//        auth.userDetailsService(new MyUserDetailsService());
-    }
-
-
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
         PreAuthTokenHeaderFilter preAuthTokenHeaderFilter = new PreAuthTokenHeaderFilter(authenticatorService, inetAddressSecurityService);
         preAuthTokenHeaderFilter.setAuthenticationManager(authentication -> {
@@ -51,10 +44,7 @@ public class AdminSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
                 .antMatchers("/session/**").hasAnyRole(UserRole.ADMINISTRATOR.getRole(), UserRole.PARTICIPANT.getRole())
                 //.antMatchers("/ws/**").permitAll()
                 .anyRequest().authenticated()
-                //.and().authenticationProvider(ipAuthenticationProvider)
-                .and()
-                //.authenticationProvider(ipAuthenticationProvider)
-                .addFilter(preAuthTokenHeaderFilter)
+                .and().addFilter(preAuthTokenHeaderFilter)
 
         ;
 

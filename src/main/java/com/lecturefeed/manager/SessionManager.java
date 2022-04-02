@@ -68,7 +68,8 @@ public class SessionManager {
 
 
     public void checkSessionId(int sessionId){
-        if (getSessionById(sessionId) == null)
+        Session session = getSessionById(sessionId);
+        if (session == null || session.getClosed() != 0L)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("SessionId %d are not exists", sessionId));
     }
 

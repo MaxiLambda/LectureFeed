@@ -4,7 +4,7 @@ import com.lecturefeed.entity.model.Participant;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
+import java.util.List;
 
 enum SessionDataServiceAdminPath {
     sendNewParticipantToAll("/admin/session/%d/user/onjoin"),
@@ -80,9 +80,9 @@ public class SessionDataService {
         simpMessagingTemplate.convertAndSend(path, "");
     }
 
-    public void sendConnectionStatus(int sessionId, Map<Integer, Boolean> connectionStatus){
+    public void sendConnectionStatus(int sessionId, List<Participant> participants){
         String path = String.format(SessionDataServiceAdminPath.sendParticipantConnectionStatus.toString(),sessionId);
-        simpMessagingTemplate.convertAndSend(path, connectionStatus);
+        simpMessagingTemplate.convertAndSend(path, participants);
     }
 
 

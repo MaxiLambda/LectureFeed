@@ -25,7 +25,7 @@ public class ParticipantManager {
     public Participant createParticipantBySessionId(Integer sessionId, String nickname){
         Session session = sessionManager.getSessionById(sessionId);
         if(session != null){
-            Participant participant = Participant.builder().nickname(nickname).build();
+            Participant participant = Participant.builder().nickname(nickname).session(session).build();
             participantDBService.save(participant);
             session.getParticipants().add(participant);
             sessionManager.saveSession(session);
@@ -43,13 +43,17 @@ public class ParticipantManager {
         return getSessionByParticipantId(participantId).getId();
     }
 
-    public Map<Integer, Boolean> getConnectionStatusByParticipants(Integer sessionId){
-        List<Participant> participants = participantDBService.findBySession(sessionManager.getSessionById(sessionId));
-        Map<Integer, Boolean> status = new HashMap<>();
-        for (Participant participant: participants) {
-            status.put(participant.getId(), participant.isConnected());
-        }
-        return status;
+//    public Map<Integer, Boolean> getConnectionStatusByParticipants(Integer sessionId){
+//        List<Participant> participants = participantDBService.findBySession(sessionManager.getSessionById(sessionId));
+//        Map<Integer, Boolean> status = new HashMap<>();
+//        for (Participant participant: participants) {
+//            status.put(participant.getId(), participant.isConnected());
+//        }
+//        return status;
+//    }
+
+    public List<Participant> getParticipantsBySessionId(Integer sessionId){
+        return participantDBService.findBySession(sessionManager.getSessionById(sessionId));
     }
 
     public void updateConnectionStatusByParticipantId(Integer participant_id, Boolean status){

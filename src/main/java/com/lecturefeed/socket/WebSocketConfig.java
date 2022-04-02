@@ -3,6 +3,7 @@ package com.lecturefeed.socket;
 import com.lecturefeed.manager.ParticipantManager;
 import com.lecturefeed.socket.controller.core.CustomHandshakeHandler;
 import com.lecturefeed.socket.controller.core.WebSocketHolderService;
+import com.lecturefeed.socket.controller.core.event.WebSocketSessionEventPublisher;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
@@ -30,7 +31,9 @@ import java.security.Principal;
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    private final WebSocketHolderService webSocketHolderService;
+    private final CustomHandshakeHandler customHandshakeHandler;
+    private final WebSocketSessionEventPublisher webSocketSessionEventPublisher;
+
 
     @Override
     public void configureWebSocketTransport(final WebSocketTransportRegistration registration) {
@@ -40,10 +43,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 return new WebSocketHandlerDecorator(handler) {
                     @Override
                     public void afterConnectionEstablished(final WebSocketSession session) throws Exception {
-                        //Principal principal = session.getPrincipal();
-                        InetSocketAddress test = session.getRemoteAddress();
-                        //session.close(CloseStatus.NOT_ACCEPTABLE);
-                        webSocketHolderService.addUnknownSession(session);
+                        webSocketSessionEventPublisher.onWebSocketSessionCreated(session);
                         super.afterConnectionEstablished(session);
                     }
                 };
@@ -62,22 +62,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry
                 .addEndpoint("/ws")
                 .setAllowedOriginPatterns("http://localhost:4200")
-                .setHandshakeHandler(new CustomHandshakeHandler())
+                .setHandshakeHandler(customHandshakeHandler)
                 .withSockJS();
     }
 
-    @EventListener
-    public void onSocketConnected(SessionConnectedEvent event) {
-        StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
-        webSocketHolderService.connectParticipantToSessionId(sha.getSessionId(), (UsernamePasswordAuthenticationToken) event.getUser());
-        System.out.println("[Connected] " + sha.getSessionId());
-    }
 
-    @EventListener
-    public void onSocketDisconnected(SessionDisconnectEvent event) {
-        StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
-        System.out.println("[Disonnected] " + sha.getSessionId());
-        webSocketHolderService.removeSessionById(sha.getSessionId());
-    }
 
 }
