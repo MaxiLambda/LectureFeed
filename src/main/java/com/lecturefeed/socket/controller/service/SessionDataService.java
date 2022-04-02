@@ -4,9 +4,12 @@ import com.lecturefeed.entity.model.Participant;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 enum SessionDataServiceAdminPath {
     sendNewParticipantToAll("/admin/session/%d/user/onjoin"),
-    sendMood("/admin/session/%d/mood/onupdate");
+    sendMood("/admin/session/%d/mood/onupdate"),
+    sendParticipantConnectionStatus("/admin/session/%d/participant/connections/status");
 
     private final String path;
     SessionDataServiceAdminPath(String path) {
@@ -75,6 +78,11 @@ public class SessionDataService {
     public void sendClose(int sessionId){
         String path = String.format(SessionDataServiceSharedPath.sendClosedToAll.toString(),sessionId);
         simpMessagingTemplate.convertAndSend(path, "");
+    }
+
+    public void sendConnectionStatus(int sessionId, List<Participant> participants){
+        String path = String.format(SessionDataServiceAdminPath.sendParticipantConnectionStatus.toString(),sessionId);
+        simpMessagingTemplate.convertAndSend(path, participants);
     }
 
 

@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -67,7 +68,8 @@ public class SessionManager {
 
 
     public void checkSessionId(int sessionId){
-        if (getSessionById(sessionId) == null)
+        Session session = getSessionById(sessionId);
+        if (session == null || session.getClosed() != 0L)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("SessionId %d are not exists", sessionId));
     }
 
@@ -98,5 +100,7 @@ public class SessionManager {
     public void closeAllOpenSessions(){
         sessionDBService.findAllOpen().stream().forEach(session ->  closeSession(session.getId()));
     }
+
+
 
 }

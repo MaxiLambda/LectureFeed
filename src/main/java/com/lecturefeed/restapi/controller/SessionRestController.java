@@ -9,6 +9,7 @@ import com.lecturefeed.manager.ParticipantManager;
 import com.lecturefeed.manager.QuestionManager;
 import com.lecturefeed.manager.SessionManager;
 import com.lecturefeed.model.*;
+import com.lecturefeed.socket.controller.core.WebSocketHolderService;
 import com.lecturefeed.utils.SecurityContextHolderUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
@@ -33,6 +34,7 @@ public class SessionRestController {
     private final QuestionManager questionManager;
     private final ParticipantManager participantManager;
     private final TokenService tokenService;
+    private final WebSocketHolderService webSocketHolderService;
 
     @PostMapping("/presenter/create")
     public Map<String,Object> createNewSession(@RequestBody CreateSessionModel createSessionModel) {
@@ -91,11 +93,20 @@ public class SessionRestController {
                 .collect(Collectors.toList());
     }
 
-    //TODO: LFD-79 //Aktuell Testdaten
     @GetMapping("/presenter/{sessionId}/data")
     public Session getSessionData(@PathVariable("sessionId") Integer sessionId) {
         sessionManager.checkSessionId(sessionId);
         return sessionManager.getSessionById(sessionId);
+    }
+
+    @GetMapping("/presenter/{sessionId}/participant/{participantId}/kill/{blocked}")
+    public void killParticipant(@PathVariable("sessionId") Integer sessionId, @PathVariable("participantId") Integer participantId, @PathVariable("blocked") Boolean blocked) {
+        sessionManager.checkSessionId(sessionId);
+        participantManager.checkParticipantId(participantId);
+        if(blocked){
+            webSocketHolderService.blockRemoteAddrByParticipantId(participantId);
+        }
+        webSocketHolderService.killConnectionByParticipantId(participantId);
     }
 
     //TODO: LFD-92 //Aktuell Testdaten

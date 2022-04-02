@@ -1,11 +1,10 @@
 package com.lecturefeed.entity.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -18,4 +17,11 @@ public class Participant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nickname;
+    private boolean connected = false;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="session_id", nullable=false)
+    private Session session;
+
 }
