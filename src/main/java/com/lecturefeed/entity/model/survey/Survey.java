@@ -22,7 +22,7 @@ public class Survey {
     private int id;
     //TODO maybe replace with dedicated answer objet and @OneToMany Relations to improve Performance
     @Builder.Default
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> answers = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "template_id")
@@ -47,7 +47,9 @@ public class Survey {
     }
 
     public void addAnswer(int answeringId,String answer){
-        //TODO throw Exception if id already answered?
-        if(answeredIds.add(answeringId)) answers.add(answer);
+        if(!answeredIds.contains(answeringId)){
+            answeredIds.add(answeringId);
+            answers.add(answer);
+        }
     }
 }

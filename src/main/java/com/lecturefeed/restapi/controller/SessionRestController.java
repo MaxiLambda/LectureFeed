@@ -5,6 +5,7 @@ import com.lecturefeed.entity.model.Participant;
 import com.lecturefeed.entity.model.Question;
 import com.lecturefeed.entity.model.Session;
 import com.lecturefeed.entity.model.SessionMetadata;
+import com.lecturefeed.manager.CSVManager;
 import com.lecturefeed.manager.ParticipantManager;
 import com.lecturefeed.manager.QuestionManager;
 import com.lecturefeed.manager.SessionManager;
@@ -35,6 +36,7 @@ public class SessionRestController {
     private final ParticipantManager participantManager;
     private final TokenService tokenService;
     private final WebSocketHolderService webSocketHolderService;
+    private final CSVManager csvManager;
 
     @PostMapping("/presenter/create")
     public Map<String,Object> createNewSession(@RequestBody CreateSessionModel createSessionModel) {
@@ -112,14 +114,9 @@ public class SessionRestController {
     //TODO: LFD-92 //Aktuell Testdaten
     @GetMapping("/presenter/{sessionId}/data/download")
     public FileSystemResource downloadSessionData(@PathVariable("sessionId") Integer sessionId) {
-        //sessionManager.checkSessionId(sessionId);
+        sessionManager.checkSessionId(sessionId);
         try {
-            File tempFile = File.createTempFile("prefix-", "-suffix");
-            String s = System.lineSeparator() + "New Line!";
-            BufferedOutputStream out = new BufferedOutputStream(Files.newOutputStream(Paths.get(tempFile.getPath()), StandardOpenOption.APPEND));
-            out.write(s.getBytes());
-            out.close();
-
+              File tempFile = csvManager.buildSessionZip(sessionId);
             return new FileSystemResource(tempFile);
         } catch (IOException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, String.format("Failed to create data by session id %d", sessionId));
