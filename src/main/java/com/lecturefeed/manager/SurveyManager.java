@@ -22,12 +22,11 @@ public class SurveyManager {
     private final SurveyDBService surveyDBService;
 
     public Collection<Survey> getSurveysBySessionId(int sessionId){
-        //return sessionManager.getSessionById(sessionId).getSurveys().values();
         return sessionManager.getSessionById(sessionId).getSurveys();
     }
 
     public SurveyTemplate createSurvey(int sessionId, SurveyTemplate template){
-        Survey survey = new Survey(getSurveysBySessionId(sessionId).size()+1, template, new ArrayList<>(), System.currentTimeMillis());
+        Survey survey = Survey.builder().template(template).build();
         sessionManager.getSessionById(sessionId).getSurveys().add(survey);
         surveyDBService.save(survey);
 
@@ -35,7 +34,7 @@ public class SurveyManager {
         surveyService.onCreateByParticipant(sessionId, survey.getId(), template);
 
         //start Thread to publish survey after a given amount of time
-        new SurveyTimer(sessionId, survey, surveyService, this).start();
+        new SurveyTimer(sessionId, survey.getId(), surveyService, this).start();
 
         return template;
     }
@@ -49,7 +48,7 @@ public class SurveyManager {
     public void addAnswerToSurvey(int sessionId, int surveyId,int participantId, String answer){
         Survey survey = getSurveyById(surveyId);
         if(survey != null){
-            survey.addAnswer(participantId,answer);
+            survey.addAnswer(participantId, answer);
             surveyDBService.save(survey);
             surveyService.onUpdate(sessionId, survey);
         }

@@ -10,14 +10,16 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class SurveyTimer extends Thread{
     private final int sessionId;
-    private final Survey survey;
+    private final int surveyId;
     private final SurveyService surveyService;
     private final SurveyManager surveyManager;
 
     @Override
     public void run() {
         try {
+            Survey survey = surveyManager.getSurveyById(surveyId);
             sleep(survey.getTemplate().getDuration() * 1000L);
+            survey = surveyManager.getSurveyById(surveyId);
             survey.setTimestamp(new Date().getTime());
             surveyManager.updateSurvey(sessionId, survey);
             surveyService.onClose(sessionId, survey.getId());

@@ -12,13 +12,11 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="LectureFeed" target="16" />
-      <module name="LectureFeedLight" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="LectureFeed" options="-parameters" />
-      <module name="LectureFeedLight" options="-parameters" />
     </option>
   </component>
 </project>
