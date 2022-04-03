@@ -20,4 +20,5 @@ public class MoodEntity {
 
     int value;
     long timestamp;
+    int participantsCount;
 }

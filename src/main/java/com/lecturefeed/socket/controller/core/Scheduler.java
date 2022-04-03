@@ -19,11 +19,11 @@ public class Scheduler {
     private final SessionManager sessionManager;
     private final MoodManager moodManager;
 
-    //Todo: kann nach dem Ticket LFD-82 entfernt werden
-    @Scheduled(fixedRate = 10000)
-    public void schedulingTask() {
-        for (Session session: sessionManager.getAllOpenSessions()) {
-            moodManager.addMoodValueToSession(session.getId(), IntegerUtils.getRandomIntegerByRange(-5, 5));
-        }
-    }
+//    //Todo: kann nach dem Ticket LFD-82 entfernt werden
+//    @Scheduled(fixedRate = 10000)
+//    public void schedulingTask() {
+//        for (Session session: sessionManager.getAllOpenSessions()) {
+//            //moodManager.addMoodValueToSession(session.getId(), IntegerUtils.getRandomIntegerByRange(-5, 5), 1);
+//        }
+//    }
 }

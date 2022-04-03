@@ -95,7 +95,7 @@ public class SessionRestController {
 
     @GetMapping("/presenter/{sessionId}/data")
     public Session getSessionData(@PathVariable("sessionId") Integer sessionId) {
-        sessionManager.checkSessionId(sessionId);
+        sessionManager.checkSessionId(sessionId, false);
         return sessionManager.getSessionById(sessionId);
     }
 

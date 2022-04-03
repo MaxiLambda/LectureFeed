@@ -67,10 +67,14 @@ public class SessionManager {
     }
 
 
-    public void checkSessionId(int sessionId){
+    public void checkSessionId(int sessionId, boolean closedAllowed){
         Session session = getSessionById(sessionId);
-        if (session == null || session.getClosed() != 0L)
+        if (session == null || closedAllowed && session.getClosed() != 0L)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("SessionId %d are not exists", sessionId));
+    }
+
+    public void checkSessionId(int sessionId){
+        this.checkSessionId(sessionId, false);
     }
 
     public boolean existsSessionId(int sessionId){
