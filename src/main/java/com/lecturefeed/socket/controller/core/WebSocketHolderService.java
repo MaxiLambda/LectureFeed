@@ -2,6 +2,8 @@ package com.lecturefeed.socket.controller.core;
 
 import com.auth0.jwt.interfaces.Claim;
 import com.lecturefeed.authentication.InetAddressSecurityService;
+import com.lecturefeed.entity.model.Participant;
+import com.lecturefeed.manager.MoodManager;
 import com.lecturefeed.manager.ParticipantManager;
 import com.lecturefeed.socket.controller.core.event.WebSocketSessionRegistrationEvent;
 import com.lecturefeed.socket.controller.model.WebSocketHolderSession;
@@ -26,6 +28,7 @@ public class WebSocketHolderService{
 
     private final InetAddressSecurityService inetAddressSecurityService;
     private final ParticipantManager participantManager;
+    private final MoodManager moodManager;
     private final SessionDataService sessionDataService;
     private final Map<String, WebSocketHolderSession> webSocketHolderSessions = new HashMap<>();
 
@@ -68,7 +71,9 @@ public class WebSocketHolderService{
 
     private void sendConnectionStatusByParticipantId(int participantId){
         int sessionId = participantManager.getSessionIdByParticipantId(participantId);
-        sessionDataService.sendConnectionStatus(sessionId, participantManager.getParticipantsBySessionId(sessionId));
+        List<Participant> participants = participantManager.getParticipantsBySessionId(sessionId);
+        if(participants.size() == 0) moodManager.addMoodValueToSession(sessionId, 0, 0);
+        sessionDataService.sendConnectionStatus(sessionId, participants);
     }
 
     private WebSocketHolderSession getWebSocketHolderSessionByParticipantId(int participantId){

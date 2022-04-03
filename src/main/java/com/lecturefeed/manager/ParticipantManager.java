@@ -43,17 +43,12 @@ public class ParticipantManager {
         return getSessionByParticipantId(participantId).getId();
     }
 
-//    public Map<Integer, Boolean> getConnectionStatusByParticipants(Integer sessionId){
-//        List<Participant> participants = participantDBService.findBySession(sessionManager.getSessionById(sessionId));
-//        Map<Integer, Boolean> status = new HashMap<>();
-//        for (Participant participant: participants) {
-//            status.put(participant.getId(), participant.isConnected());
-//        }
-//        return status;
-//    }
-
     public List<Participant> getParticipantsBySessionId(Integer sessionId){
         return participantDBService.findBySession(sessionManager.getSessionById(sessionId));
+    }
+
+    public List<Participant> getConnectedParticipantsBySessionId(Integer sessionId){
+        return getParticipantsBySessionId(sessionId).stream().filter(Participant::isConnected).toList();
     }
 
     public void updateConnectionStatusByParticipantId(Integer participant_id, Boolean status){
@@ -65,6 +60,10 @@ public class ParticipantManager {
     public void checkParticipantId(int participantId){
         if (participantDBService.findById(participantId)==null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Participant-Id %d are not exists", participantId));
+    }
+
+    public boolean existsParticipantId(int participantId){
+        return participantDBService.findById(participantId)!=null;
     }
 
 }
