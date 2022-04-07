@@ -22,7 +22,7 @@ public class DBConfig {
     Environment env;
 
     private static Path getDatabasePathOption(){
-        if(RunTimeUtils.getServerOptions().database.length() == 0) return null;
+        if(RunTimeUtils.getServerOptions() == null || RunTimeUtils.getServerOptions().database == null || RunTimeUtils.getServerOptions().database.length() == 0) return null;
         if(!new File(RunTimeUtils.getServerOptions().database).isFile()) return null;
         return Paths.get(RunTimeUtils.getServerOptions().database);
     }
