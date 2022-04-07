@@ -18,8 +18,6 @@ jobs:
         node-version: [14.x]
 
     steps:
-    - name: Checkout submodules from main
-      run: git submodule foreach git pull origin main
     - name: Checkout repository
       uses: actions/checkout@v2
     - name: Checkout submodules
