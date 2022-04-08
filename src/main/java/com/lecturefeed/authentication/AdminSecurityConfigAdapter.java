@@ -19,7 +19,6 @@ public class AdminSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
 
     private final AuthenticatorService authenticatorService;
     private final InetAddressSecurityService inetAddressSecurityService;
-    private final HttpServletRequest request;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -33,19 +32,19 @@ public class AdminSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
         });
 
         http
+                .antMatcher("/api/**")
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/auth/admin")
+                .antMatchers("/api/auth/admin")
                 .access("hasIpAddress('127.0.0.1') or hasIpAddress('::1')")
-                .antMatchers("/auth/participant").permitAll()
-                .antMatchers("/admin/**", "/presenter/**", "/session/presenter/**").hasRole(UserRole.ADMINISTRATOR.getRole())
-                .antMatchers("/session/**").hasAnyRole(UserRole.ADMINISTRATOR.getRole(), UserRole.PARTICIPANT.getRole())
-                //.antMatchers("/ws/**").permitAll()
+                .antMatchers("/api/auth/participant").permitAll()
+                .antMatchers("/api/admin/**", "/api/presenter/**", "/api/session/presenter/**").hasRole(UserRole.ADMINISTRATOR.getRole())
+                .antMatchers("/api/session/**").hasAnyRole(UserRole.ADMINISTRATOR.getRole(), UserRole.PARTICIPANT.getRole())
+//                .antMatchers("/api/ws/**").authenticated()
                 .anyRequest().authenticated()
                 .and().addFilter(preAuthTokenHeaderFilter)
-
         ;
 
     }
