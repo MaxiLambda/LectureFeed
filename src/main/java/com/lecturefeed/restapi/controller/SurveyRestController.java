@@ -16,6 +16,7 @@ import java.util.*;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@RequestMapping("/api")
 public class SurveyRestController {
 
     private final SurveyManager surveyManager;
