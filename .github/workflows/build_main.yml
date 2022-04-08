@@ -18,10 +18,19 @@ jobs:
         node-version: [14.x]
 
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v2
-    - name: Checkout submodules
-      run: git submodule update --init --recursive
+      
+    - name: Clear Project
+      run: |
+        rm -rf "src/main/resources/LectureFeed-Web" 
+        
+    - name: Checkout LectureFeed-Web
+      uses: actions/checkout@v2
+      with:
+          repository: MaximilianLincks/LectureFeed-Web
+          ref: main
+          path: src/main/resources/LectureFeed-Web
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
