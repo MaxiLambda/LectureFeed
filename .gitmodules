@@ -1,0 +1,4 @@
+[submodule "src/main/resources/LectureFeed-Web"]
+	path = src/main/resources/LectureFeed-Web
+	url = https://github.com/MaximilianLincks/LectureFeed-Web.git
+	branch = main
