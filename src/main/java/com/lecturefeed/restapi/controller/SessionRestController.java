@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/session")
+@RequestMapping("/api/session")
 public class SessionRestController {
 
     private final SessionManager sessionManager;

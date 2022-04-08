@@ -60,7 +60,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry
-                .addEndpoint("/ws")
+                .addEndpoint("/api/ws")
                 .setAllowedOriginPatterns("http://localhost:4200")
                 .setHandshakeHandler(customHandshakeHandler)
                 .withSockJS();
