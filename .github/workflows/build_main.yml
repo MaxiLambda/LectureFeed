@@ -24,7 +24,6 @@ jobs:
     - name: Clone Subproject
       run: |
         rm -rf "src/main/resources/LectureFeed-Web" 
-        "ls -la"
         cd "src/main/resources"
         git clone https://github.com/MaximilianLincks/LectureFeed-Web.git
 
