@@ -23,4 +23,4 @@ jobs:
         PARENT_BRANCH: main
         WORKFLOW_ID: 14954323
       run: |
-        curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${{ env.CI_TOKEN }}" https://api.github.com/repos/${{ env.PARENT_REPO }}/actions/workflows/${{ env.WORKFLOW_ID }}/dispatches -d '{"ref":"${{ env.PARENT_BRANCH }}"}'        
+        curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${{ env.CI_TOKEN }}" https://api.github.com/repos/${{ env.PARENT_REPO }}-Desktop/actions/workflows/${{ env.WORKFLOW_ID }}/dispatches -d '{"ref":"main"}'        
