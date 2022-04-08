@@ -18,8 +18,15 @@ jobs:
         node-version: [14.x]
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    
     - name: Clone Subproject
-      run: rm -rf "src/main/resources/LectureFeed-Web" && "ls -la" && cd "src/main/resources" && git clone https://github.com/MaximilianLincks/LectureFeed-Web.git
+      run: |
+        rm -rf "src/main/resources/LectureFeed-Web" 
+        "ls -la"
+        cd "src/main/resources"
+        git clone https://github.com/MaximilianLincks/LectureFeed-Web.git
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
