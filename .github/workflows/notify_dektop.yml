@@ -1,4 +1,4 @@
- name: 'Notify LFD-Desktop'
+name: 'Notify LFD-Desktop'
 
 on:
   push:
