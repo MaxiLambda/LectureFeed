@@ -24,7 +24,13 @@ jobs:
     - name: Clear Project
       run: |
         rm -rf "src/main/resources/LectureFeed-Web" 
-        cd "src/main/resources"
+        
+    - name: Checkout Central Actions Repo
+      uses: actions/checkout@v2
+      with:
+          repository: MaximilianLincks/LectureFeed-Web
+          ref: main
+          path: src/main/resources/
     
     - name: Clone Subproject
       run: git clone https://github.com/MaximilianLincks/LectureFeed-Web.git
