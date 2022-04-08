@@ -5,12 +5,9 @@ on:
     branches:
       - main    
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
 jobs:
   notify:
-    name: 'Notify   LFD-Desktop'
+    name: 'Notify LFD-Desktop'
     runs-on: ubuntu-latest
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
