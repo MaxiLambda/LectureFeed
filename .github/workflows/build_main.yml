@@ -19,7 +19,7 @@ jobs:
 
     steps:
     - name: Clone Subproject
-      run: rm -rf "src/main/resources/LectureFeed-Web" && cd "src/main/resources/LectureFeed-Web" && git clone https://github.com/MaximilianLincks/LectureFeed-Web.git
+      run: rm -rf "src/main/resources/LectureFeed-Web" && cd "src/main/resources/" && git clone https://github.com/MaximilianLincks/LectureFeed-Web.git
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
