@@ -25,7 +25,7 @@ jobs:
       run: |
         rm -rf "src/main/resources/LectureFeed-Web" 
         
-    - name: Checkout Central Actions Repo
+    - name: Checkout LectureFeed-Web
       uses: actions/checkout@v2
       with:
           repository: MaximilianLincks/LectureFeed-Web
