@@ -3,16 +3,13 @@ package com.lecturefeed.manager;
 import com.lecturefeed.entity.model.Participant;
 import com.lecturefeed.entity.model.Session;
 import com.lecturefeed.repository.service.ParticipantDBService;
-import com.lecturefeed.repository.service.SurveyTemplateDBService;
 import com.lecturefeed.socket.controller.service.SessionDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -57,8 +54,8 @@ public class ParticipantManager {
         participantDBService.save(participant);
     }
 
-    public void checkParticipantId(int participantId){
-        if (participantDBService.findById(participantId)==null)
+    public void checkParticipantId(Integer participantId){
+        if (participantId == null || participantDBService.findById(participantId)==null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Participant-Id %d are not exists", participantId));
     }
 

@@ -34,7 +34,17 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              {
+                "input": "src/theme-dark.scss",
+                "bundleName": "dark",
+                "inject": false
+              },
+              {
+                "input": "src/theme-light.scss",
+                "bundleName": "light",
+                "inject": false
+              }
             ],
             "scripts": []
           },
@@ -43,8 +53,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",

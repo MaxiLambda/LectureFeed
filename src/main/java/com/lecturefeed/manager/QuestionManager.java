@@ -26,7 +26,13 @@ public class QuestionManager {
 
     public Question createQuestionByModel(int sessionId, QuestionModel model){
         Participant participant = participantService.findById(model.getParticipantId());
-        Question question = Question.builder().participant(participant).message(model.getMessage()).rating(model.getRating()).created(model.getCreated()).build();
+        Question question = Question.builder()
+                .participant(participant)
+                .message(model.getMessage())
+                .rating(0)
+                .created(model.getCreated())
+                .anonymous(model.getAnonymous())
+                .build();
         questionDBService.save(question);
         Session session = sessionManager.getSessionById(sessionId);
         session.getQuestions().add(question);

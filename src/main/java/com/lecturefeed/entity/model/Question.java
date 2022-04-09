@@ -26,6 +26,7 @@ public class Question {
     private String message;
     private Integer rating = 0;
     private Long created;
+    private Boolean anonymous;
     //null means the question was never closed
     private Long closed;
 
