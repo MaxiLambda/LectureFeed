@@ -1,6 +1,5 @@
 package com.lecturefeed.model;
 
-import com.lecturefeed.entity.model.Participant;
 import lombok.Data;
 
 @Data

@@ -5,6 +5,7 @@ import com.lecturefeed.entity.model.Session;
 import com.lecturefeed.repository.service.ParticipantDBService;
 import com.lecturefeed.repository.service.SurveyTemplateDBService;
 import com.lecturefeed.socket.controller.service.SessionDataService;
+import com.lecturefeed.utils.QuestionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -66,4 +67,8 @@ public class ParticipantManager {
         return participantDBService.findById(participantId)!=null;
     }
 
+    public void addHiddenParticipant(){
+        sessionManager.saveSession(QuestionUtils.HIDDEN_SESSION);
+        participantDBService.save(QuestionUtils.HIDDEN_PARTICIPANT);
+    }
 }
