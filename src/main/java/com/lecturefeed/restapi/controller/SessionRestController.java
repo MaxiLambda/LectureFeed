@@ -11,7 +11,6 @@ import com.lecturefeed.manager.QuestionManager;
 import com.lecturefeed.manager.SessionManager;
 import com.lecturefeed.model.*;
 import com.lecturefeed.socket.controller.core.WebSocketHolderService;
-import com.lecturefeed.utils.QuestionUtils;
 import com.lecturefeed.utils.SecurityContextHolderUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
@@ -83,7 +82,8 @@ public class SessionRestController {
     @PostMapping("/{sessionId}/question/create")
     public Question createQuestion(@RequestBody QuestionModel questionModel, @PathVariable("sessionId") Integer sessionId){
         sessionManager.checkSessionId(sessionId);
-        if(questionModel.getParticipantId() == null) questionModel.setParticipantId(QuestionUtils.HIDDEN_PARTICIPANT.getId());
+        //1 is the id of the hiddenParticipant
+        if(questionModel.getParticipantId() == null) questionModel.setParticipantId(1);
         participantManager.checkParticipantId(questionModel.getParticipantId());
         return questionManager.createQuestionByModel(sessionId, questionModel);
     }

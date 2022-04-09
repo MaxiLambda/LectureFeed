@@ -1,7 +1,9 @@
 package com.lecturefeed.manager;
 
+import com.lecturefeed.entity.model.Participant;
 import com.lecturefeed.entity.model.Session;
 import com.lecturefeed.entity.model.SessionMetadata;
+import com.lecturefeed.repository.service.ParticipantDBService;
 import com.lecturefeed.repository.service.SessionDBService;
 import com.lecturefeed.socket.controller.service.SessionDataService;
 import com.lecturefeed.utils.StringUtils;
@@ -22,6 +24,7 @@ public class SessionManager {
 
     private final SessionDataService sessionDataService;
     private final SessionDBService sessionDBService;
+    private final ParticipantDBService participantDBService;
     private static final int SESSION_CODE_LENGTH = 8;
 
     public boolean isSessionClosed(int sessionId){
@@ -35,6 +38,7 @@ public class SessionManager {
     public Session createSession(String name){
         Session session = createSessionEntity(name);
         sessionDBService.save(session);
+       participantDBService.save(Participant.builder().session(session).nickname("hidden").connected(false).build());
         return session;
     }
 

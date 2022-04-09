@@ -3,17 +3,13 @@ package com.lecturefeed.manager;
 import com.lecturefeed.entity.model.Participant;
 import com.lecturefeed.entity.model.Session;
 import com.lecturefeed.repository.service.ParticipantDBService;
-import com.lecturefeed.repository.service.SurveyTemplateDBService;
 import com.lecturefeed.socket.controller.service.SessionDataService;
-import com.lecturefeed.utils.QuestionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -67,8 +63,4 @@ public class ParticipantManager {
         return participantDBService.findById(participantId)!=null;
     }
 
-    public void addHiddenParticipant(){
-        sessionManager.saveSession(QuestionUtils.HIDDEN_SESSION);
-        participantDBService.save(QuestionUtils.HIDDEN_PARTICIPANT);
-    }
 }
