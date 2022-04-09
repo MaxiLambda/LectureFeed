@@ -54,8 +54,8 @@ public class ParticipantManager {
         participantDBService.save(participant);
     }
 
-    public void checkParticipantId(int participantId){
-        if (participantDBService.findById(participantId)==null)
+    public void checkParticipantId(Integer participantId){
+        if (participantId == null || participantDBService.findById(participantId)==null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Participant-Id %d are not exists", participantId));
     }
 

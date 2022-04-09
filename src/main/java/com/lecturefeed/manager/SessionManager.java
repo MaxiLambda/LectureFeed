@@ -38,7 +38,7 @@ public class SessionManager {
     public Session createSession(String name){
         Session session = createSessionEntity(name);
         sessionDBService.save(session);
-       participantDBService.save(Participant.builder().session(session).nickname("hidden").connected(false).build());
+//       participantDBService.save(Participant.builder().session(session).nickname("hidden").connected(false).build());
         return session;
     }
 
@@ -71,13 +71,15 @@ public class SessionManager {
     }
 
 
-    public void checkSessionId(int sessionId, boolean closedAllowed){
+    public void checkSessionId(Integer sessionId, boolean closedAllowed){
+        if(sessionId == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "SessionId are not exists");
         Session session = getSessionById(sessionId);
         if (session == null || closedAllowed && session.getClosed() != 0L)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("SessionId %d are not exists", sessionId));
     }
 
-    public void checkSessionId(int sessionId){
+    public void checkSessionId(Integer sessionId){
         this.checkSessionId(sessionId, false);
     }
 

@@ -82,8 +82,6 @@ public class SessionRestController {
     @PostMapping("/{sessionId}/question/create")
     public Question createQuestion(@RequestBody QuestionModel questionModel, @PathVariable("sessionId") Integer sessionId){
         sessionManager.checkSessionId(sessionId);
-        //1 is the id of the hiddenParticipant
-        if(questionModel.getParticipantId() == null) questionModel.setParticipantId(1);
         participantManager.checkParticipantId(questionModel.getParticipantId());
         return questionManager.createQuestionByModel(sessionId, questionModel);
     }

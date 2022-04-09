@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  port: 8080,
+  displayShareSessionDialog: true
 };
