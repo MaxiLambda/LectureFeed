@@ -40,7 +40,7 @@ public class AdminSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/auth/admin")
                 .access("hasIpAddress('127.0.0.1') or hasIpAddress('::1')")
                 .antMatchers("/api/auth/participant").permitAll()
-                .antMatchers("/api/admin/**", "/api/presenter/**", "/api/session/presenter/**").hasRole(UserRole.ADMINISTRATOR.getRole())
+                .antMatchers("/api/admin/**", "/api/presenter/**", "/api/session/presenter/**", "/api/environment/**").hasRole(UserRole.ADMINISTRATOR.getRole())
                 .antMatchers("/api/session/**").hasAnyRole(UserRole.ADMINISTRATOR.getRole(), UserRole.PARTICIPANT.getRole())
 //                .antMatchers("/api/ws/**").authenticated()
                 .anyRequest().authenticated()
