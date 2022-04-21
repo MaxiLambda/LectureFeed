@@ -8,6 +8,6 @@ import org.springframework.web.socket.WebSocketSession;
 public class WebSocketHolderSession {
 
     private WebSocketSession webSocketSession = null;
-    private int participantId = 0;
+    private Integer participantId = 0;
 
 }

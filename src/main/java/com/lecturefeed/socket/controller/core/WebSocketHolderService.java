@@ -70,10 +70,12 @@ public class WebSocketHolderService{
     }
 
     private void sendConnectionStatusByParticipantId(int participantId){
-        int sessionId = participantManager.getSessionIdByParticipantId(participantId);
-        List<Participant> participants = participantManager.getParticipantsBySessionId(sessionId);
-        if(participants.size() == 0) moodManager.addMoodValueToSession(sessionId, 0, 0);
-        sessionDataService.sendConnectionStatus(sessionId, participants);
+        Integer sessionId = participantManager.getSessionIdByParticipantId(participantId);
+        if(sessionId != null){
+            List<Participant> participants = participantManager.getParticipantsBySessionId(sessionId);
+            if(participants.size() == 0) moodManager.addMoodValueToSession(sessionId, 0, 0);
+            sessionDataService.sendConnectionStatus(sessionId, participants);
+        }
     }
 
     private WebSocketHolderSession getWebSocketHolderSessionByParticipantId(int participantId){
@@ -107,8 +109,10 @@ public class WebSocketHolderService{
         if(webSocketHolderSessions.containsKey(webSessionId)){
             WebSocketHolderSession webSocketHolderSession = webSocketHolderSessions.get(webSessionId);
             participantManager.updateConnectionStatusByParticipantId(webSocketHolderSession.getParticipantId(), false);
-            sendConnectionStatusByParticipantId(webSocketHolderSession.getParticipantId());
-            webSocketHolderSessions.remove(webSessionId);
+            if(webSocketHolderSession.getParticipantId() != null){
+                sendConnectionStatusByParticipantId(webSocketHolderSession.getParticipantId());
+                webSocketHolderSessions.remove(webSessionId);
+            }
         }
     }
 

@@ -33,11 +33,17 @@ public class ParticipantManager {
     }
 
     public Session getSessionByParticipantId(int participantId){
-        return participantDBService.findById(participantId).getSession();
+        Participant participant = participantDBService.findById(participantId);
+        if(participant != null){
+            return participant.getSession();
+        }
+        return null;
     }
 
-    public int getSessionIdByParticipantId(int participantId){
-        return getSessionByParticipantId(participantId).getId();
+    public Integer getSessionIdByParticipantId(int participantId){
+        Session session = getSessionByParticipantId(participantId);
+        if(session != null) return session.getId();
+        return null;
     }
 
     public List<Participant> getParticipantsBySessionId(Integer sessionId){
@@ -50,8 +56,10 @@ public class ParticipantManager {
 
     public void updateConnectionStatusByParticipantId(Integer participant_id, Boolean status){
         Participant participant = participantDBService.findById(participant_id);
-        participant.setConnected(status);
-        participantDBService.save(participant);
+        if(participant != null){
+            participant.setConnected(status);
+            participantDBService.save(participant);
+        }
     }
 
     public void checkParticipantId(Integer participantId){
