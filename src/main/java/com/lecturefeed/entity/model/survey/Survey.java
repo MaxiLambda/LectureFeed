@@ -22,7 +22,7 @@ public class Survey {
     private int id;
     //TODO maybe replace with dedicated answer objet and @OneToMany Relations to improve Performance
     @Builder.Default
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.LAZY)
     private List<String> answers = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "template_id")
