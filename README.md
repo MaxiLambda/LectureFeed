@@ -4,3 +4,5 @@ It is really cool and developed using Angular and Java.
 
 ## Build-Status
 [![Build LectureFeed](https://github.com/MaximilianLincks/LectureFeed/actions/workflows/build_main.yml/badge.svg?branch=main)](https://github.com/MaximilianLincks/LectureFeed/actions/workflows/build_main.yml)
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=MaximilianLincks_LectureFeed&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=MaximilianLincks_LectureFeed)
