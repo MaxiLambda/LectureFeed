@@ -21,7 +21,7 @@ public class SurveyTimer extends Thread{
             sleep(survey.getTemplate().getDuration() * 1000L);
             survey = surveyManager.getSurveyById(surveyId);
             survey.setTimestamp(new Date().getTime());
-            surveyManager.updateSurvey(sessionId, survey);
+            surveyManager.updateSurvey(survey);
             surveyService.onClose(sessionId, survey.getId());
             surveyService.onResult(sessionId, survey);
         } catch (InterruptedException e) {
