@@ -24,7 +24,6 @@ public class SessionManager {
 
     private final SessionDataService sessionDataService;
     private final SessionDBService sessionDBService;
-    private final ParticipantDBService participantDBService;
     private static final int SESSION_CODE_LENGTH = 8;
 
     public boolean isSessionClosed(int sessionId){
@@ -108,7 +107,7 @@ public class SessionManager {
     }
 
     public void closeAllOpenSessions(){
-        sessionDBService.findAllOpen().stream().forEach(session ->  closeSession(session.getId()));
+        sessionDBService.findAllOpen().forEach(session ->  closeSession(session.getId()));
     }
 
 
