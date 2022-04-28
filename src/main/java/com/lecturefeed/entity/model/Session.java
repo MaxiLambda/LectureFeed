@@ -21,22 +21,22 @@ public class Session {
 
     @Builder.Default
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "session")
-    private Set<Participant> participants = Set.of();
+    private Set<Participant> participants = new HashSet<>();
 
     @Builder.Default
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "session_id")
-    private Set<Question> questions = Set.of();
+    private Set<Question> questions = new HashSet<>();
 
     @Builder.Default
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "session_id")
-    private Set<Survey> surveys = Set.of();
+    private Set<Survey> surveys = new HashSet<>();
 
     @Builder.Default
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "session_id")
-    private Set<MoodEntity> moodEntities = Set.of();
+    private Set<MoodEntity> moodEntities = new HashSet<>();
 
     private long closed = 0;
     private String sessionCode;
