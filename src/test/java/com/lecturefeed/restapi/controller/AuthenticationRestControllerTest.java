@@ -112,7 +112,7 @@ class AuthenticationRestControllerTest {
         TokenModel returnedToken = objectMapper.readValue(resultString,TokenModel.class);
 
         //check that the participant was added to the session
-        assertEquals(session.getParticipants().size(),1);
+        assertEquals(1,session.getParticipants().size());
 
         //check if the token matches
         assertEquals(sessionId,tokenService.getTokenValue("sessionId",returnedToken).asInt());
