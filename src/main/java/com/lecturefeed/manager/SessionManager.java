@@ -37,7 +37,6 @@ public class SessionManager {
     public Session createSession(String name){
         Session session = createSessionEntity(name);
         sessionDBService.save(session);
-//       participantDBService.save(Participant.builder().session(session).nickname("hidden").connected(false).build());
         return session;
     }
 
