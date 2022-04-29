@@ -41,9 +41,6 @@ public class AuthenticationRestController {
         sessionManager.checkSessionId(authRequestModel.getSessionId());
         Participant participant = participantManager.createParticipantBySessionId(authRequestModel.getSessionId(), authRequestModel.getNickname());
         //create token
-        TokenModel tokenModel = tokenService.createParticipantToken(authRequestModel.getNickname(), UserRole.PARTICIPANT, authRequestModel.getSessionId(), participant.getId());
-        int userId = tokenService.getTokenValue("id", tokenModel).asInt();
-
-        return tokenModel;
+        return tokenService.createParticipantToken(authRequestModel.getNickname(), UserRole.PARTICIPANT, authRequestModel.getSessionId(), participant.getId());
     }
 }

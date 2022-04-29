@@ -25,12 +25,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureMockRestServiceServer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.util.NestedServletException;
 
 import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
 import static org.junit.jupiter.api.Assertions.*;
@@ -84,7 +86,7 @@ class AuthenticationRestControllerTest {
         String sessionCode = "super-secret";
         int userId = 1;
 
-        Session session = Session.builder().sessionCode("super-secret").name("").id(sessionId).build();
+        Session session = Session.builder().sessionCode(sessionCode).name("").id(sessionId).build();
 
         ParticipantAuthRequestModel requestModel = new ParticipantAuthRequestModel(sessionId,username,sessionCode);
         String jsonRequestModel = objectMapper.writeValueAsString(requestModel);
@@ -119,5 +121,42 @@ class AuthenticationRestControllerTest {
         assertEquals(username,tokenService.getTokenValue("username",returnedToken).asString());
         assertEquals(UserRole.PARTICIPANT.getRole(),tokenService.getTokenValue("role",returnedToken).asString());
         assertEquals(userId,tokenService.getTokenValue("id",returnedToken).asInt());
+    }
+
+    //checks the creation of a new User Token
+    @Test
+    void joinNotExistingSession() throws Exception {
+        int sessionId = 1;
+        String username = "Rainer Zufall";
+        String sessionCode = "super-secret";
+
+        ParticipantAuthRequestModel requestModel = new ParticipantAuthRequestModel(sessionId,username,sessionCode);
+        String jsonRequestModel = objectMapper.writeValueAsString(requestModel);
+
+        when(sessionDBService.findById(sessionId)).thenReturn(null);
+
+        //when a user tries to join a non-existing session a NestedServletException containing a BadCredentials Exception is thrown
+        assertThrows(NestedServletException.class,() -> mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/participant")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequestModel)));
+    }
+
+    @Test
+    void joinWithBadSessionCode() throws Exception {
+        int sessionId = 1;
+        String username = "Rainer Zufall";
+        String sessionCode = "super-secret";
+        String badSessionCode = "bad-secret";
+
+        Session session = Session.builder().sessionCode(sessionCode).name("").id(sessionId).build();
+
+        ParticipantAuthRequestModel requestModel = new ParticipantAuthRequestModel(sessionId,username,badSessionCode);
+        String jsonRequestModel = objectMapper.writeValueAsString(requestModel);
+
+        when(sessionDBService.findById(sessionId)).thenReturn(session);
+
+        assertThrows(NestedServletException.class,() -> mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/participant")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequestModel)));
     }
 }
