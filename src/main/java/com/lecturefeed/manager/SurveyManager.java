@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -25,19 +27,23 @@ public class SurveyManager {
     private final SessionManager sessionManager;
     private final SurveyDBService surveyDBService;
     private final SurveyAnswerDBService surveyAnswerDBService;
+    private final Set<Integer> sessionHasActiveSurvey = new HashSet<>();
 
     public Collection<Survey> getSurveysBySessionId(int sessionId){
         return sessionManager.getSessionById(sessionId).getSurveys();
     }
 
     public SurveyTemplate createSurvey(int sessionId, SurveyTemplate template){
+        if(sessionHasActiveSurvey.contains(sessionId)) throw new RuntimeException("Session already has an active Survey");
+
         Survey survey = Survey.builder().template(template).build();
         sessionManager.getSessionById(sessionId).getSurveys().add(survey);
         surveyDBService.save(survey);
-        //survey = getSurveyById(survey.getId());
 
         surveyService.onCreateByAdmin(sessionId, survey);
         surveyService.onCreateByParticipant(sessionId, survey.getId(), template);
+
+        sessionHasActiveSurvey.add(sessionId);
 
         //start Thread to publish survey after a given amount of time
         new SurveyTimer(sessionId, survey.getId(), surveyService, this).start();
@@ -70,9 +76,12 @@ public class SurveyManager {
         }
     }
 
-    @Transactional
     public Survey getSurveyById(int id){
         return surveyDBService.findById(id);
+    }
+
+    public void closeSurvey(int sessionId){
+        sessionHasActiveSurvey.remove(sessionId);
     }
 
 }

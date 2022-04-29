@@ -27,5 +27,6 @@ public class SurveyTimer extends Thread{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        surveyManager.closeSurvey(sessionId);
     }
 }
