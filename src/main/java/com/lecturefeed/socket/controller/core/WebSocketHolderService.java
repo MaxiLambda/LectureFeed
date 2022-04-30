@@ -20,7 +20,11 @@ import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import java.io.IOException;
-import java.util.*;
+import java.net.InetSocketAddress;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -102,7 +106,11 @@ public class WebSocketHolderService{
     }
 
     private void blockRemoteAddrByWebSessionId(String webSessionId){
-        inetAddressSecurityService.blockInetAddress(webSocketHolderSessions.get(webSessionId).getWebSocketSession().getRemoteAddress().getAddress());
+        Optional.ofNullable(webSocketHolderSessions.get(webSessionId))
+                .map(WebSocketHolderSession::getWebSocketSession)
+                .map(WebSocketSession::getRemoteAddress)
+                .map(InetSocketAddress::getAddress)
+                .ifPresent(inetAddressSecurityService::blockInetAddress);
     }
 
     private void removeSessionById(String webSessionId){

@@ -2,12 +2,11 @@ package com.lecturefeed.entity.model.survey;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.lecturefeed.entity.model.Participant;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 
 
 @Getter

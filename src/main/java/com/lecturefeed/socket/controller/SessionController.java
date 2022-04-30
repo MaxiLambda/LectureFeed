@@ -1,16 +1,14 @@
 package com.lecturefeed.socket.controller;
 
 import com.auth0.jwt.interfaces.Claim;
-import com.lecturefeed.entity.model.MoodEntity;
 import com.lecturefeed.manager.MoodManager;
 import com.lecturefeed.manager.ParticipantManager;
-import com.lecturefeed.manager.SessionManager;
-import com.lecturefeed.socket.controller.service.SessionDataService;
 import com.lecturefeed.utils.PrincipalUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
+
 import java.security.Principal;
 
 

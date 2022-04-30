@@ -3,7 +3,7 @@ package com.lecturefeed.core;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.net.*;
+import java.net.InetAddress;
 import java.util.Optional;
 
 @AllArgsConstructor

@@ -2,12 +2,12 @@ package com.lecturefeed.restapi.controller;
 
 import com.lecturefeed.authentication.InetAddressSecurityService;
 import com.lecturefeed.authentication.jwt.TokenService;
+import com.lecturefeed.entity.model.Participant;
 import com.lecturefeed.manager.ParticipantManager;
+import com.lecturefeed.manager.SessionManager;
 import com.lecturefeed.model.ParticipantAuthRequestModel;
 import com.lecturefeed.model.TokenModel;
 import com.lecturefeed.model.UserRole;
-import com.lecturefeed.entity.model.Participant;
-import com.lecturefeed.manager.SessionManager;
 import com.lecturefeed.utils.HttpServletRequestUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;

@@ -1,6 +1,5 @@
 package com.lecturefeed.manager;
 
-import com.lecturefeed.entity.model.Session;
 import com.lecturefeed.entity.model.survey.Survey;
 import com.lecturefeed.entity.model.survey.SurveyAnswer;
 import com.lecturefeed.entity.model.survey.SurveyTemplate;
@@ -9,11 +8,8 @@ import com.lecturefeed.repository.service.SurveyAnswerDBService;
 import com.lecturefeed.repository.service.SurveyDBService;
 import com.lecturefeed.socket.controller.service.SurveyService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Hibernate;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;

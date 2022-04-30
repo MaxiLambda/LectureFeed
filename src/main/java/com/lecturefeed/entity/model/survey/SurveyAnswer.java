@@ -1,8 +1,6 @@
 package com.lecturefeed.entity.model.survey;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.lecturefeed.entity.model.Participant;
-import com.lecturefeed.entity.model.Session;
 import lombok.*;
 
 import javax.persistence.*;
