@@ -18,8 +18,8 @@ public class TokenService {
 
     private final CustomAuthenticationService customAuthenticationService;
 
-    private final static Calendar calendar = Calendar.getInstance();
-    private final static int DAYS_TILL_EXPIRATION = 30;
+    private final Calendar calendar = Calendar.getInstance();
+    private final int DAYS_TILL_EXPIRATION = 30;
 
     public void checkSessionIdByToken(String token, int sessionId){
         if(getTokenValue("sessionId", token).asInt() != sessionId){
