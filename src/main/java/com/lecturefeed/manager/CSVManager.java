@@ -31,8 +31,6 @@ public class CSVManager {
             appendFileToZip(out, "participants.csv", createParticipantCSV(sessionId));
             appendFileToZip(out, "moods.csv", createMoodCSV(sessionId));
             appendFileToZip(out, "surveys.csv", createSurveyCSV(sessionId));
-        }catch (IOException e){
-            throw new IOException(e);
         }
 
         return tempZip;
@@ -46,8 +44,6 @@ public class CSVManager {
             while ((count = in.read(b)) > 0) {
                 out.write(b, 0, count);
             }
-        }catch (IOException e){
-            throw new IOException(e);
         }
 
     }
@@ -65,8 +61,6 @@ public class CSVManager {
 
             Session session = sessionManager.getSessionById(sessionId);
             printer.printRecord(session.getId(), session.getName(), session.getSessionCode(), dateFormat.format(session.getClosed()));
-        }catch (IOException e){
-            throw new IOException(e);
         }
         return tempFile;
     }
@@ -81,8 +75,6 @@ public class CSVManager {
                 printer.printRecord(question.getId(), question.getMessage(), question.getRating(), question.getParticipant().getId(), dateFormat.format(question.getCreated()), dateFormat.format(question.getClosed()));
             }
 
-        }catch (IOException e){
-            throw new IOException(e);
         }
         return tempFile;
 
@@ -98,8 +90,6 @@ public class CSVManager {
             for (Participant participant: sessionManager.getSessionById(sessionId).getParticipants()) {
                 printer.printRecord(participant.getId(), participant.getNickname());
             }
-        }catch (IOException e){
-            throw new IOException(e);
         }
 
         return tempFile;
@@ -115,8 +105,6 @@ public class CSVManager {
             for (MoodEntity moodEntity: sessionManager.getSessionById(sessionId).getMoodEntities()) {
                 printer.printRecord(dateFormat.format(moodEntity.getTimestamp()), moodEntity.getValue());
             }
-        }catch (IOException e){
-            throw new IOException(e);
         }
 
         return tempFile;
@@ -139,8 +127,6 @@ public class CSVManager {
                         String.join(",", survey.getAnswers()),
                         dateFormat.format(survey.getTimestamp()));
             }
-        }catch (IOException e){
-            throw new IOException(e);
         }
 
         return tempFile;
