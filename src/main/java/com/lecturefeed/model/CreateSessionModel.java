@@ -1,6 +1,5 @@
 package com.lecturefeed.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data

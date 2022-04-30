@@ -1,9 +1,7 @@
 package com.lecturefeed.manager;
 
-import com.lecturefeed.entity.model.Participant;
 import com.lecturefeed.entity.model.Session;
 import com.lecturefeed.entity.model.SessionMetadata;
-import com.lecturefeed.repository.service.ParticipantDBService;
 import com.lecturefeed.repository.service.SessionDBService;
 import com.lecturefeed.socket.controller.service.SessionDataService;
 import com.lecturefeed.utils.StringUtils;
@@ -14,7 +12,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 

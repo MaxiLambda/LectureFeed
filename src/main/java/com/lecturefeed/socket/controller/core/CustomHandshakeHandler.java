@@ -1,11 +1,8 @@
 package com.lecturefeed.socket.controller.core;
 
 
-
 import com.lecturefeed.authentication.InetAddressSecurityService;
 import com.lecturefeed.socket.controller.model.StompPrincipal;
-import com.lecturefeed.utils.HttpServletRequestUtils;
-import jdk.jfr.Category;
 import lombok.AllArgsConstructor;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.stereotype.Component;
