@@ -58,12 +58,16 @@ public class CSVManager {
 
     private File createSessionCSVFile(Integer sessionId) throws IOException {
         File tempFile = getTempCSVFile();
-        FileWriter out = new FileWriter(tempFile);
         String[] headers = { "Session Id", "Name", "Session Code", "Closed"};
-        CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader(headers));
-        Session session = sessionManager.getSessionById(sessionId);
-        printer.printRecord(session.getId(), session.getName(), session.getSessionCode(),dateFormat.format(session.getClosed()));
-        out.close();
+        try(FileWriter out = new FileWriter(tempFile);
+        CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader(headers))) {
+
+
+            Session session = sessionManager.getSessionById(sessionId);
+            printer.printRecord(session.getId(), session.getName(), session.getSessionCode(), dateFormat.format(session.getClosed()));
+        }catch (IOException e){
+            throw new IOException(e);
+        }
         return tempFile;
     }
 
