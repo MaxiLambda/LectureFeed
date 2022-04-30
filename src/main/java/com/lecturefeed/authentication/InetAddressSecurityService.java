@@ -25,7 +25,7 @@ public class InetAddressSecurityService {
                 public void run() {
                     blockedIpAddresses.remove(inetAddress);
                 }
-            }, getBanTimeMin()*60*1000);
+            }, (long) getBanTimeMin() *60*1000);
         }
     }
 
