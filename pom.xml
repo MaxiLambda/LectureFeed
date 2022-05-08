@@ -112,11 +112,6 @@
             <artifactId>selenium-chrome-driver</artifactId>
             <version>4.1.4</version>
         </dependency>
-		<dependency>
-			<groupId>org.testcontainers</groupId>
-			<artifactId>selenium</artifactId>
-			<scope>test</scope>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-remote-driver -->
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
