@@ -17,10 +17,11 @@ public class LectureFeedApplication{
 			System.exit(1);
 		}
 		SpringApplication app = new SpringApplication(LectureFeedApplication.class);
-		int port = Integer.parseInt(System.getenv("PORT"));
-		if (System.getenv("PORT").isEmpty())
+		int port = RunTimeUtils.getServerOptions().serverPort;
+		if (System.getenv("PORT") != null && !System.getenv("PORT").isEmpty())
 		{
-			port = RunTimeUtils.getServerOptions().serverPort;
+			port = Integer.parseInt(System.getenv("PORT"));
+
 		}
 		app.setDefaultProperties(Collections.singletonMap("server.port", port));
 		app.run(args);
