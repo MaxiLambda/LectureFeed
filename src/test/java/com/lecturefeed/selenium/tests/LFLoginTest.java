@@ -18,6 +18,7 @@ public class LFLoginTest {
 
     public void registration()
     {
+        registrationPage.navigateTo("http://localhost:4200/#/presenter");
         registrationPage.clickCreateSessionButton();
         registrationPage.putSessionName("test");
         registrationPage.clickStartSessionButton();
