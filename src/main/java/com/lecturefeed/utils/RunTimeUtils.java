@@ -40,7 +40,8 @@ public class RunTimeUtils {
         try {
             System.setProperty("java.awt.headless", "false");
             if (getServerOptions().openBrowser && Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-                Desktop.getDesktop().browse(new URI(String.format("http://localhost:%d/#/presenter", getServerOptions().serverPort)));
+                //Desktop.getDesktop().browse(new URI(String.format("http://localhost:%d/#/presenter", getServerOptions().serverPort)));
+                Desktop.getDesktop().browse(new URI(String.format("https://lecture-feed.herokuapp.com:%d/#/presenter", getServerOptions().serverPort)));
             }
         }catch (Exception ignore){}
     }

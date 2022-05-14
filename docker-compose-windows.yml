@@ -1,0 +1,16 @@
+version: '3.9'
+
+#networks:
+#  lecturefeednet:
+#    name: lecturefeednet
+
+services:
+  lecturefeed:
+    build: .
+    container_name: lecturefeed
+    restart: unless-stopped #always
+ #   networks:
+ #     - lecturefeednet
+    ports:
+      - "127.0.0.1:4200:4200"
+      - "127.0.0.1:8080:8080"
