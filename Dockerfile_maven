@@ -1,0 +1,42 @@
+FROM maven:3.8.5-openjdk-18
+
+# Google Chrome
+
+#siehe https://pkgs.org/download/google-chrome-stable?msclkid=0c371e2ed12c11ecbd40c8bda0e780ce
+#für verfügbare chrome Paket-Versionen
+ARG CHROME_VERSION=101.0.4951.64
+ADD google-chrome.repo /etc/yum.repos.d/google-chrome.repo
+RUN microdnf install -y google-chrome-stable-$CHROME_VERSION \
+	&& sed -i 's/"$HERE\/chrome"/"$HERE\/chrome" --no-sandbox/g' /opt/google/chrome/google-chrome
+
+# ChromeDriver
+
+# siehe https://chromedriver.storage.googleapis.com/ für verfügbare chrome versionen
+ARG CHROME_DRIVER_VERSION=101.0.4951.41
+RUN microdnf install -y unzip \
+	&& curl -s -o /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip \
+	&& unzip /tmp/chromedriver.zip -d /opt \
+	&& rm /tmp/chromedriver.zip \
+	&& mv /opt/chromedriver /opt/chromedriver-$CHROME_DRIVER_VERSION \
+	&& chmod 755 /opt/chromedriver-$CHROME_DRIVER_VERSION \
+	&& ln -s /opt/chromedriver-$CHROME_DRIVER_VERSION /usr/bin/chromedriver
+
+
+#jar-Programm zum testen
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+EXPOSE 8080
+#RUN java -jar /app.jar
+#CMD java -jar /app.jar &
+
+
+WORKDIR /sample
+COPY src /sample/src
+COPY pom.xml /sample
+# RUN mvn test
+
+#Kommandodatei kopieren
+COPY docker_maven_commands.sh /docker_maven_commands.sh
+RUN ["chmod", "+x", "/docker_maven_commands.sh"]
+
+ENTRYPOINT ["/docker_maven_commands.sh"]

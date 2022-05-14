@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.lecturefeed.LectureFeedLightApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.49 s - in com.lecturefeed.LectureFeedLightApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.251 s - in com.lecturefeed.LectureFeedLightApplicationTests

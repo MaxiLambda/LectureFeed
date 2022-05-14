@@ -1,0 +1,10 @@
+version: '3.9'
+
+services:
+  demoapplicationtests:
+    build:
+      dockerfile: ./Dockerfile_maven
+    container_name: demoapplicationtests
+    restart: "no" #unless-stopped #always
+    ports:
+      - "127.0.0.1:8080:8080"

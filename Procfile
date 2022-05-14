@@ -1,1 +1,0 @@
-web: java -jar target/LectureFeed-1.0.0.jar

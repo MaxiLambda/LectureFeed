@@ -25,6 +25,5 @@ public class LectureFeedApplication{
 		}
 		app.setDefaultProperties(Collections.singletonMap("server.port", RunTimeUtils.getServerOptions().serverPort));
 		app.run(args);
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>FUNKTIONIERT<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 	}
 }

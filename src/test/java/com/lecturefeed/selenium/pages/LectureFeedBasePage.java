@@ -13,11 +13,4 @@ public class LectureFeedBasePage {
     {
         chromeDriver = driver;
     }
-
-    public void navigateTo(String url)
-    {
-        System.out.println(url);
-        chromeDriver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-        chromeDriver.navigate().to(url);
-    }
 }
