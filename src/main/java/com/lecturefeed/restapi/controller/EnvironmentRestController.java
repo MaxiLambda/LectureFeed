@@ -22,12 +22,23 @@ public class EnvironmentRestController {
 
     @GetMapping("/info")
     public EnvironmentInfo getEnvironmentInfo() {
-        Optional<InetAddress> inetAddress =  networkService.getRoutingInterface();
-        String ip = null;
-        if(inetAddress.isPresent()){
-            ip = inetAddress.get().getHostAddress();
+        try {
+            Optional<InetAddress> inetAddress =  networkService.getRoutingInterface();
+            String ip = null;
+            if(inetAddress.isPresent()){
+                ip = inetAddress.get().getHostAddress();
+            }
+            else
+            {
+                ip = "127.0.0.1";
+            }
+            return new EnvironmentInfo(ip);
         }
-        return new EnvironmentInfo(ip);
-    }
+        catch (Exception e)
+        {
+            //needed for tests to run on docker
+            return new EnvironmentInfo("127.0.0.1");
+        }
 
+    }
 }
