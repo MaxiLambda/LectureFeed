@@ -15,9 +15,9 @@ import org.springframework.boot.web.server.LocalServerPort;
 import java.util.concurrent.TimeUnit;
 
 //@RunWith(SpringRunner.class)
-@SpringBootTest
+//@SpringBootTest
 public class SeleniumTest {
-
+/*
         private static ChromeDriver driver;
 
         @BeforeAll
@@ -34,5 +34,5 @@ public class SeleniumTest {
             LFLoginTest lfLoginTest = new LFLoginTest(driver);
             lfLoginTest.registration();
         }
-
+*/
 }
