@@ -3,6 +3,7 @@ package com.lecturefeed.entity.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -11,6 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Builder
+@EqualsAndHashCode
 public class Question {
 
     //null means the question is not yet handled by the server
@@ -37,6 +39,6 @@ public class Question {
             joinColumns = @JoinColumn(name = "question_id"),
             inverseJoinColumns = @JoinColumn(name = "participant_id")
     )
-    private Set<Participant> voters = Set.of();
+    private Set<Participant> voters = new HashSet<>();
 
 }
