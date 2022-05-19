@@ -3,6 +3,8 @@ package com.lecturefeed.manager;
 import com.lecturefeed.entity.model.Participant;
 import com.lecturefeed.entity.model.Question;
 import com.lecturefeed.entity.model.Session;
+import com.lecturefeed.manager.command.QuestionRatingChanger;
+import com.lecturefeed.manager.command.RatingChange;
 import com.lecturefeed.model.QuestionModel;
 import com.lecturefeed.repository.service.ParticipantDBService;
 import com.lecturefeed.repository.service.QuestionDBService;
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class QuestionManager {
+public class QuestionManager implements QuestionRatingChanger {
 
     private final QuestionDBService questionDBService;
     private final SessionManager sessionManager;
@@ -41,16 +43,16 @@ public class QuestionManager {
         return question;
     }
 
-    public void ratingUpByQuestionId(int sessionId, int questionId, int voterId, boolean rating){
-        Question question = questionDBService.findById(questionId);
-        Participant voter = participantService.findById(voterId);
+    public void changeRating(RatingChange ratingChange){
+        Question question = questionDBService.findById(ratingChange.getQuestionId());
+        Participant voter = participantService.findById(ratingChange.getVoterId());
 
         if (!question.getVoters().contains(voter)){
             question.getVoters().add(voter);
-            question.setRating(question.getRating() + (rating? +1: -1));
+            question.setRating(question.getRating() + (ratingChange.isRatingChange()? +1: -1));
             questionDBService.save(question);
-            updateQuestion(sessionId, question);
-            questionService.sendQuestion(sessionId, question);
+            updateQuestion(ratingChange.getSessionId(), question);
+            questionService.sendQuestion(ratingChange.getSessionId(), question);
         }
     }
 

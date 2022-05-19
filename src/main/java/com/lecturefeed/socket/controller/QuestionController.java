@@ -2,6 +2,7 @@ package com.lecturefeed.socket.controller;
 
 import com.lecturefeed.manager.QuestionManager;
 import com.lecturefeed.manager.SessionManager;
+import com.lecturefeed.manager.command.RatingChange;
 import com.lecturefeed.utils.PrincipalUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -13,7 +14,7 @@ import java.security.Principal;
 
 @RequiredArgsConstructor
 @Controller
-public class QuestionController {
+public class QuestionController  {
     private final SessionManager sessionManager;
     private final QuestionManager questionManager;
 
@@ -27,7 +28,13 @@ public class QuestionController {
                 case "up" -> r = true;
                 case "down" -> r = false;
             }
-            questionManager.ratingUpByQuestionId(sessionId, questionId, userId, r);
+            RatingChange ratingChange = RatingChange.builder()
+                    .sessionId(sessionId)
+                    .questionId(questionId)
+                    .voterId(userId)
+                    .ratingChange(r)
+                    .build();
+            questionManager.changeRating(ratingChange);
         }
     }
 
