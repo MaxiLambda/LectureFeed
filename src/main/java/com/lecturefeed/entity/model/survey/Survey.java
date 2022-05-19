@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -23,7 +24,7 @@ public class Survey {
     @JsonIgnore
     @Builder.Default
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "survey")
-    private Set<SurveyAnswer> surveyAnswers = Set.of();
+    private Set<SurveyAnswer> surveyAnswers = new HashSet<>();
 
     @JsonGetter("answers")
     public List<String> getAnswers(){
