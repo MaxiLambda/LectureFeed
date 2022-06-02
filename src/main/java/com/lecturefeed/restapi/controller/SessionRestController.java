@@ -94,7 +94,7 @@ public class SessionRestController {
         return sessionManager.getAllClosedSessions()
                 .stream()
                 .map(sessionManager::toMetadata)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @GetMapping("/presenter/{sessionId}/data")

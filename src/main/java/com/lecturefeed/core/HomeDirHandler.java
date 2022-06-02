@@ -11,6 +11,8 @@ public class HomeDirHandler {
 
     private final static String HOME_FOLDER = ".lectureFeed";
 
+    private HomeDirHandler(){}
+
     public static Path getLectureFeedPath(){
         return Paths.get(PathUtils.getUserHomePath().toString(), HOME_FOLDER);
     }
