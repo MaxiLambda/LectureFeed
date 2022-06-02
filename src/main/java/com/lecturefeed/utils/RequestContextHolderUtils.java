@@ -12,8 +12,8 @@ public class RequestContextHolderUtils {
 
     public static HttpServletRequest getCurrentHttpRequest(){
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        if (requestAttributes instanceof ServletRequestAttributes) {
-            return ((ServletRequestAttributes)requestAttributes).getRequest();
+        if (requestAttributes instanceof ServletRequestAttributes servletRequestAttributes) {
+            return servletRequestAttributes.getRequest();
         }
         return null;
     }

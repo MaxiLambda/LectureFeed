@@ -2,7 +2,6 @@ package com.lecturefeed.db;
 
 import com.lecturefeed.core.HomeDirHandler;
 import com.lecturefeed.utils.RunTimeUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -18,8 +17,11 @@ import java.util.Optional;
 @Configuration
 public class DBConfig {
 
-    @Autowired
-    Environment env;
+    private final Environment env;
+
+    public DBConfig(Environment env) {
+        this.env = env;
+    }
 
     private static Path getDatabasePathOption(){
         if(RunTimeUtils.getServerOptions() == null || RunTimeUtils.getServerOptions().database == null || RunTimeUtils.getServerOptions().database.length() == 0) return null;
