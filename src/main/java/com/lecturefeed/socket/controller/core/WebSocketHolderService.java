@@ -77,7 +77,7 @@ public class WebSocketHolderService{
         Integer sessionId = participantManager.getSessionIdByParticipantId(participantId);
         if(sessionId != null){
             List<Participant> participants = participantManager.getParticipantsBySessionId(sessionId);
-            if(participants.size() == 0) moodManager.addMoodValueToSession(sessionId, 0, 0);
+            if(participants.isEmpty()) moodManager.addMoodValueToSession(sessionId, 0, 0);
             sessionDataService.sendConnectionStatus(sessionId, participants);
         }
     }

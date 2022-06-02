@@ -21,7 +21,6 @@ public class Question {
     private Integer id;
 
     //null means the question was send anonymous
-    //TODO maybe create Relation between id and participant
     @ManyToOne
     @JoinColumn(name = "participant_id")
     private Participant participant;
@@ -32,7 +31,6 @@ public class Question {
     //null means the question was never closed
     private Long closed;
 
-    //TODO implement possibility to map voters to ids
     @Builder.Default
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

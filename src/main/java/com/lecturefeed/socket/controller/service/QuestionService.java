@@ -9,8 +9,8 @@ import java.util.Arrays;
 @Service
 public class QuestionService {
     private final SimpMessagingTemplate simpMessagingTemplate;
-    private final String WS_MESSAGE_TRANSFER_DESTINATION = "/%s/session/%d/question/onupdate";
-    private final String[] roots = {"admin","participant"};
+    private static final String WS_MESSAGE_TRANSFER_DESTINATION = "/%s/session/%d/question/onupdate";
+    private static final String[] roots = {"admin","participant"};
 
     QuestionService(SimpMessagingTemplate simpMessagingTemplate){
         this.simpMessagingTemplate = simpMessagingTemplate;
