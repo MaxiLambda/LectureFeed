@@ -22,11 +22,7 @@ public class QuestionController {
     public void ratingChange(@DestinationVariable Integer sessionId, @DestinationVariable Integer questionId, @DestinationVariable String rating, Principal principal){
         int userId = PrincipalUtils.getClaim("id", principal).asInt();
         if(sessionManager.existsSessionId(sessionId) && questionManager.existsQuestionId(questionId)){
-            boolean r = false;
-            switch (rating){
-                case "up" -> r = true;
-                case "down" -> r = false;
-            }
+            boolean r = rating.equals("up");
             questionManager.ratingUpByQuestionId(sessionId, questionId, userId, r);
         }
     }

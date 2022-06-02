@@ -6,6 +6,8 @@ import com.lecturefeed.core.os.WindowsSystem;
 public class OSFactory {
     private static final String OS = System.getProperty("os.name").toLowerCase();
 
+    private OSFactory(){}
+
     public static IOSSystem getOSSystem(){
         if (isWindows()) {
             return new WindowsSystem();

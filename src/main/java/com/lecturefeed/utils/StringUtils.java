@@ -8,6 +8,8 @@ public class StringUtils {
     private static final String CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final SecureRandom rnd = new SecureRandom();
 
+    private StringUtils(){}
+
     public static String randomString(int len){
         return len < 1 ?
                 "" : rnd.ints(0,CHARS.length()).

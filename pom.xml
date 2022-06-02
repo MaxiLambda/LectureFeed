@@ -197,13 +197,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.2.2</version>
-				<!-- <configuration>
-					<archive>
-						<manifest>
-							<mainClass>com.lecturefeed.selenium.SeleniumTest</mainClass>
-						</manifest>
-					</archive>
-				</configuration> -->
 				<executions>
                     <execution>
                         <goals>

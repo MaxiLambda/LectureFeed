@@ -12,6 +12,8 @@ import java.util.Optional;
 
 public class SecurityContextHolderUtils {
 
+    private SecurityContextHolderUtils(){}
+
     public static boolean isCurrentUserAdmin(){
         UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         List<GrantedAuthority> collection = authentication.getAuthorities().stream()

@@ -1,6 +1,8 @@
 package com.lecturefeed.restapi.controller;
 
 import com.lecturefeed.authentication.jwt.TokenService;
+import com.lecturefeed.dto.DtoManager;
+import com.lecturefeed.dto.SurveyTemplateDto;
 import com.lecturefeed.entity.model.survey.Survey;
 import com.lecturefeed.entity.model.survey.SurveyTemplate;
 import com.lecturefeed.manager.SessionManager;
@@ -23,7 +25,7 @@ public class SurveyRestController {
     private final SurveyTemplateManager surveyTemplateManager;
     private final SessionManager sessionManager;
     private final TokenService tokenService;
-
+    private final DtoManager dtoManager;
 
     @GetMapping("/admin/session/{sessionId}/survey/templates")
     public Collection<SurveyTemplate> getSessionTemplates(@PathVariable int sessionId){
@@ -45,10 +47,11 @@ public class SurveyRestController {
     }
 
     @PostMapping("/admin/session/{sessionId}/survey/create")
-    public SurveyTemplate create(@PathVariable int sessionId, @RequestBody SurveyTemplate template){
+    public SurveyTemplate create(@PathVariable int sessionId, @RequestBody SurveyTemplateDto template){
         sessionManager.checkSessionId(sessionId);
-        surveyManager.createSurvey(sessionId, surveyTemplateManager.createTemplate(template));
-        return template;
+        SurveyTemplate surveyTemplate = dtoManager.getSurveyTemplate(template);
+        surveyManager.createSurvey(sessionId, surveyTemplateManager.createTemplate(surveyTemplate));
+        return surveyTemplate;
     }
 
     @PostMapping("/participant/session/{sessionId}/survey/{surveyId}/answer")

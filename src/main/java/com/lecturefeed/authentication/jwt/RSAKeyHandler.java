@@ -28,6 +28,8 @@ public class RSAKeyHandler{
     @Getter(value = AccessLevel.PROTECTED)
     private static RSAPublicKey publicKey;
 
+    protected RSAKeyHandler(){}
+
     protected static void initKeys(){
         initRSA();
     }

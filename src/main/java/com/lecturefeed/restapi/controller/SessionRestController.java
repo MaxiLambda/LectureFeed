@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -94,7 +93,7 @@ public class SessionRestController {
         return sessionManager.getAllClosedSessions()
                 .stream()
                 .map(sessionManager::toMetadata)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @GetMapping("/presenter/{sessionId}/data")

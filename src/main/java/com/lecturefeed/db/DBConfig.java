@@ -1,7 +1,6 @@
 package com.lecturefeed.db;
 
 import com.lecturefeed.core.HomeDirHandler;
-import com.lecturefeed.utils.ObjectUtils;
 import com.lecturefeed.utils.RunTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +12,7 @@ import javax.sql.DataSource;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 
 @Configuration
@@ -38,7 +38,12 @@ public class DBConfig {
     @Bean
     public DataSource dataSource() {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setUrl(getURLFormatByPath(ObjectUtils.getValueOrDefault(getDatabasePathOption(), getDefaultLectureFeedDBFilePath(env.getProperty("sqlite.filename")))));
+
+        Path dbPath = Optional.
+                ofNullable(getDatabasePathOption()).
+                orElse(getDefaultLectureFeedDBFilePath(env.getProperty("sqlite.filename")));
+
+        dataSource.setUrl(getURLFormatByPath(dbPath));
         return dataSource;
     }
 
