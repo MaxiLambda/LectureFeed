@@ -8,6 +8,8 @@ import java.util.Map;
 
 public class PrincipalUtils {
 
+    private PrincipalUtils(){}
+
     public static Claim getClaim(String value, Principal principal){
         UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) principal;
         return ((Map<String, Claim>) token.getCredentials()).get(value);

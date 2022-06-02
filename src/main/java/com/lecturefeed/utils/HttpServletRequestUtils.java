@@ -6,6 +6,9 @@ import java.net.UnknownHostException;
 
 public class HttpServletRequestUtils {
 
+    private HttpServletRequestUtils() {
+    }
+
     public static InetAddress getRemoteAddrByRequest(HttpServletRequest request) {
         String ipAddress = request.getHeader("X-FORWARDED-FOR");
         if (ipAddress == null) {
