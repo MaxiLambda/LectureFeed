@@ -1,7 +1,0 @@
-<app-question-table-overview [questions]="questions" [customColumnHeaders]="customColumnHeaders" [customHeader]="customHeader" ></app-question-table-overview>
-<ng-template #customHeader let-question='question'>
-  <td class="rating-buttons">
-    <span class="p-column-title">Close</span>
-    <button (click)="close(question)" pButton type="button" class="p-button-raised p-button-info p-button-rounded" icon="pi pi-times"></button>
-  </td>
-</ng-template>
