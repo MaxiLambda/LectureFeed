@@ -1,0 +1,32 @@
+<p-table #dt [value]="participants" dataKey="id" styleClass="p-datatable-customers"
+         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+         [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+         [filterDelay]="0">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="nickname">
+        <div class="p-d-flex p-jc-between p-ai-center">
+          Nickname
+          <p-sortIcon field="nickname"></p-sortIcon>
+          <p-columnFilter type="text" field="nickname" display="menu"></p-columnFilter>
+        </div>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-participant>
+    <tr>
+      <td>{{participant.nickname}}</td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td>No participant found.</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </ng-template>
+
+</p-table>
+

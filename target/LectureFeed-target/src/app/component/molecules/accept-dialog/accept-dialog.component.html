@@ -1,0 +1,7 @@
+<p-dialog [(visible)]="visible" [header]="title"  [draggable]="false" [closable]="true" (onHide)="onHide()" >
+  <div class="content" >{{msg}}</div>
+  <ng-template pTemplate="footer">
+    <button pButton type="button" label="Ok" (click)="onHide()" ></button>
+  </ng-template>
+</p-dialog>
+<app-backdrop [visible]="visible" ></app-backdrop>

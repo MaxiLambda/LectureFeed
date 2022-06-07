@@ -1,0 +1,6 @@
+<p-dialog [(visible)]="visible"  [draggable]="false" [closable]="false" >
+  <ng-template pTemplate="header"></ng-template>
+  <div class="content" ><h3>{{msg}}</h3><i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i></div>
+  <ng-template pTemplate="footer"></ng-template>
+</p-dialog>
+<app-backdrop [visible]="visible" ></app-backdrop>

@@ -1,0 +1,24 @@
+<div *ngIf="template" >
+
+  <div *ngIf="isOpenAnswerType()" >
+    <div class="field">
+      <label class="block">Your Answer</label>
+      <input type="text" placeholder="" pInputText [(ngModel)]="value" (ngModelChange)="onChangeOpenAnswer($event)">
+    </div>
+  </div>
+
+  <div *ngIf="isYesNoType()" >
+    <p-selectButton [options]="yesNoOptions" optionLabel="icon" (onChange)="onUpdateYesNo($event)">
+      <ng-template let-item>
+        <i [class]="item.icon"></i>
+      </ng-template>
+    </p-selectButton>
+  </div>
+
+  <div *ngIf="isRatingType()" >
+    <div class="slider">
+      <ngx-slider [options]="ratingOptions" (userChangeEnd)="userChangeEnd($event)" ></ngx-slider>
+    </div>
+  </div>
+
+</div>

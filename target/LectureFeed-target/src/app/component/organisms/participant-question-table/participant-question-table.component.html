@@ -1,0 +1,14 @@
+<app-question-table-overview [questions]="questions" [customColumnHeaders]="customColumnHeaders" [customHeader]="customHeader" ></app-question-table-overview>
+<ng-template #customHeader let-question='question'>
+  <td class="rating-buttons">
+    <span class="p-column-title">Rate</span>
+    <div *ngIf="question | unvotedQuestion: votedQuestions; else voted" >
+      <button (click)="vote(question, true)" pButton type="button" class="p-button-raised p-button-success p-button-rounded" icon="pi pi-check"></button>
+      <button (click)="vote(question, false)" pButton type="button" class="p-button-raised p-button-danger p-button-rounded" icon="pi pi-times"></button>
+    </div>
+    <ng-template #voted>
+      <button *ngIf="question | votedQuestionByVote: votedQuestions: true" disabled pButton type="button" class="p-button-raised p-button-success p-button-rounded" icon="pi pi-check"></button>
+      <button *ngIf="question | votedQuestionByVote: votedQuestions: false" disabled pButton type="button" class="p-button-raised p-button-danger p-button-rounded" icon="pi pi-times"></button>
+    </ng-template>
+  </td>
+</ng-template>

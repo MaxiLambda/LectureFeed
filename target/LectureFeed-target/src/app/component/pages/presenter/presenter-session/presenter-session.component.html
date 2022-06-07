@@ -1,0 +1,45 @@
+<app-header [(visibleSidebar)]="visibleSidebar" [headerLinkPrefix]="'presenter/'">
+
+  <div class="p-sidebar-element p-sidebar-element-button" (click)="onClickOpenWelcomeDialog()" >
+    <span class="p-sidebar-element-icon" ><i class="pi pi-info"></i></span>
+    <span class="p-sidebar-element-text" >Show Welcome Dialog</span>
+  </div>
+
+  <div class="p-sidebar-element p-sidebar-element-button" (click)="onClickCloseSession()" >
+    <span class="p-sidebar-element-icon" ><i class="pi pi-power-off"></i></span>
+    <span class="p-sidebar-element-text" >Close Session</span>
+  </div>
+
+
+</app-header>
+
+<app-content>
+  <div *ngIf="getSessionId">
+
+    <app-share-session-code-dialog *ngIf="sessionCode" [(visible)]="displayShareCodeDialog" (onHide)="onHideShareCodeDialog()" [sessionId]="sessionId" [sessionCode]="sessionCode" ></app-share-session-code-dialog>
+
+    <div class="grid flex-column">
+      <div class="col">
+        <p-card>
+          <p-tabView>
+            <p-tabPanel header="Mood" [selected]="true" >
+              <app-mood-chart [moodLineValues]="moodLineValues" ></app-mood-chart>
+            </p-tabPanel>
+            <p-tabPanel header="Servey" >
+              <app-presenter-survey [adminSocket]="adminSocket" [sessionId]="getSessionId()" ></app-presenter-survey>
+            </p-tabPanel>
+            <p-tabPanel header="Participants" >
+              <app-participant-connection-table [participants]="participants" (onSelectParticipant)="onKillParticipant($event)" ></app-participant-connection-table>
+            </p-tabPanel>
+          </p-tabView>
+        </p-card>
+      </div>
+      <div class="col">
+        <p-card header="Top Questions">
+          <app-presenter-question-table [questions]="questions | questionFilterByClosed" (onClosedQuestion)="onClosedQuestion($event)" ></app-presenter-question-table>
+        </p-card>
+      </div>
+    </div>
+  </div>
+
+</app-content>

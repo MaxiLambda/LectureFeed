@@ -1,0 +1,66 @@
+<p-table #dt [value]="questions" dataKey="id" styleClass="p-datatable-customers" sortField="rating" [sortOrder]="-1"
+           [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+           [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+           [filterDelay]="0">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="participant">
+        <div class="p-d-flex p-jc-between p-ai-center">
+          Participant
+          <p-sortIcon field="message"></p-sortIcon>
+          <p-columnFilter type="text" field="participant.nickname" display="menu"></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="message">
+        <div class="p-d-flex p-jc-between p-ai-center">
+          Question
+          <p-sortIcon field="message"></p-sortIcon>
+          <p-columnFilter type="text" field="message" display="menu"></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="created">
+        <div class="p-d-flex p-jc-between p-ai-center">
+          Time
+          <p-sortIcon field="created"></p-sortIcon>
+        </div>
+      </th>
+      <th pSortableColumn="rating">
+        <div class="p-d-flex p-jc-between p-ai-center">
+          Score
+          <p-sortIcon field="rating"></p-sortIcon>
+        </div>
+      </th>
+      <th *ngFor="let columnHeaders of customColumnHeaders" [pSortableColumn]="columnHeaders.field && columnHeaders.sort && columnHeaders.sort === true ? columnHeaders.field : ''"  >
+        <div class="p-d-flex p-jc-between p-ai-center">
+          {{columnHeaders.title}}
+          <ng-template [ngIf]="columnHeaders.field && columnHeaders.sort && columnHeaders.sort === true" >
+            <p-sortIcon field="{{columnHeaders.field}}"></p-sortIcon>
+          </ng-template>
+        </div>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-question>
+    <tr>
+      <td><span class="p-column-title">Participant</span><p-chip label="{{question.anonymous? 'Anonymous': question.participant.nickname}}"></p-chip></td>
+      <td><span class="p-column-title">Message</span>{{question.message}}</td>
+      <td><span class="p-column-title">Created</span>{{question.created | date: 'h:mm:ss'}}</td>
+      <td><span class="p-column-title">Rating</span>{{question.rating}}</td>
+      <ng-container
+        [ngTemplateOutlet]="currentCustomHeader"
+        [ngTemplateOutletContext]="{question:question}">
+      </ng-container>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td>No questions found.</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </ng-template>
+
+</p-table>
+

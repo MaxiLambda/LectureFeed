@@ -1,0 +1,9 @@
+<app-survey-form
+  [(name)]="template.name"
+  [(type)]="template.type"
+  [(question)]="template.question"
+  [(duration)]="template.duration"
+  [(publishResults)]="template.publishResults"
+  [disabledForm]="disabledForm"
+  (onValid)="onChange($event)"
+></app-survey-form>

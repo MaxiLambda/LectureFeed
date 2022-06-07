@@ -1,0 +1,22 @@
+<p-dialog *ngIf="survey" header="Survey" [(visible)]="visible"  [draggable]="false" [closable]="true" (onHide)="onClose.emit()"   [style]="{minWidth: '50vw'}" >
+
+  <div class="grid p-fluid">
+
+    <div class="col-12">
+      <div class="field">
+        <label class="block">Number of participants : {{ survey.answers.length }}</label>
+      </div>
+    </div>
+
+    <div class="col-12 ">
+      <ng-template [ngIf]="survey">
+        <app-survey-answer-visualization [survey]="survey" ></app-survey-answer-visualization>
+      </ng-template>
+    </div>
+
+  </div>
+
+  <ng-template pTemplate="footer"></ng-template>
+
+</p-dialog>
+<app-backdrop [visible]="visible" ></app-backdrop>

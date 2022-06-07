@@ -1,0 +1,10 @@
+
+.content{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.content *:first-child{
+  margin-right: 10px;
+}

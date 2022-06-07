@@ -1,0 +1,27 @@
+<p-tabView>
+  <p-tabPanel header="New Question" leftIcon="pi pi-plus" >
+    <app-create-question (onCreatedQuestion)="onCreatedQuestion.emit($event)" ></app-create-question>
+  </p-tabPanel>
+  <p-tabPanel header="My Questions" leftIcon="pi pi-search" >
+    <p-table [value]="questions">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Your Recent Questions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-question>
+        <tr>
+          <td>{{question.message}}</td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td>No questions found.</td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+  </p-tabPanel>
+</p-tabView>
+

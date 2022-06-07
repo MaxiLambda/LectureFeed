@@ -1,0 +1,15 @@
+::ng-deep {
+  p-dialog > *{
+    min-width: 10vh;
+  }
+  div.time {
+    display: flex;
+    align-items: center;
+  }
+  div.time p-progressBar{
+    width: 100%;
+    margin-left: 30px;
+  }
+}
+
+
