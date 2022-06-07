@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:LFD-139" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="de6a3cba-bd76-465e-b63c-84e939ef0d4d" name="LFD-3 07.10 Blog Task" comment="[LFD-139]changed configuration">
+      <change afterPath="$PROJECT_DIR$/target/classes/banner.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.lecturefeed.LectureFeed.LectureFeedLightApplicationTests.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.lecturefeed.LectureFeed.LectureFeedLightApplicationTests.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_12_5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_12_5.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_12_5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_12_5.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LectureFeed.iml" beforeDir="false" afterPath="$PROJECT_DIR$/LectureFeed.iml" afterDir="false" />
+    </list>
+    <list id="07153a48-9d1c-4ffb-9b91-6bb7764a3881" name="Default Changelist" comment="" />
+    <list id="022b5fc5-f975-4f22-aaf0-a78f372db1e7" name="LFD-2 Write first blog on Wordpress" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="InvalidFacetManager">
+    <ignored-facets>
+      <facet id="LectureFeed/invalid/Web" />
+    </ignored-facets>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="downloadAnnotationsAutomatically" value="true" />
+        <option name="downloadDocsAutomatically" value="true" />
+        <option name="downloadSourcesAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1zUT5jvRP2iQVgDVcY2ftnNc1Dj" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Lukas.Hoernle\Documents\LectureFeed\docs\class-diagrams" />
+      <recent name="C:\Users\Lukas.Hoernle\Documents\LectureFeed\docs\image\mockup" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.LectureFeedApplication">
+    <configuration name="LectureFeedApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.lecturefeed.LectureFeedApplication" />
+      <module name="LectureFeed" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.lecturefeed.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LectureFeedApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="LectureFeed" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.lecturefeed.LectureFeed.LectureFeedApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.LectureFeedApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\Lukas.Hoernle\AppData\Roaming\Subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task id="Default" summary="Default task">
+      <branch name="main" repository="C:\Users\Lukas.Hoernle\Documents\LectureFeed" />
+      <changelist id="07153a48-9d1c-4ffb-9b91-6bb7764a3881" name="Default Changelist" comment="" />
+      <created>1634201485745</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1634204124256</updated>
+    </task>
+    <task id="LFD-5" summary="Learning Youtrack">
+      <branch name="LFD-5" repository="C:\Users\Lukas.Hoernle\Documents\LectureFeed" />
+      <branch name="LFD-5" repository="C:\Users\Lukas.Hoernle\Documents\LectureFeed" original="true" />
+      <option name="closed" value="true" />
+      <created>1634203788514</created>
+      <option name="issue" value="true" />
+      <url>https://dhbw-karlsruhe.myjetbrains.com/youtrack/issue/LFD-5</url>
+      <option name="number" value="5" />
+      <option name="presentableId" value="LFD-5" />
+      <option name="project" value="LFD" />
+      <updated>1639043086054</updated>
+    </task>
+    <task id="LFD-2" summary="Write first blog on Wordpress">
+      <branch name="LFD-5" repository="C:\Users\Lukas.Hoernle\Documents\LectureFeed" original="true" />
+      <branch name="LFD-2" repository="C:\Users\Lukas.Hoernle\Documents\LectureFeed" />
+      <branch name="LFD-2" repository="C:\Users\Lukas.Hoernle\Documents\LectureFeed" original="true" />
+      <changelist id="022b5fc5-f975-4f22-aaf0-a78f372db1e7" name="LFD-2 Write first blog on Wordpress" comment="" />
+      <option name="closed" value="true" />
+      <created>1633695483820</created>
+      <option name="issue" value="true" />
+      <url>https://dhbw-karlsruhe.myjetbrains.com/youtrack/issue/LFD-2</url>
+      <option name="number" value="2" />
+      <option name="presentableId" value="LFD-2" />
+      <option name="project" value="LFD" />
+      <updated>1649928771594</updated>
+    </task>
+    <task active="true" id="LFD-3" summary="Blog Task Week 0">
+      <branch name="LFD-2" repository="C:\Users\Lukas.Hoernle\Documents\LectureFeed" />
+      <changelist id="de6a3cba-bd76-465e-b63c-84e939ef0d4d" name="LFD-3 07.10 Blog Task" comment="" />
+      <option name="closed" value="true" />
+      <created>1633695600365</created>
+      <option name="issue" value="true" />
+      <url>https://dhbw-karlsruhe.myjetbrains.com/youtrack/issue/LFD-3</url>
+      <option name="number" value="3" />
+      <option name="presentableId" value="LFD-3" />
+      <option name="project" value="LFD" />
+      <updated>1639042982077</updated>
+      <workItem from="1637837023698" duration="3039000" />
+      <workItem from="1637929463311" duration="5000" />
+      <workItem from="1638015642018" duration="34000" />
+      <workItem from="1638102178459" duration="648000" />
+      <workItem from="1638265837804" duration="159000" />
+      <workItem from="1639409571738" duration="780000" />
+      <workItem from="1639413661973" duration="53000" />
+    </task>
+    <task id="LOCAL-00001" summary="LFD-16 exchanged svg for new uml diagram">
+      <created>1635174399916</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1635174399916</updated>
+    </task>
+    <task id="LOCAL-00002" summary="[LFD-16] updated uml">
+      <created>1635230692200</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1635230692200</updated>
+    </task>
+    <task id="LOCAL-00003" summary="[LFD-16] exchanged svg for new uml diagram">
+      <created>1635231398256</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1635231398256</updated>
+    </task>
+    <task id="LOCAL-00004" summary="[LFD-16] exchanged link to svg for new uml diagram">
+      <created>1635231582734</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1635231582734</updated>
+    </task>
+    <task id="LOCAL-00005" summary="[LFD-22] Create Mockups&#10;Added SVGs for first three Mockups plus second Version of Login.&#10;Decided to create new directory for mockups which can then be linked from git.">
+      <created>1635694433446</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1635694433446</updated>
+    </task>
+    <task id="LOCAL-00006" summary="[LFD-22] Create Mockups&#10;Recreated svg in inkscape as it was not visible in chrome.">
+      <created>1635776960386</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1635776960387</updated>
+    </task>
+    <task id="LOCAL-00007" summary="changed configuration">
+      <created>1654621582332</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1654621582332</updated>
+    </task>
+    <task id="LFD-139" summary="Blog Week 4">
+      <option name="closed" value="true" />
+      <created>1651663342917</created>
+      <option name="issue" value="true" />
+      <url>https://dhbw-karlsruhe.myjetbrains.com/youtrack/issue/LFD-139</url>
+      <option name="number" value="139" />
+      <option name="presentableId" value="LFD-139" />
+      <option name="project" value="LFD" />
+      <updated>1654621641104</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <option name="createBranch" value="false" />
+    <option name="useBranch" value="true" />
+    <option name="searchClosedTasks" value="true" />
+    <servers>
+      <YouTrack url="https://dhbw-karlsruhe.myjetbrains.com/youtrack">
+        <option name="defaultSearch" value="project: LectureFeed" />
+        <username>random</username>
+      </YouTrack>
+    </servers>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="LFD-139" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="LFD-16 exchanged svg for new uml diagram" />
+    <MESSAGE value="[LFD-16] updated uml" />
+    <MESSAGE value="[LFD-16] exchanged svg for new uml diagram" />
+    <MESSAGE value="[LFD-16] exchanged link to svg for new uml diagram" />
+    <MESSAGE value="[LFD-22] Create Mockups&#10;Added SVGs for first three Mockups plus second Version of Login.&#10;Decided to create new directory for mockups which can then be linked from git." />
+    <MESSAGE value="[LFD-22] Create Mockups&#10;Recreated svg in inkscape as it was not visible in chrome." />
+    <MESSAGE value="changed configuration" />
+    <MESSAGE value="[LFD-139]changed configuration" />
+    <option name="LAST_COMMIT_MESSAGE" value="[LFD-139]changed configuration" />
+  </component>
+</project>
